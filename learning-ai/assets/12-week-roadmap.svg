@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+      .section-title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #34495e; text-anchor: start; }
+      .task-text { font-family: Arial, sans-serif; font-size: 12px; fill: white; text-anchor: middle; }
+      .week-label { font-family: Arial, sans-serif; font-size: 10px; fill: #7f8c8d; text-anchor: middle; }
+      .grid-line { stroke: #ecf0f1; stroke-width: 1; fill: none; }
+      .section-bg { fill: #f8f9fa; stroke: #dee2e6; stroke-width: 1; }
+      .task-1 { fill: #3498db; stroke: #2980b9; stroke-width: 2; rx: 4; ry: 4; }
+      .task-2 { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; rx: 4; ry: 4; }
+      .task-3 { fill: #2ecc71; stroke: #27ae60; stroke-width: 2; rx: 4; ry: 4; }
+      .task-4 { fill: #f39c12; stroke: #e67e22; stroke-width: 2; rx: 4; ry: 4; }
+      .task-5 { fill: #9b59b6; stroke: #8e44ad; stroke-width: 2; rx: 4; ry: 4; }
+    </style>
+  </defs>
+  
+  <!-- Title -->
+  <text x="800" y="40" class="title">Lộ trình 12 tuần - Master AI/ML/Data Science</text>
+  
+  <!-- Week labels -->
+  <text x="200" y="80" class="week-label">Tuần 1</text>
+  <text x="300" y="80" class="week-label">Tuần 2</text>
+  <text x="400" y="80" class="week-label">Tuần 3</text>
+  <text x="500" y="80" class="week-label">Tuần 4</text>
+  <text x="600" y="80" class="week-label">Tuần 5</text>
+  <text x="700" y="80" class="week-label">Tuần 6</text>
+  <text x="800" y="80" class="week-label">Tuần 7</text>
+  <text x="900" y="80" class="week-label">Tuần 8</text>
+  <text x="1000" y="80" class="week-label">Tuần 9</text>
+  <text x="1100" y="80" class="week-label">Tuần 10</text>
+  <text x="1200" y="80" class="week-label">Tuần 11</text>
+  <text x="1300" y="80" class="week-label">Tuần 12</text>
+  
+  <!-- Grid lines -->
+  <line x1="200" y1="90" x2="200" y2="700" class="grid-line"/>
+  <line x1="300" y1="90" x2="300" y2="700" class="grid-line"/>
+  <line x1="400" y1="90" x2="400" y2="700" class="grid-line"/>
+  <line x1="500" y1="90" x2="500" y2="700" class="grid-line"/>
+  <line x1="600" y1="90" x2="600" y2="700" class="grid-line"/>
+  <line x1="700" y1="90" x2="700" y2="700" class="grid-line"/>
+  <line x1="800" y1="90" x2="800" y2="700" class="grid-line"/>
+  <line x1="900" y1="90" x2="900" y2="700" class="grid-line"/>
+  <line x1="1000" y1="90" x2="1000" y2="700" class="grid-line"/>
+  <line x1="1100" y1="90" x2="1100" y2="700" class="grid-line"/>
+  <line x1="1200" y1="90" x2="1200" y2="700" class="grid-line"/>
+  <line x1="1300" y1="90" x2="1300" y2="700" class="grid-line"/>
+  
+  <!-- Section 1: Nền tảng -->
+  <rect x="50" y="120" width="150" height="60" class="section-bg"/>
+  <text x="125" y="155" class="section-title">Nền tảng</text>
+  
+  <!-- Python & Tools - Week 1 -->
+  <rect x="200" y="130" width="100" height="40" class="task-1"/>
+  <text x="250" y="150" class="task-text">Python & Tools</text>
+  
+  <!-- Toán học & SQL - Week 2 -->
+  <rect x="300" y="130" width="100" height="40" class="task-2"/>
+  <text x="350" y="150" class="task-text">Toán học & SQL</text>
+  
+  <!-- Data Visualization - Week 3 -->
+  <rect x="400" y="130" width="100" height="40" class="task-3"/>
+  <text x="450" y="150" class="task-text">Data Visualization</text>
+  
+  <!-- Section 2: Data Analysis -->
+  <rect x="50" y="200" width="150" height="60" class="section-bg"/>
+  <text x="125" y="235" class="section-title">Data Analysis</text>
+  
+  <!-- EDA & Statistics - Week 4 -->
+  <rect x="500" y="210" width="100" height="40" class="task-1"/>
+  <text x="550" y="230" class="task-text">EDA & Statistics</text>
+  
+  <!-- Business Intelligence - Week 5 -->
+  <rect x="600" y="210" width="100" height="40" class="task-2"/>
+  <text x="650" y="230" class="task-text">Business Intelligence</text>
+  
+  <!-- A/B Testing - Week 6 -->
+  <rect x="700" y="210" width="100" height="40" class="task-3"/>
+  <text x="750" y="230" class="task-text">A/B Testing</text>
+  
+  <!-- Section 3: Machine Learning -->
+  <rect x="50" y="280" width="150" height="60" class="section-bg"/>
+  <text x="125" y="315" class="section-title">Machine Learning</text>
+  
+  <!-- Feature Engineering - Week 7 -->
+  <rect x="800" y="290" width="100" height="40" class="task-1"/>
+  <text x="850" y="310" class="task-text">Feature Engineering</text>
+  
+  <!-- Supervised Learning - Week 8 -->
+  <rect x="900" y="290" width="100" height="40" class="task-2"/>
+  <text x="950" y="310" class="task-text">Supervised Learning</text>
+  
+  <!-- Model Evaluation - Week 9 -->
+  <rect x="1000" y="290" width="100" height="40" class="task-3"/>
+  <text x="1050" y="310" class="task-text">Model Evaluation</text>
+  
+  <!-- Section 4: Deep Learning -->
+  <rect x="50" y="360" width="150" height="60" class="section-bg"/>
+  <text x="125" y="395" class="section-title">Deep Learning</text>
+  
+  <!-- Neural Networks - Week 10 -->
+  <rect x="1100" y="370" width="100" height="40" class="task-4"/>
+  <text x="1150" y="390" class="task-text">Neural Networks</text>
+  
+  <!-- Computer Vision - Week 11 -->
+  <rect x="1200" y="370" width="100" height="40" class="task-5"/>
+  <text x="1250" y="390" class="task-text">Computer Vision</text>
+  
+  <!-- NLP & LLMs - Week 12 -->
+  <rect x="1300" y="370" width="100" height="40" class="task-1"/>
+  <text x="1350" y="390" class="task-text">NLP & LLMs</text>
+  
+  <!-- Section 5: MLOps -->
+  <rect x="50" y="440" width="150" height="60" class="section-bg"/>
+  <text x="125" y="475" class="section-title">MLOps</text>
+  
+  <!-- Model Deployment - Week 10-11 -->
+  <rect x="1100" y="450" width="200" height="40" class="task-4"/>
+  <text x="1200" y="470" class="task-text">Model Deployment</text>
+  
+  <!-- Production Pipeline - Week 11-12 -->
+  <rect x="1200" y="450" width="200" height="40" class="task-5"/>
+  <text x="1300" y="470" class="task-text">Production Pipeline</text>
+  
+  <!-- Additional milestones -->
+  <rect x="50" y="520" width="150" height="60" class="section-bg"/>
+  <text x="125" y="555" class="section-title">Milestones</text>
+  
+  <!-- Week 3 milestone -->
+  <rect x="400" y="530" width="20" height="20" class="task-3"/>
+  <text x="410" y="543" class="task-text">✓</text>
+  
+  <!-- Week 6 milestone -->
+  <rect x="700" y="530" width="20" height="20" class="task-3"/>
+  <text x="710" y="543" class="task-text">✓</text>
+  
+  <!-- Week 9 milestone -->
+  <rect x="1000" y="530" width="20" height="20" class="task-3"/>
+  <text x="1010" y="543" class="task-text">✓</text>
+  
+  <!-- Week 12 milestone -->
+  <rect x="1300" y="530" width="20" height="20" class="task-3"/>
+  <text x="1310" y="543" class="task-text">✓</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="600" width="150" height="120" class="section-bg"/>
+  <text x="125" y="625" class="section-title">Legend</text>
+  
+  <rect x="70" y="640" width="20" height="20" class="task-1"/>
+  <text x="100" y="653" class="task-text">Python & Tools</text>
+  
+  <rect x="70" y="670" width="20" height="20" class="task-2"/>
+  <text x="100" y="683" class="task-text">Math & SQL</text>
+  
+  <rect x="70" y="700" width="20" height="20" class="task-3"/>
+  <text x="100" y="713" class="task-text">Data & ML</text>
+  
+  <rect x="70" y="730" width="20" height="20" class="task-4"/>
+  <text x="100" y="743" class="task-text">Deep Learning</text>
+  
+  <rect x="70" y="760" width="20" height="20" class="task-5"/>
+  <text x="100" y="773" class="task-text">MLOps</text>
+  
+  <!-- Progress indicators -->
+  <text x="1400" y="200" class="section-title">Progress</text>
+  <text x="1400" y="230" class="task-text">Week 1-3: 25%</text>
+  <text x="1400" y="250" class="task-text">Week 4-6: 50%</text>
+  <text x="1400" y="270" class="task-text">Week 7-9: 75%</text>
+  <text x="1400" y="290" class="task-text">Week 10-12: 100%</text>
+</svg>

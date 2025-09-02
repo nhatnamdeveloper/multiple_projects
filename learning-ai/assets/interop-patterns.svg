@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 4; rx: 15; ry: 15; }
+      .main-branch { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 3; rx: 10; ry: 10; }
+      .sub-branch { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; rx: 8; ry: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 18px; font-weight: bold; fill: white; }
+      .main-text { font-size: 14px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 11px; fill: white; }
+      .line { stroke: #7f8c8d; stroke-width: 3; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Root Node -->
+  <rect x="650" y="50" width="120" height="60" class="root"/>
+  <text x="710" y="85" class="text root-text">🔗 Interop Patterns</text>
+  
+  <!-- Main Branches - Level 1 -->
+  <!-- REST APIs -->
+  <rect x="50" y="150" width="120" height="50" class="main-branch"/>
+  <text x="110" y="175" class="text main-text">🌐 REST APIs</text>
+  <line x1="710" y1="80" x2="110" y2="150" class="line"/>
+  
+  <!-- gRPC -->
+  <rect x="200" y="150" width="120" height="50" class="main-branch"/>
+  <text x="260" y="175" class="text main-text">⚡ gRPC</text>
+  <line x1="710" y1="80" x2="260" y2="150" class="line"/>
+  
+  <!-- FFI - Foreign Function Interface -->
+  <rect x="350" y="150" width="120" height="50" class="main-branch"/>
+  <text x="410" y="175" class="text main-text">🔧 FFI - Foreign Function Interface</text>
+  <line x1="710" y1="80" x2="410" y2="150" class="line"/>
+  
+  <!-- Message Queues -->
+  <rect x="500" y="150" width="120" height="50" class="main-branch"/>
+  <text x="560" y="175" class="text main-text">📡 Message Queues</text>
+  <line x1="710" y1="80" x2="560" y2="150" class="line"/>
+  
+  <!-- Event Streaming -->
+  <rect x="650" y="150" width="120" height="50" class="main-branch"/>
+  <text x="710" y="175" class="text main-text">🔄 Event Streaming</text>
+  <line x1="710" y1="80" x2="710" y2="150" class="line"/>
+  
+  <!-- Sub-branches for REST APIs -->
+  <rect x="20" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="65" y="270" class="text sub-text">HTTP/HTTPS</text>
+  <line x1="110" y1="175" x2="65" y2="250" class="line"/>
+  
+  <rect x="120" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="165" y="270" class="text sub-text">OpenAPI/Swagger</text>
+  <line x1="110" y1="175" x2="165" y2="250" class="line"/>
+  
+  <rect x="220" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="265" y="270" class="text sub-text">JSON/XML</text>
+  <line x1="110" y1="175" x2="265" y2="250" class="line"/>
+  
+  <rect x="320" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="365" y="270" class="text sub-text">Rate Limiting</text>
+  <line x1="110" y1="175" x2="365" y2="250" class="line"/>
+  
+  <!-- Sub-branches for gRPC -->
+  <rect x="170" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="215" y="270" class="text sub-text">Protocol Buffers</text>
+  <line x1="260" y1="175" x2="215" y2="250" class="line"/>
+  
+  <rect x="270" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="315" y="270" class="text sub-text">HTTP/2</text>
+  <line x1="260" y1="175" x2="315" y2="250" class="line"/>
+  
+  <rect x="370" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="415" y="270" class="text sub-text">Streaming</text>
+  <line x1="260" y1="175" x2="415" y2="250" class="line"/>
+  
+  <rect x="470" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="515" y="270" class="text sub-text">Code Generation</text>
+  <line x1="260" y1="175" x2="515" y2="250" class="line"/>
+  
+  <!-- Sub-branches for FFI -->
+  <rect x="320" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="365" y="270" class="text sub-text">PyO3 - Python/Rust</text>
+  <line x1="410" y1="175" x2="365" y2="250" class="line"/>
+  
+  <rect x="420" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="465" y="270" class="text sub-text">N-API - Node.js/C++</text>
+  <line x1="410" y1="175" x2="465" y2="250" class="line"/>
+  
+  <rect x="520" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="565" y="270" class="text sub-text">ctypes - Python/C</text>
+  <line x1="410" y1="175" x2="565" y2="250" class="line"/>
+  
+  <rect x="620" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="665" y="270" class="text sub-text">JNI - Java/C++</text>
+  <line x1="410" y1="175" x2="665" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Message Queues -->
+  <rect x="470" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="515" y="270" class="text sub-text">Redis Pub/Sub</text>
+  <line x1="560" y1="175" x2="515" y2="250" class="line"/>
+  
+  <rect x="570" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="615" y="270" class="text sub-text">RabbitMQ</text>
+  <line x1="560" y1="175" x2="615" y2="250" class="line"/>
+  
+  <rect x="670" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="715" y="270" class="text sub-text">Apache Kafka</text>
+  <line x1="560" y1="175" x2="715" y2="250" class="line"/>
+  
+  <rect x="770" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="815" y="270" class="text sub-text">ZeroMQ</text>
+  <line x1="560" y1="175" x2="815" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Event Streaming -->
+  <rect x="620" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="665" y="270" class="text sub-text">WebSockets</text>
+  <line x1="710" y1="175" x2="665" y2="250" class="line"/>
+  
+  <rect x="720" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="765" y="270" class="text sub-text">Server-Sent Events</text>
+  <line x1="710" y1="175" x2="765" y2="250" class="line"/>
+  
+  <rect x="820" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="865" y="270" class="text sub-text">GraphQL Subscriptions</text>
+  <line x1="710" y1="175" x2="865" y2="250" class="line"/>
+  
+  <rect x="920" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="965" y="270" class="text sub-text">Event Sourcing</text>
+  <line x1="710" y1="175" x2="965" y2="250" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="800" y="150" width="120" height="50" class="main-branch"/>
+  <text x="860" y="175" class="text main-text">🔒 Security & Auth</text>
+  <line x1="710" y1="80" x2="860" y2="150" class="line"/>
+  
+  <rect x="870" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="915" y="270" class="text sub-text">OAuth 2.0</text>
+  <line x1="860" y1="175" x2="915" y2="250" class="line"/>
+  
+  <rect x="970" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1015" y="270" class="text sub-text">JWT Tokens</text>
+  <line x1="860" y1="175" x2="1015" y2="250" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1120" y="150" width="120" height="50" class="main-branch"/>
+  <text x="1180" y="175" class="text main-text">📊 Performance & Monitoring</text>
+  <line x1="710" y1="80" x2="1180" y2="150" class="line"/>
+  
+  <rect x="1170" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1215" y="270" class="text sub-text">Latency Metrics</text>
+  <line x1="1180" y1="175" x2="1215" y2="250" class="line"/>
+  
+  <rect x="1270" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1315" y="270" class="text sub-text">Throughput Analysis</text>
+  <line x1="1180" y1="175" x2="1315" y2="250" class="line"/>
+</svg>

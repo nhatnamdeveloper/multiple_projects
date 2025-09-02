@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 3; rx: 15; ry: 15; }
+      .main-branch { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 2; rx: 10; ry: 10; }
+      .sub-branch { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; rx: 8; ry: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 18px; font-weight: bold; fill: white; }
+      .main-text { font-size: 14px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 11px; fill: white; }
+      .line { stroke: #7f8c8d; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Root Node -->
+  <rect x="650" y="50" width="120" height="70" class="root"/>
+  <text x="710" y="95" class="text root-text">🚀 Learning AI</text>
+  
+  <!-- Main Branches -->
+  <!-- Nền tảng -->
+  <rect x="100" y="200" width="100" height="50" class="main-branch"/>
+  <text x="150" y="225" class="text main-text">🧠 Nền tảng</text>
+  <line x1="710" y1="100" x2="150" y2="200" class="line"/>
+  
+  <!-- Data Analyst -->
+  <rect x="250" y="200" width="100" height="50" class="main-branch"/>
+  <text x="300" y="225" class="text main-text">📊 Data Analyst</text>
+  <line x1="710" y1="100" x2="300" y2="200" class="line"/>
+  
+  <!-- Data Science & ML -->
+  <rect x="400" y="200" width="100" height="50" class="main-branch"/>
+  <text x="450" y="225" class="text main-text">🤖 Data Science & ML</text>
+  <line x1="710" y1="100" x2="450" y2="200" class="line"/>
+  
+  <!-- Time Series -->
+  <rect x="550" y="200" width="100" height="50" class="main-branch"/>
+  <text x="600" y="225" class="text main-text">📈 Time Series</text>
+  <line x1="710" y1="100" x2="600" y2="200" class="line"/>
+  
+  <!-- Deep Learning -->
+  <rect x="700" y="200" width="100" height="50" class="main-branch"/>
+  <text x="750" y="225" class="text main-text">🧠 Deep Learning</text>
+  <line x1="710" y1="100" x2="750" y2="200" class="line"/>
+  
+  <!-- LLMs -->
+  <rect x="850" y="200" width="100" height="50" class="main-branch"/>
+  <text x="900" y="225" class="text main-text">🤖 LLMs & Ứng dụng</text>
+  <line x1="710" y1="100" x2="900" y2="200" class="line"/>
+  
+  <!-- MLOps -->
+  <rect x="1000" y="200" width="100" height="50" class="main-branch"/>
+  <text x="1050" y="225" class="text main-text">🚀 MLOps & Sản xuất</text>
+  <line x1="710" y1="100" x2="1050" y2="200" class="line"/>
+  
+  <!-- Sub-branches for Nền tảng -->
+  <rect x="50" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="90" y="320" class="text sub-text">Python Nâng cao</text>
+  <line x1="150" y1="230" x2="90" y2="300" class="line"/>
+  
+  <rect x="140" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="180" y="320" class="text sub-text">Toán học cơ bản</text>
+  <line x1="150" y1="230" x2="180" y2="300" class="line"/>
+  
+  <rect x="230" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="270" y="320" class="text sub-text">SQL & Database</text>
+  <line x1="150" y1="230" x2="270" y2="300" class="line"/>
+  
+  <!-- Sub-branches for Data Analyst -->
+  <rect x="200" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="240" y="320" class="text sub-text">Quy trình phân tích</text>
+  <line x1="300" y1="230" x2="240" y2="300" class="line"/>
+  
+  <rect x="290" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="330" y="320" class="text sub-text">EDA & Khám phá dữ liệu</text>
+  <line x1="300" y1="230" x2="330" y2="300" class="line"/>
+  
+  <!-- Sub-branches for Data Science -->
+  <rect x="350" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="390" y="320" class="text sub-text">Feature Engineering</text>
+  <line x1="450" y1="230" x2="390" y2="300" class="line"/>
+  
+  <rect x="440" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="480" y="320" class="text sub-text">Supervised Learning</text>
+  <line x1="450" y1="230" x2="480" y2="300" class="line"/>
+  
+  <!-- Sub-branches for Time Series -->
+  <rect x="500" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="540" y="320" class="text sub-text">Exploratory Analysis</text>
+  <line x1="600" y1="230" x2="540" y2="300" class="line"/>
+  
+  <rect x="590" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="630" y="320" class="text sub-text">Statistical Models</text>
+  <line x1="600" y1="230" x2="630" y2="300" class="line"/>
+  
+  <!-- Sub-branches for Deep Learning -->
+  <rect x="650" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="690" y="320" class="text sub-text">Neural Network Theory</text>
+  <line x1="750" y1="230" x2="690" y2="300" class="line"/>
+  
+  <rect x="740" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="780" y="320" class="text sub-text">Optimization & Training</text>
+  <line x1="750" y1="230" x2="780" y2="300" class="line"/>
+  
+  <!-- Sub-branches for LLMs -->
+  <rect x="800" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="840" y="320" class="text sub-text">Language Modeling Theory</text>
+  <line x1="900" y1="230" x2="840" y2="300" class="line"/>
+  
+  <rect x="890" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="930" y="320" class="text sub-text">RAG & Vector Search</text>
+  <line x1="900" y1="230" x2="930" y2="300" class="line"/>
+  
+  <!-- Sub-branches for MLOps -->
+  <rect x="950" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="990" y="320" class="text sub-text">Model Development</text>
+  <line x1="1050" y1="230" x2="990" y2="300" class="line"/>
+  
+  <rect x="1040" y="300" width="80" height="40" class="sub-branch"/>
+  <text x="1080" y="320" class="text sub-text">CI/CD & Pipelines</text>
+  <line x1="1050" y1="230" x2="1080" y2="300" class="line"/>
+  
+  <!-- Additional sub-branches for completeness -->
+  <!-- More Python sub-branches -->
+  <rect x="30" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="65" y="395" class="text sub-text">OOP & Advanced</text>
+  <line x1="90" y1="310" x2="65" y2="380" class="line"/>
+  
+  <rect x="110" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="145" y="395" class="text sub-text">Packaging & Testing</text>
+  <line x1="90" y1="310" x2="145" y2="380" class="line"/>
+  
+  <!-- More Math sub-branches -->
+  <rect x="120" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="155" y="395" class="text sub-text">Linear Algebra</text>
+  <line x1="180" y1="310" x2="155" y2="380" class="line"/>
+  
+  <rect x="200" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="235" y="395" class="text sub-text">Probability & Stats</text>
+  <line x1="180" y1="310" x2="235" y2="380" class="line"/>
+  
+  <!-- More ML sub-branches -->
+  <rect x="320" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="355" y="395" class="text sub-text">Linear Models</text>
+  <line x1="390" y1="310" x2="355" y2="380" class="line"/>
+  
+  <rect x="400" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="435" y="395" class="text sub-text">Tree-based Models</text>
+  <line x1="390" y1="310" x2="435" y2="380" class="line"/>
+  
+  <!-- More DL sub-branches -->
+  <rect x="620" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="655" y="395" class="text sub-text">CNN Architectures</text>
+  <line x1="690" y1="310" x2="655" y2="380" class="line"/>
+  
+  <rect x="700" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="735" y="395" class="text sub-text">Transformer Models</text>
+  <line x1="690" y1="310" x2="735" y2="380" class="line"/>
+  
+  <!-- More LLM sub-branches -->
+  <rect x="810" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="845" y="395" class="text sub-text">Autoregressive Models</text>
+  <line x1="840" y1="310" x2="845" y2="380" class="line"/>
+  
+  <rect x="890" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="925" y="395" class="text sub-text">Prompt Engineering</text>
+  <line x1="840" y1="310" x2="925" y2="380" class="line"/>
+  
+  <!-- More MLOps sub-branches -->
+  <rect x="920" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="955" y="395" class="text sub-text">Model Serving</text>
+  <line x1="990" y1="310" x2="955" y2="380" class="line"/>
+  
+  <rect x="1000" y="380" width="70" height="35" class="sub-branch"/>
+  <text x="1035" y="395" class="text sub-text">Monitoring</text>
+  <line x1="990" y1="310" x2="1035" y2="380" class="line"/>
+</svg>

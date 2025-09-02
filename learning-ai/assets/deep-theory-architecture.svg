@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 4; rx: 15; ry: 15; }
+      .main-branch { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 3; rx: 10; ry: 10; }
+      .sub-branch { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; rx: 8; ry: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 18px; font-weight: bold; fill: white; }
+      .main-text { font-size: 14px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 11px; fill: white; }
+      .line { stroke: #7f8c8d; stroke-width: 3; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Root Node -->
+  <rect x="500" y="50" width="120" height="60" class="root"/>
+  <text x="560" y="85" class="text root-text">🧠 Deep Theory</text>
+  
+  <!-- Main Branches - Level 1 -->
+  <!-- Optimization -->
+  <rect x="50" y="150" width="120" height="50" class="main-branch"/>
+  <text x="110" y="175" class="text main-text">⚡ Optimization</text>
+  <line x1="560" y1="80" x2="110" y2="150" class="line"/>
+  
+  <!-- Generalization -->
+  <rect x="200" y="150" width="120" height="50" class="main-branch"/>
+  <text x="260" y="175" class="text main-text">🎯 Generalization</text>
+  <line x1="560" y1="80" x2="260" y2="150" class="line"/>
+  
+  <!-- Transformers -->
+  <rect x="350" y="150" width="120" height="50" class="main-branch"/>
+  <text x="410" y="175" class="text main-text">🔄 Transformers</text>
+  <line x1="560" y1="80" x2="410" y2="150" class="line"/>
+  
+  <!-- RAG/IR Theory -->
+  <rect x="500" y="150" width="120" height="50" class="main-branch"/>
+  <text x="560" y="175" class="text main-text">🔍 RAG/IR Theory</text>
+  <line x1="560" y1="80" x2="560" y2="150" class="line"/>
+  
+  <!-- Production Evaluation -->
+  <rect x="650" y="150" width="120" height="50" class="main-branch"/>
+  <text x="710" y="175" class="text main-text">📊 Production Evaluation</text>
+  <line x1="560" y1="80" x2="710" y2="150" class="line"/>
+  
+  <!-- Sub-branches for Optimization -->
+  <rect x="20" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="65" y="270" class="text sub-text">AdamW & Weight Decay</text>
+  <line x1="110" y1="175" x2="65" y2="250" class="line"/>
+  
+  <rect x="120" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="165" y="270" class="text sub-text">SAM - Sharpness-Aware</text>
+  <line x1="110" y1="175" x2="165" y2="250" class="line"/>
+  
+  <rect x="220" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="265" y="270" class="text sub-text">Convergence Analysis</text>
+  <line x1="110" y1="175" x2="265" y2="250" class="line"/>
+  
+  <rect x="320" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="365" y="270" class="text sub-text">Learning Rate Theory</text>
+  <line x1="110" y1="175" x2="365" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Generalization -->
+  <rect x="170" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="215" y="270" class="text sub-text">Generalization Gap</text>
+  <line x1="260" y1="175" x2="215" y2="250" class="line"/>
+  
+  <rect x="270" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="315" y="270" class="text sub-text">Flat vs Sharp Minima</text>
+  <line x1="260" y1="175" x2="315" y2="250" class="line"/>
+  
+  <rect x="370" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="415" y="270" class="text sub-text">VC Dimension</text>
+  <line x1="260" y1="175" x2="415" y2="250" class="line"/>
+  
+  <rect x="470" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="515" y="270" class="text sub-text">Rademacher Complexity</text>
+  <line x1="260" y1="175" x2="515" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Transformers -->
+  <rect x="320" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="365" y="270" class="text sub-text">Self-Attention Math</text>
+  <line x1="410" y1="175" x2="365" y2="250" class="line"/>
+  
+  <rect x="420" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="465" y="270" class="text sub-text">Positional Encoding</text>
+  <line x1="410" y1="175" x2="465" y2="250" class="line"/>
+  
+  <rect x="520" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="565" y="270" class="text sub-text">Complexity Analysis</text>
+  <line x1="410" y1="175" x2="565" y2="250" class="line"/>
+  
+  <rect x="620" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="665" y="270" class="text sub-text">Attention Variants</text>
+  <line x1="410" y1="175" x2="665" y2="250" class="line"/>
+  
+  <!-- Sub-branches for RAG/IR Theory -->
+  <rect x="470" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="515" y="270" class="text sub-text">Information Retrieval</text>
+  <line x1="560" y1="175" x2="515" y2="250" class="line"/>
+  
+  <rect x="570" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="615" y="270" class="text sub-text">RAG Pipeline</text>
+  <line x1="560" y1="175" x2="615" y2="250" class="line"/>
+  
+  <rect x="670" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="715" y="270" class="text sub-text">Evaluation Metrics</text>
+  <line x1="560" y1="175" x2="715" y2="250" class="line"/>
+  
+  <rect x="770" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="815" y="270" class="text sub-text">Optimization Strategies</text>
+  <line x1="560" y1="175" x2="815" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Production Evaluation -->
+  <rect x="620" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="665" y="270" class="text sub-text">Gold Set Design</text>
+  <line x1="710" y1="175" x2="665" y2="250" class="line"/>
+  
+  <rect x="720" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="765" y="270" class="text sub-text">Canary Evaluation</text>
+  <line x1="710" y1="175" x2="765" y2="250" class="line"/>
+  
+  <rect x="820" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="865" y="270" class="text sub-text">Risk & Safety</text>
+  <line x1="710" y1="175" x2="865" y2="250" class="line"/>
+  
+  <rect x="920" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="965" y="270" class="text sub-text">Production Metrics</text>
+  <line x1="710" y1="175" x2="965" y2="250" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="870" y="150" width="120" height="50" class="main-branch"/>
+  <text x="930" y="175" class="text main-text">🔬 Mathematical Foundations</text>
+  <line x1="560" y1="80" x2="930" y2="150" class="line"/>
+  
+  <rect x="920" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="965" y="270" class="text sub-text">Linear Algebra</text>
+  <line x1="930" y1="175" x2="965" y2="250" class="line"/>
+  
+  <rect x="1020" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1065" y="270" class="text sub-text">Calculus & Optimization</text>
+  <line x1="930" y1="175" x2="1065" y2="250" class="line"/>
+</svg>

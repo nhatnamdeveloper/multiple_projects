@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 4; rx: 20; ry: 20; }
+      .main-branch { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 3; rx: 12; ry: 12; }
+      .sub-branch { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; rx: 10; ry: 10; }
+      .leaf { fill: #96ceb4; stroke: #6b8e6b; stroke-width: 2; rx: 8; ry: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 20px; font-weight: bold; fill: white; }
+      .main-text { font-size: 16px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 13px; fill: white; }
+      .leaf-text { font-size: 10px; fill: #2c3e50; }
+      .line { stroke: #7f8c8d; stroke-width: 3; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Root Node -->
+  <rect x="750" y="50" width="120" height="80" class="root"/>
+  <text x="810" y="95" class="text root-text">DA • DS • AI/ML • DL • LLM • MLOps</text>
+  
+  <!-- Main Branches -->
+  <!-- Nền tảng -->
+  <rect x="100" y="200" width="100" height="60" class="main-branch"/>
+  <text x="150" y="235" class="text main-text">Nền tảng</text>
+  <line x1="810" y1="100" x2="150" y2="200" class="line"/>
+  
+  <!-- Data Analyst -->
+  <rect x="250" y="200" width="100" height="60" class="main-branch"/>
+  <text x="300" y="235" class="text main-text">Data Analyst</text>
+  <line x1="810" y1="100" x2="300" y2="200" class="line"/>
+  
+  <!-- Data Science ML -->
+  <rect x="400" y="200" width="100" height="60" class="main-branch"/>
+  <text x="450" y="235" class="text main-text">Data Science / ML</text>
+  <line x1="810" y1="100" x2="450" y2="200" class="line"/>
+  
+  <!-- Time Series -->
+  <rect x="550" y="200" width="100" height="60" class="main-branch"/>
+  <text x="600" y="235" class="text main-text">Time Series</text>
+  <line x1="810" y1="100" x2="600" y2="200" class="line"/>
+  
+  <!-- Deep Learning -->
+  <rect x="700" y="200" width="100" height="60" class="main-branch"/>
+  <text x="750" y="235" class="text main-text">Deep Learning</text>
+  <line x1="810" y1="100" x2="750" y2="200" class="line"/>
+  
+  <!-- NLP -->
+  <rect x="850" y="200" width="100" height="60" class="main-branch"/>
+  <text x="900" y="235" class="text main-text">NLP</text>
+  <line x1="810" y1="100" x2="900" y2="200" class="line"/>
+  
+  <!-- LLM -->
+  <rect x="1000" y="200" width="100" height="60" class="main-branch"/>
+  <text x="1050" y="235" class="text main-text">LLM & Ứng dụng</text>
+  <line x1="810" y1="100" x2="1050" y2="200" class="line"/>
+  
+  <!-- MLOps -->
+  <rect x="1150" y="200" width="100" height="60" class="main-branch"/>
+  <text x="1200" y="235" class="text main-text">MLOps</text>
+  <line x1="810" y1="100" x2="1200" y2="200" class="line"/>
+  
+  <!-- Thực hành -->
+  <rect x="1300" y="200" width="100" height="60" class="main-branch"/>
+  <text x="1350" y="235" class="text main-text">Thực hành & Chất lượng</text>
+  <line x1="810" y1="100" x2="1350" y2="200" class="line"/>
+  
+  <!-- Stack Apps -->
+  <rect x="100" y="400" width="100" height="60" class="main-branch"/>
+  <text x="150" y="435" class="text main-text">Ứng dụng theo Stack</text>
+  <line x1="810" y1="100" x2="150" y2="400" class="line"/>
+  
+  <!-- Interop -->
+  <rect x="250" y="400" width="100" height="60" class="main-branch"/>
+  <text x="300" y="435" class="text main-text">Interop</text>
+  <line x1="810" y1="100" x2="300" y2="400" class="line"/>
+  
+  <!-- Sub-branches for Nền tảng -->
+  <rect x="50" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="90" y="345" class="text sub-text">Python</text>
+  <line x1="150" y1="230" x2="90" y2="320" class="line"/>
+  
+  <rect x="140" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="180" y="345" class="text sub-text">Toán học</text>
+  <line x1="150" y1="230" x2="180" y2="320" class="line"/>
+  
+  <rect x="230" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="270" y="345" class="text sub-text">SQL</text>
+  <line x1="150" y1="230" x2="270" y2="320" class="line"/>
+  
+  <rect x="320" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="360" y="345" class="text sub-text">Trực quan hóa</text>
+  <line x1="150" y1="230" x2="360" y2="320" class="line"/>
+  
+  <rect x="410" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="450" y="345" class="text sub-text">Git & CLI</text>
+  <line x1="150" y1="230" x2="450" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Data Analyst -->
+  <rect x="200" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="240" y="345" class="text sub-text">Thu thập & làm sạch</text>
+  <line x1="300" y1="230" x2="240" y2="320" class="line"/>
+  
+  <rect x="290" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="330" y="345" class="text sub-text">EDA có hệ thống</text>
+  <line x1="300" y1="230" x2="330" y2="320" class="line"/>
+  
+  <rect x="380" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="420" y="345" class="text sub-text">Dashboard & BI</text>
+  <line x1="300" y1="230" x2="420" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Data Science -->
+  <rect x="350" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="390" y="345" class="text sub-text">Tiền xử lý & FE</text>
+  <line x1="450" y1="230" x2="390" y2="320" class="line"/>
+  
+  <rect x="440" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="480" y="345" class="text sub-text">Học có giám sát</text>
+  <line x1="450" y1="230" x2="480" y2="320" class="line"/>
+  
+  <rect x="530" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="570" y="345" class="text sub-text">Học không giám sát</text>
+  <line x1="450" y1="230" x2="570" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Deep Learning -->
+  <rect x="650" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="690" y="345" class="text sub-text">Optimization & Regularization</text>
+  <line x1="750" y1="230" x2="690" y2="320" class="line"/>
+  
+  <rect x="740" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="780" y="345" class="text sub-text">CNN/Detection/Segmentation</text>
+  <line x1="750" y1="230" x2="780" y2="320" class="line"/>
+  
+  <rect x="830" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="870" y="345" class="text sub-text">RNN/Attention/Transformer</text>
+  <line x1="750" y1="230" x2="870" y2="320" class="line"/>
+  
+  <!-- Sub-branches for LLM -->
+  <rect x="950" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="990" y="345" class="text sub-text">Prompt engineering</text>
+  <line x1="1050" y1="230" x2="990" y2="320" class="line"/>
+  
+  <rect x="1040" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="1080" y="345" class="text sub-text">RAG & Vector DB</text>
+  <line x1="1050" y1="230" x2="1080" y2="320" class="line"/>
+  
+  <rect x="1130" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="1170" y="345" class="text sub-text">Finetune & PEFT</text>
+  <line x1="1050" y1="230" x2="1170" y2="320" class="line"/>
+  
+  <!-- Sub-branches for MLOps -->
+  <rect x="1100" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="1140" y="345" class="text sub-text">Tracking & Registry</text>
+  <line x1="1200" y1="230" x2="1140" y2="320" class="line"/>
+  
+  <rect x="1190" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="1230" y="345" class="text sub-text">DVC & Pipelines</text>
+  <line x1="1200" y1="230" x2="1230" y2="320" class="line"/>
+  
+  <rect x="1280" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="1320" y="345" class="text sub-text">CI/CD</text>
+  <line x1="1200" y1="230" x2="1320" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Stack -->
+  <rect x="50" y="520" width="80" height="50" class="sub-branch"/>
+  <text x="90" y="545" class="text sub-text">Python</text>
+  <line x1="150" y1="430" x2="90" y2="520" class="line"/>
+  
+  <rect x="140" y="520" width="80" height="50" class="sub-branch"/>
+  <text x="180" y="545" class="text sub-text">Rust</text>
+  <line x1="150" y1="430" x2="180" y2="520" class="line"/>
+  
+  <rect x="230" y="520" width="80" height="50" class="sub-branch"/>
+  <text x="270" y="545" class="text sub-text">Node.js</text>
+  <line x1="150" y1="430" x2="270" y2="520" class="line"/>
+  
+  <!-- Sub-branches for Interop -->
+  <rect x="200" y="520" width="80" height="50" class="sub-branch"/>
+  <text x="240" y="545" class="text sub-text">REST</text>
+  <line x1="300" y1="430" x2="240" y2="520" class="line"/>
+  
+  <rect x="290" y="520" width="80" height="50" class="sub-branch"/>
+  <text x="330" y="545" class="text sub-text">gRPC</text>
+  <line x1="300" y1="430" x2="330" y2="520" class="line"/>
+  
+  <rect x="380" y="520" width="80" height="50" class="sub-branch"/>
+  <text x="420" y="545" class="text sub-text">FFI</text>
+  <line x1="300" y1="430" x2="420" y2="520" class="line"/>
+  
+  <!-- Leaf nodes for Python -->
+  <rect x="30" y="600" width="70" height="40" class="leaf"/>
+  <text x="65" y="620" class="text leaf-text">OOP</text>
+  <line x1="90" y1="330" x2="65" y2="600" class="line"/>
+  
+  <rect x="110" y="600" width="70" height="40" class="leaf"/>
+  <text x="145" y="620" class="text leaf-text">Packaging</text>
+  <line x1="90" y1="330" x2="145" y2="600" class="line"/>
+  
+  <rect x="190" y="600" width="70" height="40" class="leaf"/>
+  <text x="225" y="620" class="text leaf-text">Testing</text>
+  <line x1="90" y1="330" x2="225" y2="600" class="line"/>
+  
+  <!-- Leaf nodes for Math -->
+  <rect x="120" y="600" width="70" height="40" class="leaf"/>
+  <text x="155" y="620" class="text leaf-text">Đại số tuyến tính</text>
+  <line x1="180" y1="330" x2="155" y2="600" class="line"/>
+  
+  <rect x="200" y="600" width="70" height="40" class="leaf"/>
+  <text x="235" y="620" class="text leaf-text">Giải tích & Tối ưu</text>
+  <line x1="180" y1="330" x2="235" y2="600" class="line"/>
+  
+  <!-- Leaf nodes for SQL -->
+  <rect x="210" y="600" width="70" height="40" class="leaf"/>
+  <text x="245" y="620" class="text leaf-text">JOIN/CTE/Window</text>
+  <line x1="270" y1="330" x2="245" y2="600" class="line"/>
+  
+  <rect x="290" y="600" width="70" height="40" class="leaf"/>
+  <text x="325" y="620" class="text leaf-text">Thiết kế schema</text>
+  <line x1="270" y1="330" x2="325" y2="600" class="line"/>
+  
+  <!-- Leaf nodes for Python Stack -->
+  <rect x="30" y="680" width="70" height="40" class="leaf"/>
+  <text x="65" y="700" class="text leaf-text">FastAPI</text>
+  <line x1="90" y1="530" x2="65" y2="680" class="line"/>
+  
+  <rect x="110" y="680" width="70" height="40" class="leaf"/>
+  <text x="145" y="700" class="text leaf-text">Polars</text>
+  <line x1="90" y1="530" x2="145" y2="680" class="line"/>
+  
+  <!-- Leaf nodes for Rust Stack -->
+  <rect x="120" y="680" width="70" height="40" class="leaf"/>
+  <text x="155" y="700" class="text leaf-text">Axum/Actix</text>
+  <line x1="180" y1="530" x2="155" y2="680" class="line"/>
+  
+  <rect x="200" y="680" width="70" height="40" class="leaf"/>
+  <text x="235" y="700" class="text leaf-text">Polars/Arrow</text>
+  <line x1="180" y1="530" x2="235" y2="680" class="line"/>
+  
+  <!-- Leaf nodes for Node.js Stack -->
+  <rect x="210" y="680" width="70" height="40" class="leaf"/>
+  <text x="245" y="700" class="text leaf-text">Express/NestJS</text>
+  <line x1="270" y1="530" x2="245" y2="680" class="line"/>
+  
+  <rect x="290" y="680" width="70" height="40" class="leaf"/>
+  <text x="325" y="700" class="text leaf-text">TensorFlow.js</text>
+  <line x1="270" y1="530" x2="325" y2="680" class="line"/>
+  
+  <!-- Additional connections for completeness -->
+  <rect x="1400" y="200" width="100" height="60" class="main-branch"/>
+  <text x="1450" y="235" class="text main-text">Advanced Topics</text>
+  <line x1="810" y1="100" x2="1450" y2="200" class="line"/>
+  
+  <rect x="1350" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="1390" y="345" class="text sub-text">Testing dữ liệu/mô hình</text>
+  <line x1="1350" y1="230" x2="1390" y2="320" class="line"/>
+  
+  <rect x="1440" y="320" width="80" height="50" class="sub-branch"/>
+  <text x="1480" y="345" class="text sub-text">Reproducibility</text>
+  <line x1="1350" y1="230" x2="1480" y2="320" class="line"/>
+</svg>

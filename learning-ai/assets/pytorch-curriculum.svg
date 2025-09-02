@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 4; rx: 20; ry: 20; }
+      .main-branch { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 3; rx: 12; ry: 12; }
+      .sub-branch { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; rx: 8; ry: 8; }
+      .leaf { fill: #96ceb4; stroke: #6b8e6b; stroke-width: 2; rx: 6; ry: 6; }
+      .text { font-family: Arial, sans-serif; font-size: 11px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 20px; font-weight: bold; fill: white; }
+      .main-text { font-size: 16px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 13px; fill: white; }
+      .leaf-text { font-size: 10px; fill: #2c3e50; }
+      .line { stroke: #7f8c8d; stroke-width: 3; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Root Node -->
+  <rect x="750" y="50" width="120" height="80" class="root"/>
+  <text x="810" y="95" class="text root-text">PyTorch Curriculum</text>
+  
+  <!-- Main Branches - Level 1 -->
+  <!-- Cơ bản -->
+  <rect x="50" y="200" width="100" height="60" class="main-branch"/>
+  <text x="100" y="235" class="text main-text">Cơ bản</text>
+  <line x1="810" y1="90" x2="100" y2="200" class="line"/>
+  
+  <!-- Mạng nơ-ron -->
+  <rect x="200" y="200" width="100" height="60" class="main-branch"/>
+  <text x="250" y="235" class="text main-text">Mạng nơ-ron</text>
+  <line x1="810" y1="90" x2="250" y2="200" class="line"/>
+  
+  <!-- Tối ưu hóa -->
+  <rect x="350" y="200" width="100" height="60" class="main-branch"/>
+  <text x="400" y="235" class="text main-text">Tối ưu hóa</text>
+  <line x1="810" y1="90" x2="400" y2="200" class="line"/>
+  
+  <!-- Thực hành -->
+  <rect x="500" y="200" width="100" height="60" class="main-branch"/>
+  <text x="550" y="235" class="text main-text">Thực hành</text>
+  <line x1="810" y1="90" x2="550" y2="200" class="line"/>
+  
+  <!-- Nâng cao -->
+  <rect x="650" y="200" width="100" height="60" class="main-branch"/>
+  <text x="700" y="235" class="text main-text">Nâng cao</text>
+  <line x1="810" y1="90" x2="700" y2="200" class="line"/>
+  
+  <!-- Hiệu năng -->
+  <rect x="800" y="200" width="100" height="60" class="main-branch"/>
+  <text x="850" y="235" class="text main-text">Hiệu năng</text>
+  <line x1="810" y1="90" x2="850" y2="200" class="line"/>
+  
+  <!-- Triển khai -->
+  <rect x="950" y="200" width="100" height="60" class="main-branch"/>
+  <text x="1000" y="235" class="text main-text">Triển khai</text>
+  <line x1="810" y1="90" x2="1000" y2="200" class="line"/>
+  
+  <!-- Best Practices -->
+  <rect x="1100" y="200" width="100" height="60" class="main-branch"/>
+  <text x="1150" y="235" class="text main-text">Best Practices</text>
+  <line x1="810" y1="90" x2="1150" y2="200" class="line"/>
+  
+  <!-- Sub-branches for Cơ bản -->
+  <rect x="20" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="60" y="340" class="text sub-text">Tensor & Device</text>
+  <line x1="100" y1="230" x2="60" y2="320" class="line"/>
+  
+  <rect x="110" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="150" y="340" class="text sub-text">Autograd</text>
+  <line x1="100" y1="230" x2="150" y2="320" class="line"/>
+  
+  <rect x="200" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="240" y="340" class="text sub-text">Module & nn</text>
+  <line x1="100" y1="230" x2="240" y2="320" class="line"/>
+  
+  <rect x="290" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="330" y="340" class="text sub-text">DataLoader</text>
+  <line x1="100" y1="230" x2="330" y2="320" class="line"/>
+  
+  <rect x="380" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="420" y="340" class="text sub-text">Training Loop</text>
+  <line x1="100" y1="230" x2="420" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Mạng nơ-ron -->
+  <rect x="170" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="210" y="340" class="text sub-text">MLP</text>
+  <line x1="250" y1="230" x2="210" y2="320" class="line"/>
+  
+  <rect x="260" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="300" y="340" class="text sub-text">CNN</text>
+  <line x1="250" y1="230" x2="300" y2="320" class="line"/>
+  
+  <rect x="350" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="390" y="340" class="text sub-text">RNN/LSTM/GRU</text>
+  <line x1="250" y1="230" x2="390" y2="320" class="line"/>
+  
+  <rect x="440" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="480" y="340" class="text sub-text">Transformer</text>
+  <line x1="250" y1="230" x2="480" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Tối ưu hóa -->
+  <rect x="320" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="360" y="340" class="text sub-text">Optimizers</text>
+  <line x1="400" y1="230" x2="360" y2="320" class="line"/>
+  
+  <rect x="410" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="450" y="340" class="text sub-text">LR Schedulers</text>
+  <line x1="400" y1="230" x2="450" y2="320" class="line"/>
+  
+  <rect x="500" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="540" y="340" class="text sub-text">Regularization</text>
+  <line x1="400" y1="230" x2="540" y2="320" class="line"/>
+  
+  <rect x="590" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="630" y="340" class="text sub-text">Initialization</text>
+  <line x1="400" y1="230" x2="630" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Thực hành -->
+  <rect x="470" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="510" y="340" class="text sub-text">Classification</text>
+  <line x1="550" y1="230" x2="510" y2="320" class="line"/>
+  
+  <rect x="560" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="600" y="340" class="text sub-text">Regression</text>
+  <line x1="550" y1="230" x2="600" y2="320" class="line"/>
+  
+  <rect x="650" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="690" y="340" class="text sub-text">Image tasks</text>
+  <line x1="550" y1="230" x2="690" y2="320" class="line"/>
+  
+  <rect x="740" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="780" y="340" class="text sub-text">NLP tasks</text>
+  <line x1="550" y1="230" x2="780" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Nâng cao -->
+  <rect x="620" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="660" y="340" class="text sub-text">Mixed Precision</text>
+  <line x1="700" y1="230" x2="660" y2="320" class="line"/>
+  
+  <rect x="710" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="750" y="340" class="text sub-text">Distributed</text>
+  <line x1="700" y1="230" x2="750" y2="320" class="line"/>
+  
+  <rect x="800" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="840" y="340" class="text sub-text">Checkpointing</text>
+  <line x1="700" y1="230" x2="840" y2="320" class="line"/>
+  
+  <rect x="890" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="930" y="340" class="text sub-text">Logging</text>
+  <line x1="700" y1="230" x2="930" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Hiệu năng -->
+  <rect x="770" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="810" y="340" class="text sub-text">Data pipeline</text>
+  <line x1="850" y1="230" x2="810" y2="320" class="line"/>
+  
+  <rect x="860" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="900" y="340" class="text sub-text">Profiling</text>
+  <line x1="850" y1="230" x2="900" y2="320" class="line"/>
+  
+  <rect x="950" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="990" y="340" class="text sub-text">TorchScript</text>
+  <line x1="850" y1="230" x2="990" y2="320" class="line"/>
+  
+  <rect x="1040" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1080" y="340" class="text sub-text">JIT & Quantization</text>
+  <line x1="850" y1="230" x2="1080" y2="320" class="line"/>
+  
+  <rect x="1130" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1170" y="340" class="text sub-text">ONNX Export</text>
+  <line x1="850" y1="230" x2="1170" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Triển khai -->
+  <rect x="920" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="960" y="340" class="text sub-text">FastAPI</text>
+  <line x1="1000" y1="230" x2="960" y2="320" class="line"/>
+  
+  <rect x="1010" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1050" y="340" class="text sub-text">TorchServe</text>
+  <line x1="1000" y1="230" x2="1050" y2="320" class="line"/>
+  
+  <rect x="1100" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1140" y="340" class="text sub-text">Triton</text>
+  <line x1="1000" y1="230" x2="1140" y2="320" class="line"/>
+  
+  <rect x="1190" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1230" y="340" class="text sub-text">Edge/Mobile</text>
+  <line x1="1000" y1="230" x2="1230" y2="320" class="line"/>
+  
+  <!-- Sub-branches for Best Practices -->
+  <rect x="1070" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1110" y="340" class="text sub-text">Reproducibility</text>
+  <line x1="1150" y1="230" x2="1110" y2="320" class="line"/>
+  
+  <rect x="1160" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1200" y="340" class="text sub-text">Seed/Determinism</text>
+  <line x1="1150" y1="230" x2="1200" y2="320" class="line"/>
+  
+  <rect x="1250" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1290" y="340" class="text sub-text">Experiment structure</text>
+  <line x1="1150" y1="230" x2="1290" y2="320" class="line"/>
+  
+  <rect x="1340" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1380" y="340" class="text sub-text">Testing</text>
+  <line x1="1150" y1="230" x2="1380" y2="320" class="line"/>
+  
+  <!-- Leaf nodes for specific topics -->
+  <rect x="20" y="420" width="70" height="30" class="leaf"/>
+  <text x="55" y="435" class="text leaf-text">CPU/GPU</text>
+  <line x1="60" y1="320" x2="55" y2="420" class="line"/>
+  
+  <rect x="100" y="420" width="70" height="30" class="leaf"/>
+  <text x="135" y="435" class="text leaf-text">Backward pass</text>
+  <line x1="150" y1="320" x2="135" y2="420" class="line"/>
+  
+  <rect x="180" y="420" width="70" height="30" class="leaf"/>
+  <text x="215" y="435" class="text leaf-text">Sequential</text>
+  <line x1="240" y1="320" x2="215" y2="420" class="line"/>
+  
+  <rect x="260" y="420" width="70" height="30" class="leaf"/>
+  <text x="295" y="435" class="text leaf-text">Convolution</text>
+  <line x1="300" y1="320" x2="295" y2="420" class="line"/>
+  
+  <rect x="340" y="420" width="70" height="30" class="leaf"/>
+  <text x="375" y="435" class="text leaf-text">SGD/Adam</text>
+  <line x1="360" y1="320" x2="375" y2="420" class="line"/>
+  
+  <rect x="420" y="420" width="70" height="30" class="leaf"/>
+  <text x="455" y="435" class="text leaf-text">Step/Plateau</text>
+  <line x1="450" y1="320" x2="455" y2="420" class="line"/>
+  
+  <rect x="500" y="420" width="70" height="30" class="leaf"/>
+  <text x="535" y="435" class="text leaf-text">Dropout/BN</text>
+  <line x1="540" y1="320" x2="535" y2="420" class="line"/>
+  
+  <rect x="580" y="420" width="70" height="30" class="leaf"/>
+  <text x="615" y="435" class="text leaf-text">Xavier/He</text>
+  <line x1="630" y1="320" x2="615" y2="420" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1400" y="200" width="100" height="60" class="main-branch"/>
+  <text x="1450" y="235" class="text main-text">Production</text>
+  <line x1="810" y1="90" x2="1450" y2="200" class="line"/>
+  
+  <rect x="1350" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1390" y="340" class="text sub-text">Model Serving</text>
+  <line x1="1450" y1="230" x2="1390" y2="320" class="line"/>
+  
+  <rect x="1440" y="320" width="80" height="40" class="sub-branch"/>
+  <text x="1480" y="340" class="text sub-text">Monitoring</text>
+  <line x1="1450" y1="230" x2="1480" y2="320" class="line"/>
+</svg>

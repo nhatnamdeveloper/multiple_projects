@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .node { fill: #f0f8ff; stroke: #4682b4; stroke-width: 2; rx: 10; ry: 10; }
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 3; }
+      .main-branch { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 2; }
+      .sub-branch { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; }
+      .leaf { fill: #96ceb4; stroke: #6b8e6b; stroke-width: 1; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 16px; font-weight: bold; fill: white; }
+      .main-text { font-size: 14px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 12px; fill: white; }
+      .leaf-text { font-size: 10px; fill: #2c3e50; }
+      .line { stroke: #7f8c8d; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Root Node -->
+  <rect x="550" y="50" width="100" height="60" class="node root"/>
+  <text x="600" y="85" class="text root-text">🚀 AI/ML/Data Science</text>
+  
+  <!-- Main Branches -->
+  <!-- Nền tảng -->
+  <rect x="100" y="200" width="80" height="50" class="node main-branch"/>
+  <text x="140" y="225" class="text main-text">🌱 Nền tảng</text>
+  <line x1="600" y1="80" x2="140" y2="200" class="line"/>
+  
+  <!-- Data Analysis -->
+  <rect x="250" y="200" width="80" height="50" class="node main-branch"/>
+  <text x="290" y="225" class="text main-text">📊 Data Analysis</text>
+  <line x1="600" y1="80" x2="290" y2="200" class="line"/>
+  
+  <!-- Machine Learning -->
+  <rect x="400" y="200" width="80" height="50" class="node main-branch"/>
+  <text x="440" y="225" class="text main-text">🤖 Machine Learning</text>
+  <line x1="600" y1="80" x2="440" y2="200" class="line"/>
+  
+  <!-- Time Series -->
+  <rect x="550" y="200" width="80" height="50" class="node main-branch"/>
+  <text x="590" y="225" class="text main-text">📈 Time Series</text>
+  <line x1="600" y1="80" x2="590" y2="200" class="line"/>
+  
+  <!-- Deep Learning -->
+  <rect x="700" y="200" width="80" height="50" class="node main-branch"/>
+  <text x="740" y="225" class="text main-text">🧠 Deep Learning</text>
+  <line x1="600" y1="80" x2="740" y2="200" class="line"/>
+  
+  <!-- LLMs -->
+  <rect x="850" y="200" width="80" height="50" class="node main-branch"/>
+  <text x="890" y="225" class="text main-text">🤖 Large Language Models</text>
+  <line x1="600" y1="80" x2="890" y2="200" class="line"/>
+  
+  <!-- Sub-branches for Nền tảng -->
+  <rect x="50" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="85" y="320" class="text sub-text">🐍 Python</text>
+  <line x1="140" y1="230" x2="85" y2="300" class="line"/>
+  
+  <rect x="130" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="165" y="320" class="text sub-text">📊 Toán học</text>
+  <line x1="140" y1="230" x2="165" y2="300" class="line"/>
+  
+  <rect x="210" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="245" y="320" class="text sub-text">🗄️ SQL</text>
+  <line x1="140" y1="230" x2="245" y2="300" class="line"/>
+  
+  <!-- Sub-branches for Data Analysis -->
+  <rect x="200" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="235" y="320" class="text sub-text">🔍 EDA</text>
+  <line x1="290" y1="230" x2="235" y2="300" class="line"/>
+  
+  <rect x="280" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="315" y="320" class="text sub-text">📊 BI</text>
+  <line x1="290" y1="230" x2="315" y2="300" class="line"/>
+  
+  <!-- Sub-branches for Machine Learning -->
+  <rect x="350" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="385" y="320" class="text sub-text">🔧 Feature Engineering</text>
+  <line x1="440" y1="230" x2="385" y2="300" class="line"/>
+  
+  <rect x="430" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="465" y="320" class="text sub-text">🏗️ Supervised Learning</text>
+  <line x1="440" y1="230" x2="465" y2="300" class="line"/>
+  
+  <!-- Sub-branches for Deep Learning -->
+  <rect x="650" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="685" y="320" class="text sub-text">🧮 Neural Network Theory</text>
+  <line x1="740" y1="230" x2="685" y2="300" class="line"/>
+  
+  <rect x="730" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="765" y="320" class="text sub-text">🔥 PyTorch Specialization</text>
+  <line x1="740" y1="230" x2="765" y2="300" class="line"/>
+  
+  <!-- Sub-branches for LLMs -->
+  <rect x="800" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="835" y="320" class="text sub-text">📚 Language Modeling</text>
+  <line x1="890" y1="230" x2="835" y2="300" class="line"/>
+  
+  <!-- Leaf nodes for Python -->
+  <rect x="30" y="380" width="60" height="30" class="node leaf"/>
+  <text x="60" y="395" class="text leaf-text">OOP & Advanced</text>
+  <line x1="85" y1="310" x2="60" y2="380" class="line"/>
+  
+  <rect x="100" y="380" width="60" height="30" class="node leaf"/>
+  <text x="130" y="395" class="text leaf-text">Packaging & Testing</text>
+  <line x1="85" y1="310" x2="130" y2="380" class="line"/>
+  
+  <!-- Leaf nodes for Math -->
+  <rect x="110" y="380" width="60" height="30" class="node leaf"/>
+  <text x="140" y="395" class="text leaf-text">Linear Algebra</text>
+  <line x1="165" y1="310" x2="140" y2="380" class="line"/>
+  
+  <rect x="180" y="380" width="60" height="30" class="node leaf"/>
+  <text x="210" y="395" class="text leaf-text">Probability & Stats</text>
+  <line x1="165" y1="310" x2="210" y2="380" class="line"/>
+  
+  <!-- Leaf nodes for ML -->
+  <rect x="330" y="380" width="60" height="30" class="node leaf"/>
+  <text x="360" y="395" class="text leaf-text">Temporal Features</text>
+  <line x1="385" y1="310" x2="360" y2="380" class="line"/>
+  
+  <rect x="400" y="380" width="60" height="30" class="node leaf"/>
+  <text x="430" y="395" class="text leaf-text">Linear Models</text>
+  <line x1="465" y1="310" x2="430" y2="380" class="line"/>
+  
+  <!-- Leaf nodes for DL -->
+  <rect x="620" y="380" width="60" height="30" class="node leaf"/>
+  <text x="650" y="395" class="text leaf-text">Universal Approximation</text>
+  <line x1="685" y1="310" x2="650" y2="380" class="line"/>
+  
+  <rect x="690" y="380" width="60" height="30" class="node leaf"/>
+  <text x="720" y="395" class="text leaf-text">Tensors & Autograd</text>
+  <line x1="765" y1="310" x2="720" y2="380" class="line"/>
+  
+  <!-- Leaf nodes for LLMs -->
+  <rect x="770" y="380" width="60" height="30" class="node leaf"/>
+  <text x="800" y="395" class="text leaf-text">Autoregressive Models</text>
+  <line x1="835" y1="310" x2="800" y2="380" class="line"/>
+  
+  <!-- Additional connections and nodes for completeness -->
+  <rect x="1000" y="200" width="80" height="50" class="node main-branch"/>
+  <text x="1040" y="225" class="text main-text">🚀 MLOps</text>
+  <line x1="600" y1="80" x2="1040" y2="200" class="line"/>
+  
+  <rect x="950" y="300" width="70" height="40" class="node sub-branch"/>
+  <text x="985" y="320" class="text sub-text">🔧 Model Development</text>
+  <line x1="1040" y1="230" x2="985" y2="300" class="line"/>
+  
+  <rect x="920" y="380" width="60" height="30" class="node leaf"/>
+  <text x="950" y="395" class="text leaf-text">Tracking & Registry</text>
+  <line x1="985" y1="310" x2="950" y2="380" class="line"/>
+</svg>

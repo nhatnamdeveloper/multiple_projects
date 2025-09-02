@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .node { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2; rx: 8; ry: 8; }
+      .input { fill: #c8e6c9; stroke: #388e3c; stroke-width: 2; }
+      .output { fill: #ffcdd2; stroke: #d32f2f; stroke-width: 2; }
+      .process { fill: #fff3e0; stroke: #f57c00; stroke-width: 2; }
+      .database { fill: #f3e5f5; stroke: #7b1fa2; stroke-width: 2; }
+      .subgraph { fill: #f5f5f5; stroke: #9e9e9e; stroke-width: 1; stroke-dasharray: 5,5; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .title { font-size: 14px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+      .line { stroke: #7f8c8d; stroke-width: 2; fill: none; }
+      .arrow { marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7f8c8d" />
+    </marker>
+  </defs>
+  
+  <!-- Main Search Flow -->
+  <rect x="50" y="100" width="100" height="50" class="node input"/>
+  <text x="100" y="125" class="text">Input Query</text>
+  
+  <rect x="200" y="100" width="100" height="50" class="node process"/>
+  <text x="250" y="125" class="text">Text Preprocessing</text>
+  
+  <rect x="350" y="100" width="100" height="50" class="node process"/>
+  <text x="400" y="125" class="text">Sentence Embedding</text>
+  
+  <rect x="500" y="100" width="100" height="50" class="node process"/>
+  <text x="550" y="125" class="text">Vector Search</text>
+  
+  <rect x="650" y="100" width="100" height="50" class="node process"/>
+  <text x="700" y="125" class="text">Ranking & Filtering</text>
+  
+  <rect x="800" y="100" width="100" height="50" class="node output"/>
+  <text x="850" y="125" class="text">Results</text>
+  
+  <!-- Document Processing Flow -->
+  <rect x="50" y="250" width="100" height="50" class="node"/>
+  <text x="100" y="275" class="text">Document Collection</text>
+  
+  <rect x="200" y="250" width="100" height="50" class="node process"/>
+  <text x="250" y="275" class="text">Document Processing</text>
+  
+  <rect x="350" y="250" width="100" height="50" class="node process"/>
+  <text x="400" y="275" class="text">Chunking & Embedding</text>
+  
+  <rect x="500" y="250" width="100" height="50" class="node database"/>
+  <text x="550" y="275" class="text">Vector Database</text>
+  
+  <!-- Embedding Pipeline Subgraph -->
+  <rect x="50" y="350" width="200" height="120" class="subgraph"/>
+  <text x="150" y="370" class="title">Embedding Pipeline</text>
+  
+  <rect x="70" y="380" width="80" height="40" class="node"/>
+  <text x="110" y="400" class="text">Tokenization</text>
+  
+  <rect x="170" y="380" width="80" height="40" class="node"/>
+  <text x="210" y="400" class="text">Model Inference</text>
+  
+  <rect x="70" y="430" width="80" height="40" class="node"/>
+  <text x="110" y="450" class="text">Vector Generation</text>
+  
+  <!-- Search Pipeline Subgraph -->
+  <rect x="300" y="350" width="200" height="120" class="subgraph"/>
+  <text x="400" y="370" class="title">Search Pipeline</text>
+  
+  <rect x="320" y="380" width="80" height="40" class="node"/>
+  <text x="360" y="400" class="text">Query Embedding</text>
+  
+  <rect x="420" y="380" width="80" height="40" class="node"/>
+  <text x="460" y="400" class="text">Similarity Calculation</text>
+  
+  <rect x="320" y="430" width="80" height="40" class="node"/>
+  <text x="360" y="450" class="text">Top-K Retrieval</text>
+  
+  <rect x="420" y="430" width="80" height="40" class="node"/>
+  <text x="460" y="450" class="text">Re-ranking</text>
+  
+  <!-- Vector Database Subgraph -->
+  <rect x="550" y="350" width="200" height="120" class="subgraph"/>
+  <text x="650" y="370" class="title">Vector Database</text>
+  
+  <rect x="570" y="380" width="80" height="40" class="node database"/>
+  <text x="610" y="400" class="text">FAISS Index</text>
+  
+  <rect x="670" y="380" width="80" height="40" class="node database"/>
+  <text x="710" y="400" class="text">Metadata Storage</text>
+  
+  <rect x="570" y="430" width="80" height="40" class="node database"/>
+  <text x="610" y="450" class="text">Update Mechanism</text>
+  
+  <!-- Connections -->
+  <!-- Main search flow -->
+  <line x1="150" y1="125" x2="200" y2="125" class="line arrow"/>
+  <line x1="300" y1="125" x2="350" y2="125" class="line arrow"/>
+  <line x1="450" y1="125" x2="500" y2="125" class="line arrow"/>
+  <line x1="600" y1="125" x2="650" y2="125" class="line arrow"/>
+  <line x1="750" y1="125" x2="800" y2="125" class="line arrow"/>
+  
+  <!-- Document processing flow -->
+  <line x1="150" y1="275" x2="200" y2="275" class="line arrow"/>
+  <line x1="300" y1="275" x2="350" y2="275" class="line arrow"/>
+  <line x1="450" y1="275" x2="500" y2="275" class="line arrow"/>
+  <line x1="550" y1="275" x2="550" y2="150" class="line arrow"/>
+  
+  <!-- Embedding pipeline connections -->
+  <line x1="110" y1="400" x2="170" y2="400" class="line arrow"/>
+  <line x1="210" y1="420" x2="110" y2="430" class="line arrow"/>
+  <line x1="150" y1="430" x2="170" y2="430" class="line arrow"/>
+  
+  <!-- Search pipeline connections -->
+  <line x1="360" y1="400" x2="420" y2="400" class="line arrow"/>
+  <line x1="460" y1="420" x2="360" y2="430" class="line arrow"/>
+  <line x1="400" y1="430" x2="420" y2="430" class="line arrow"/>
+  
+  <!-- Vector database connections -->
+  <line x1="610" y1="400" x2="670" y2="400" class="line arrow"/>
+  <line x1="710" y1="420" x2="610" y2="430" class="line arrow"/>
+  <line x1="650" y1="430" x2="670" y2="430" class="line arrow"/>
+  
+  <!-- Additional connections for clarity -->
+  <line x1="400" y1="125" x2="400" y2="100" class="line" stroke-dasharray="5,5"/>
+  <line x1="550" y1="125" x2="550" y2="100" class="line" stroke-dasharray="5,5"/>
+</svg>

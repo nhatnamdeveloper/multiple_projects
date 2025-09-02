@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 4; rx: 15; ry: 15; }
+      .main-branch { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 3; rx: 10; ry: 10; }
+      .sub-branch { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; rx: 8; ry: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 18px; font-weight: bold; fill: white; }
+      .main-text { font-size: 14px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 11px; fill: white; }
+      .line { stroke: #7f8c8d; stroke-width: 3; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Root Node -->
+  <rect x="650" y="50" width="120" height="60" class="root"/>
+  <text x="710" y="85" class="text root-text">🎯 Nền tảng bắt buộc</text>
+  
+  <!-- Main Branches - Level 1 -->
+  <!-- Python Nâng cao -->
+  <rect x="50" y="150" width="120" height="50" class="main-branch"/>
+  <text x="110" y="175" class="text main-text">🐍 Python Nâng cao</text>
+  <line x1="710" y1="80" x2="110" y2="150" class="line"/>
+  
+  <!-- Toán học cơ bản -->
+  <rect x="200" y="150" width="120" height="50" class="main-branch"/>
+  <text x="260" y="175" class="text main-text">📊 Toán học cơ bản</text>
+  <line x1="710" y1="80" x2="260" y2="150" class="line"/>
+  
+  <!-- SQL & Database -->
+  <rect x="350" y="150" width="120" height="50" class="main-branch"/>
+  <text x="410" y="175" class="text main-text">🗄️ SQL & Database</text>
+  <line x1="710" y1="80" x2="410" y2="150" class="line"/>
+  
+  <!-- Trực quan hóa dữ liệu -->
+  <rect x="500" y="150" width="120" height="50" class="main-branch"/>
+  <text x="560" y="175" class="text main-text">🎨 Trực quan hóa dữ liệu</text>
+  <line x1="710" y1="80" x2="560" y2="150" class="line"/>
+  
+  <!-- Git & CLI Tools -->
+  <rect x="650" y="150" width="120" height="50" class="main-branch"/>
+  <text x="710" y="175" class="text main-text">🔧 Git & CLI Tools</text>
+  <line x1="710" y1="80" x2="710" y2="150" class="line"/>
+  
+  <!-- Sub-branches for Python Nâng cao -->
+  <rect x="20" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="65" y="270" class="text sub-text">Cấu trúc dữ liệu & Algorithms</text>
+  <line x1="110" y1="175" x2="65" y2="250" class="line"/>
+  
+  <rect x="120" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="165" y="270" class="text sub-text">OOP & Design Patterns</text>
+  <line x1="110" y1="175" x2="165" y2="250" class="line"/>
+  
+  <rect x="220" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="265" y="270" class="text sub-text">Packaging & Testing</text>
+  <line x1="110" y1="175" x2="265" y2="250" class="line"/>
+  
+  <rect x="320" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="365" y="270" class="text sub-text">Performance & Optimization</text>
+  <line x1="110" y1="175" x2="365" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Toán học cơ bản -->
+  <rect x="170" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="215" y="270" class="text sub-text">Đại số tuyến tính</text>
+  <line x1="260" y1="175" x2="215" y2="250" class="line"/>
+  
+  <rect x="270" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="315" y="270" class="text sub-text">Giải tích & Tối ưu hóa</text>
+  <line x1="260" y1="175" x2="315" y2="250" class="line"/>
+  
+  <rect x="370" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="415" y="270" class="text sub-text">Xác suất & Thống kê</text>
+  <line x1="260" y1="175" x2="415" y2="250" class="line"/>
+  
+  <!-- Sub-branches for SQL & Database -->
+  <rect x="320" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="365" y="270" class="text sub-text">Queries & JOINs</text>
+  <line x1="410" y1="175" x2="365" y2="250" class="line"/>
+  
+  <rect x="420" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="465" y="270" class="text sub-text">Schema Design</text>
+  <line x1="410" y1="175" x2="465" y2="250" class="line"/>
+  
+  <rect x="520" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="565" y="270" class="text sub-text">Performance Tuning</text>
+  <line x1="410" y1="175" x2="565" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Trực quan hóa dữ liệu -->
+  <rect x="470" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="515" y="270" class="text sub-text">Matplotlib/Seaborn</text>
+  <line x1="560" y1="175" x2="515" y2="250" class="line"/>
+  
+  <rect x="570" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="615" y="270" class="text sub-text">Plotly & Interactive</text>
+  <line x1="560" y1="175" x2="615" y2="250" class="line"/>
+  
+  <rect x="670" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="715" y="270" class="text sub-text">Storytelling & Dashboard</text>
+  <line x1="560" y1="175" x2="715" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Git & CLI Tools -->
+  <rect x="620" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="665" y="270" class="text sub-text">Version Control</text>
+  <line x1="710" y1="175" x2="665" y2="250" class="line"/>
+  
+  <rect x="720" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="765" y="270" class="text sub-text">Command Line</text>
+  <line x1="710" y1="175" x2="765" y2="250" class="line"/>
+  
+  <rect x="820" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="865" y="270" class="text sub-text">Automation Scripts</text>
+  <line x1="710" y1="175" x2="865" y2="250" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="800" y="150" width="120" height="50" class="main-branch"/>
+  <text x="860" y="175" class="text main-text">📚 Learning Resources</text>
+  <line x1="710" y1="80" x2="860" y2="150" class="line"/>
+  
+  <rect x="870" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="915" y="270" class="text sub-text">Documentation</text>
+  <line x1="860" y1="175" x2="915" y2="250" class="line"/>
+  
+  <rect x="970" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1015" y="270" class="text sub-text">Online Courses</text>
+  <line x1="860" y1="175" x2="1015" y2="250" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1120" y="150" width="120" height="50" class="main-branch"/>
+  <text x="1180" y="175" class="text main-text">🔬 Practice Projects</text>
+  <line x1="710" y1="80" x2="1180" y2="150" class="line"/>
+  
+  <rect x="1170" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1215" y="270" class="text sub-text">Mini Projects</text>
+  <line x1="1180" y1="175" x2="1215" y2="250" class="line"/>
+  
+  <rect x="1270" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1315" y="270" class="text sub-text">Code Challenges</text>
+  <line x1="1180" y1="175" x2="1315" y2="250" class="line"/>
+</svg>

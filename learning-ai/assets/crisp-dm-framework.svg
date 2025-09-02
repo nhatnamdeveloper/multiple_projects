@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 4; rx: 15; ry: 15; }
+      .main-step { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 3; rx: 12; ry: 12; }
+      .sub-step { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; rx: 8; ry: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 18px; font-weight: bold; fill: white; }
+      .main-text { font-size: 14px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 10px; fill: white; }
+      .line { stroke: #7f8c8d; stroke-width: 3; fill: none; }
+      .arrow { stroke: #e74c3c; stroke-width: 4; fill: none; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c" />
+    </marker>
+  </defs>
+  
+  <!-- Main CRISP-DM Flow -->
+  <!-- Business Understanding -->
+  <rect x="700" y="50" width="120" height="60" class="main-step"/>
+  <text x="760" y="85" class="text main-text">💼 Business Understanding</text>
+  
+  <!-- Data Understanding -->
+  <rect x="700" y="150" width="120" height="60" class="main-step"/>
+  <text x="760" y="185" class="text main-text">📊 Data Understanding</text>
+  <line x1="760" y1="110" x2="760" y2="150" class="arrow"/>
+  
+  <!-- Data Preparation -->
+  <rect x="700" y="250" width="120" height="60" class="main-step"/>
+  <text x="760" y="285" class="text main-text">🧹 Data Preparation</text>
+  <line x1="760" y1="210" x2="760" y2="250" class="arrow"/>
+  
+  <!-- Modeling -->
+  <rect x="700" y="350" width="120" height="60" class="main-step"/>
+  <text x="760" y="385" class="text main-text">🤖 Modeling</text>
+  <line x1="760" y1="310" x2="760" y2="350" class="arrow"/>
+  
+  <!-- Evaluation -->
+  <rect x="700" y="450" width="120" height="60" class="main-step"/>
+  <text x="760" y="485" class="text main-text">✅ Evaluation</text>
+  <line x1="760" y1="410" x2="760" y2="450" class="arrow"/>
+  
+  <!-- Deployment -->
+  <rect x="700" y="550" width="120" height="60" class="main-step"/>
+  <text x="760" y="585" class="text main-text">🚀 Deployment</text>
+  <line x1="760" y1="510" x2="760" y2="550" class="arrow"/>
+  
+  <!-- Sub-steps for Business Understanding -->
+  <rect x="50" y="20" width="100" height="40" class="sub-step"/>
+  <text x="100" y="40" class="text sub-text">Xác định mục tiêu kinh doanh</text>
+  <line x1="700" y1="80" x2="150" y2="40" class="line"/>
+  
+  <rect x="50" y="70" width="100" height="40" class="sub-step"/>
+  <text x="100" y="90" class="text sub-text">Đánh giá tình hình hiện tại</text>
+  <line x1="700" y1="80" x2="150" y2="90" class="line"/>
+  
+  <rect x="50" y="120" width="100" height="40" class="sub-step"/>
+  <text x="100" y="140" class="text sub-text">Xác định yếu tố thành công</text>
+  <line x1="700" y1="80" x2="150" y2="140" class="line"/>
+  
+  <!-- Sub-steps for Data Understanding -->
+  <rect x="50" y="170" width="100" height="40" class="sub-step"/>
+  <text x="100" y="190" class="text sub-text">Thu thập dữ liệu ban đầu</text>
+  <line x1="700" y1="180" x2="150" y2="190" class="line"/>
+  
+  <rect x="50" y="220" width="100" height="40" class="sub-step"/>
+  <text x="100" y="240" class="text sub-text">Mô tả dữ liệu</text>
+  <line x1="700" y1="180" x2="150" y2="240" class="line"/>
+  
+  <rect x="50" y="270" width="100" height="40" class="sub-step"/>
+  <text x="100" y="290" class="text sub-text">Khám phá dữ liệu</text>
+  <line x1="700" y1="180" x2="150" y2="290" class="line"/>
+  
+  <rect x="50" y="320" width="100" height="40" class="sub-step"/>
+  <text x="100" y="340" class="text sub-text">Kiểm tra chất lượng dữ liệu</text>
+  <line x1="700" y1="180" x2="150" y2="340" class="line"/>
+  
+  <!-- Sub-steps for Data Preparation -->
+  <rect x="50" y="370" width="100" height="40" class="sub-step"/>
+  <text x="100" y="390" class="text sub-text">Lựa chọn dữ liệu</text>
+  <line x1="700" y1="280" x2="150" y2="390" class="line"/>
+  
+  <rect x="50" y="420" width="100" height="40" class="sub-step"/>
+  <text x="100" y="440" class="text sub-text">Làm sạch dữ liệu</text>
+  <line x1="700" y1="280" x2="150" y2="440" class="line"/>
+  
+  <rect x="50" y="470" width="100" height="40" class="sub-step"/>
+  <text x="100" y="490" class="text sub-text">Xây dựng dữ liệu</text>
+  <line x1="700" y1="280" x2="150" y2="490" class="line"/>
+  
+  <rect x="50" y="520" width="100" height="40" class="sub-step"/>
+  <text x="100" y="540" class="text sub-text">Tích hợp dữ liệu</text>
+  <line x1="700" y1="280" x2="150" y2="540" class="line"/>
+  
+  <rect x="50" y="570" width="100" height="40" class="sub-step"/>
+  <text x="100" y="590" class="text sub-text">Định dạng dữ liệu</text>
+  <line x1="700" y1="280" x2="150" y2="590" class="line"/>
+  
+  <!-- Sub-steps for Modeling -->
+  <rect x="50" y="620" width="100" height="40" class="sub-step"/>
+  <text x="100" y="640" class="text sub-text">Lựa chọn kỹ thuật modeling</text>
+  <line x1="700" y1="380" x2="150" y2="640" class="line"/>
+  
+  <rect x="50" y="670" width="100" height="40" class="sub-step"/>
+  <text x="100" y="690" class="text sub-text">Thiết kế test</text>
+  <line x1="700" y1="380" x2="150" y2="690" class="line"/>
+  
+  <rect x="50" y="720" width="100" height="40" class="sub-step"/>
+  <text x="100" y="740" class="text sub-text">Xây dựng model</text>
+  <line x1="700" y1="380" x2="150" y2="740" class="line"/>
+  
+  <rect x="50" y="770" width="100" height="40" class="sub-step"/>
+  <text x="100" y="790" class="text sub-text">Đánh giá model</text>
+  <line x1="700" y1="380" x2="150" y2="790" class="line"/>
+  
+  <!-- Sub-steps for Evaluation -->
+  <rect x="50" y="820" width="100" height="40" class="sub-step"/>
+  <text x="100" y="840" class="text sub-text">Đánh giá kết quả</text>
+  <line x1="700" y1="480" x2="150" y2="840" class="line"/>
+  
+  <rect x="50" y="870" width="100" height="40" class="sub-step"/>
+  <text x="100" y="890" class="text sub-text">Xem xét quy trình</text>
+  <line x1="700" y1="480" x2="150" y2="890" class="line"/>
+  
+  <rect x="50" y="920" width="100" height="40" class="sub-step"/>
+  <text x="100" y="940" class="text sub-text">Xác định bước tiếp theo</text>
+  <line x1="700" y1="480" x2="150" y2="940" class="line"/>
+  
+  <!-- Sub-steps for Deployment -->
+  <rect x="50" y="970" width="100" height="40" class="sub-step"/>
+  <text x="100" y="990" class="text sub-text">Triển khai kế hoạch</text>
+  <line x1="700" y1="580" x2="150" y2="990" class="line"/>
+  
+  <rect x="50" y="1020" width="100" height="40" class="sub-step"/>
+  <text x="100" y="1040" class="text sub-text">Giám sát và bảo trì</text>
+  <line x1="700" y1="580" x2="150" y2="1040" class="line"/>
+  
+  <rect x="50" y="1070" width="100" height="40" class="sub-step"/>
+  <text x="100" y="1090" class="text sub-text">Báo cáo kết quả cuối cùng</text>
+  <line x1="700" y1="580" x2="150" y2="1090" class="line"/>
+  
+  <!-- Right side sub-steps for better layout -->
+  <rect x="1350" y="20" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="40" class="text sub-text">Stakeholder Analysis</text>
+  <line x1="820" y1="80" x2="1350" y2="40" class="line"/>
+  
+  <rect x="1350" y="70" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="90" class="text sub-text">ROI Calculation</text>
+  <line x1="820" y1="80" x2="1350" y2="90" class="line"/>
+  
+  <rect x="1350" y="120" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="140" class="text sub-text">Success Metrics</text>
+  <line x1="820" y1="80" x2="1350" y2="140" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1350" y="170" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="190" class="text sub-text">Data Sources</text>
+  <line x1="820" y1="180" x2="1350" y2="190" class="line"/>
+  
+  <rect x="1350" y="220" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="240" class="text sub-text">Data Profiling</text>
+  <line x1="820" y1="180" x2="1350" y2="240" class="line"/>
+  
+  <rect x="1350" y="270" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="290" class="text sub-text">Quality Metrics</text>
+  <line x1="820" y1="180" x2="1350" y2="290" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1350" y="370" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="390" class="text sub-text">Feature Engineering</text>
+  <line x1="820" y1="280" x2="1350" y2="390" class="line"/>
+  
+  <rect x="1350" y="420" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="440" class="text sub-text">Data Validation</text>
+  <line x1="820" y1="280" x2="1350" y2="440" class="line"/>
+  
+  <rect x="1350" y="470" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="490" class="text sub-text">Schema Design</text>
+  <line x1="820" y1="280" x2="1350" y2="490" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1350" y="620" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="640" class="text sub-text">Algorithm Selection</text>
+  <line x1="820" y1="380" x2="1350" y2="640" class="line"/>
+  
+  <rect x="1350" y="670" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="690" class="text sub-text">Cross-validation</text>
+  <line x1="820" y1="380" x2="1350" y2="690" class="line"/>
+  
+  <rect x="1350" y="720" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="740" class="text sub-text">Hyperparameter Tuning</text>
+  <line x1="820" y1="380" x2="1350" y2="740" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1350" y="820" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="840" class="text sub-text">Performance Metrics</text>
+  <line x1="820" y1="480" x2="1350" y2="840" class="line"/>
+  
+  <rect x="1350" y="870" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="890" class="text sub-text">Business Validation</text>
+  <line x1="820" y1="480" x2="1350" y2="890" class="line"/>
+  
+  <rect x="1350" y="920" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="940" class="text sub-text">Iteration Planning</text>
+  <line x1="820" y1="480" x2="1350" y2="940" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1350" y="970" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="990" class="text sub-text">Production Deployment</text>
+  <line x1="820" y1="580" x2="1350" y2="990" class="line"/>
+  
+  <rect x="1350" y="1020" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="1040" class="text sub-text">Performance Monitoring</text>
+  <line x1="820" y1="580" x2="1350" y2="1040" class="line"/>
+  
+  <rect x="1350" y="1070" width="100" height="40" class="sub-step"/>
+  <text x="1400" y="1090" class="text sub-text">Documentation</text>
+  <line x1="820" y1="580" x2="1350" y2="1090" class="line"/>
+</svg>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .root { fill: #ff6b6b; stroke: #c92a2a; stroke-width: 4; rx: 15; ry: 15; }
+      .main-branch { fill: #4ecdc4; stroke: #2d9a8f; stroke-width: 3; rx: 10; ry: 10; }
+      .sub-branch { fill: #45b7d1; stroke: #2c88a0; stroke-width: 2; rx: 8; ry: 8; }
+      .text { font-family: Arial, sans-serif; font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .root-text { font-size: 18px; font-weight: bold; fill: white; }
+      .main-text { font-size: 14px; font-weight: bold; fill: white; }
+      .sub-text { font-size: 11px; fill: white; }
+      .line { stroke: #7f8c8d; stroke-width: 3; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Root Node -->
+  <rect x="650" y="50" width="120" height="60" class="root"/>
+  <text x="710" y="85" class="text root-text">🚀 Portfolio Building</text>
+  
+  <!-- Main Branches - Level 1 -->
+  <!-- Data Analysis Projects -->
+  <rect x="50" y="150" width="120" height="50" class="main-branch"/>
+  <text x="110" y="175" class="text main-text">📊 Data Analysis Projects</text>
+  <line x1="710" y1="80" x2="110" y2="150" class="line"/>
+  
+  <!-- Machine Learning Projects -->
+  <rect x="200" y="150" width="120" height="50" class="main-branch"/>
+  <text x="260" y="175" class="text main-text">🤖 Machine Learning Projects</text>
+  <line x1="710" y1="80" x2="260" y2="150" class="line"/>
+  
+  <!-- Deep Learning Projects -->
+  <rect x="350" y="150" width="120" height="50" class="main-branch"/>
+  <text x="410" y="175" class="text main-text">🧠 Deep Learning Projects</text>
+  <line x1="710" y1="80" x2="410" y2="150" class="line"/>
+  
+  <!-- Time Series Projects -->
+  <rect x="500" y="150" width="120" height="50" class="main-branch"/>
+  <text x="560" y="175" class="text main-text">📈 Time Series Projects</text>
+  <line x1="710" y1="80" x2="560" y2="150" class="line"/>
+  
+  <!-- LLM Applications -->
+  <rect x="650" y="150" width="120" height="50" class="main-branch"/>
+  <text x="710" y="175" class="text main-text">🤖 LLM Applications</text>
+  <line x1="710" y1="80" x2="710" y2="150" class="line"/>
+  
+  <!-- MLOps Projects -->
+  <rect x="800" y="150" width="120" height="50" class="main-branch"/>
+  <text x="860" y="175" class="text main-text">🚀 MLOps Projects</text>
+  <line x1="710" y1="80" x2="860" y2="150" class="line"/>
+  
+  <!-- Sub-branches for Data Analysis Projects -->
+  <rect x="20" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="65" y="270" class="text sub-text">Exploratory Data Analysis</text>
+  <line x1="110" y1="175" x2="65" y2="250" class="line"/>
+  
+  <rect x="120" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="165" y="270" class="text sub-text">Business Intelligence Dashboard</text>
+  <line x1="110" y1="175" x2="165" y2="250" class="line"/>
+  
+  <rect x="220" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="265" y="270" class="text sub-text">A/B Testing Analysis</text>
+  <line x1="110" y1="175" x2="265" y2="250" class="line"/>
+  
+  <rect x="320" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="365" y="270" class="text sub-text">Customer Segmentation</text>
+  <line x1="110" y1="175" x2="365" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Machine Learning Projects -->
+  <rect x="170" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="215" y="270" class="text sub-text">Predictive Modeling</text>
+  <line x1="260" y1="175" x2="215" y2="250" class="line"/>
+  
+  <rect x="270" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="315" y="270" class="text sub-text">Recommendation System</text>
+  <line x1="260" y1="175" x2="315" y2="250" class="line"/>
+  
+  <rect x="370" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="415" y="270" class="text sub-text">Anomaly Detection</text>
+  <line x1="260" y1="175" x2="415" y2="250" class="line"/>
+  
+  <rect x="470" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="515" y="270" class="text sub-text">Classification Models</text>
+  <line x1="260" y1="175" x2="515" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Deep Learning Projects -->
+  <rect x="320" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="365" y="270" class="text sub-text">Computer Vision</text>
+  <line x1="410" y1="175" x2="365" y2="250" class="line"/>
+  
+  <rect x="420" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="465" y="270" class="text sub-text">Natural Language Processing</text>
+  <line x1="410" y1="175" x2="465" y2="250" class="line"/>
+  
+  <rect x="520" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="565" y="270" class="text sub-text">Audio Processing</text>
+  <line x1="410" y1="175" x2="565" y2="250" class="line"/>
+  
+  <rect x="620" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="665" y="270" class="text sub-text">Generative AI</text>
+  <line x1="410" y1="175" x2="665" y2="250" class="line"/>
+  
+  <!-- Sub-branches for Time Series Projects -->
+  <rect x="470" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="515" y="270" class="text sub-text">Sales Forecasting</text>
+  <line x1="560" y1="175" x2="515" y2="250" class="line"/>
+  
+  <rect x="570" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="615" y="270" class="text sub-text">Stock Price Prediction</text>
+  <line x1="560" y1="175" x2="615" y2="250" class="line"/>
+  
+  <rect x="670" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="715" y="270" class="text sub-text">Energy Consumption</text>
+  <line x1="560" y1="175" x2="715" y2="250" class="line"/>
+  
+  <rect x="770" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="815" y="270" class="text sub-text">Weather Prediction</text>
+  <line x1="560" y1="175" x2="815" y2="250" class="line"/>
+  
+  <!-- Sub-branches for LLM Applications -->
+  <rect x="620" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="665" y="270" class="text sub-text">Chatbot Development</text>
+  <line x1="710" y1="175" x2="665" y2="250" class="line"/>
+  
+  <rect x="720" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="765" y="270" class="text sub-text">Document Q&A System</text>
+  <line x1="710" y1="175" x2="765" y2="250" class="line"/>
+  
+  <rect x="820" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="865" y="270" class="text sub-text">Code Generation</text>
+  <line x1="710" y1="175" x2="865" y2="250" class="line"/>
+  
+  <rect x="920" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="965" y="270" class="text sub-text">Content Summarization</text>
+  <line x1="710" y1="175" x2="965" y2="250" class="line"/>
+  
+  <!-- Sub-branches for MLOps Projects -->
+  <rect x="770" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="815" y="270" class="text sub-text">Model Deployment</text>
+  <line x1="860" y1="175" x2="815" y2="250" class="line"/>
+  
+  <rect x="870" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="915" y="270" class="text sub-text">ML Pipeline Automation</text>
+  <line x1="860" y1="175" x2="915" y2="250" class="line"/>
+  
+  <rect x="970" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1015" y="270" class="text sub-text">Model Monitoring</text>
+  <line x1="860" y1="175" x2="1015" y2="250" class="line"/>
+  
+  <rect x="1070" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1115" y="270" class="text sub-text">CI/CD for ML</text>
+  <line x1="860" y1="175" x2="1115" y2="250" class="line"/>
+  
+  <!-- Additional connections for better layout -->
+  <rect x="1120" y="150" width="120" height="50" class="main-branch"/>
+  <text x="1180" y="175" class="text main-text">🔬 Research Projects</text>
+  <line x1="710" y1="80" x2="1180" y2="150" class="line"/>
+  
+  <rect x="1170" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1215" y="270" class="text sub-text">Paper Implementation</text>
+  <line x1="1180" y1="175" x2="1215" y2="250" class="line"/>
+  
+  <rect x="1270" y="250" width="90" height="40" class="sub-branch"/>
+  <text x="1315" y="270" class="text sub-text">Novel Approaches</text>
+  <line x1="1180" y1="175" x2="1315" y2="250" class="line"/>
+</svg>
