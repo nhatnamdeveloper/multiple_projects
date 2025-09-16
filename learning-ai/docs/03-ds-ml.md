@@ -2,6 +2,300 @@
 
 > **Mục tiêu**: Trở thành chuyên gia Machine Learning, có khả năng xây dựng và triển khai các mô hình AI/ML trong thực tế
 
+## 📚 **1. Bảng ký hiệu (Notation)**
+
+### **Machine Learning:**
+- **Dataset**: $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$ (tập dữ liệu training)
+- **Feature vector**: $\mathbf{x}_i = [x_{i1}, x_{i2}, \ldots, x_{id}]^T \in \mathbb{R}^d$
+- **Target**: $y_i \in \mathbb{R}$ (regression) hoặc $y_i \in \{0,1\}$ (classification)
+- **Model**: $f_\theta: \mathbb{R}^d \rightarrow \mathbb{R}$ với parameters $\theta$
+
+### **Loss Functions:**
+- **MSE**: $\mathcal{L}(\theta) = \frac{1}{n}\sum_{i=1}^n (y_i - f_\theta(\mathbf{x}_i))^2$
+- **Cross-entropy**: $\mathcal{L}(\theta) = -\frac{1}{n}\sum_{i=1}^n [y_i \log(f_\theta(\mathbf{x}_i)) + (1-y_i)\log(1-f_\theta(\mathbf{x}_i))]$
+- **Hinge loss**: $\mathcal{L}(\theta) = \frac{1}{n}\sum_{i=1}^n \max(0, 1 - y_i f_\theta(\mathbf{x}_i))$
+
+### **Optimization:**
+- **Gradient**: $\nabla_\theta \mathcal{L}(\theta) = [\frac{\partial \mathcal{L}}{\partial \theta_1}, \ldots, \frac{\partial \mathcal{L}}{\partial \theta_p}]^T$
+- **Gradient descent**: $\theta_{t+1} = \theta_t - \alpha \nabla_\theta \mathcal{L}(\theta_t)$
+- **Learning rate**: $\alpha$ (step size)
+
+### **Evaluation Metrics:**
+- **Accuracy**: $\text{Acc} = \frac{\text{Correct predictions}}{\text{Total predictions}}$
+- **Precision**: $\text{Prec} = \frac{TP}{TP + FP}$
+- **Recall**: $\text{Rec} = \frac{TP}{TP + FN}$
+- **F1-score**: $\text{F1} = 2 \cdot \frac{\text{Prec} \cdot \text{Rec}}{\text{Prec} + \text{Rec}}$
+
+### **Feature Engineering:**
+- **Feature transformation**: $\phi: \mathbb{R}^d \rightarrow \mathbb{R}^{d'}$
+- **Normalization**: $x' = \frac{x - \mu}{\sigma}$
+- **Standardization**: $x' = \frac{x - \min(x)}{\max(x) - \min(x)}$
+
+## 📖 **2. Glossary (Định nghĩa cốt lõi)**
+
+### **Machine Learning Types:**
+- **Supervised Learning**: Học có giám sát - học từ labeled data
+- **Unsupervised Learning**: Học không giám sát - học patterns từ unlabeled data
+- **Semi-supervised Learning**: Học bán giám sát - kết hợp labeled và unlabeled data
+- **Reinforcement Learning**: Học tăng cường - học từ rewards và penalties
+
+### **Model Components:**
+- **Feature**: Đặc trưng - thuộc tính của dữ liệu
+- **Label**: Nhãn - giá trị mục tiêu cần dự đoán
+- **Parameter**: Tham số - giá trị được học trong quá trình training
+- **Hyperparameter**: Siêu tham số - giá trị được set trước training
+
+### **Training Concepts:**
+- **Overfitting**: Quá khớp - model học quá chi tiết training data
+- **Underfitting**: Thiếu khớp - model không học đủ từ training data
+- **Bias**: Độ chệch - systematic error trong predictions
+- **Variance**: Phương sai - sensitivity to fluctuations in training data
+
+### **Evaluation Concepts:**
+- **Cross-validation**: Kiểm định chéo - đánh giá model performance
+- **Train/Test split**: Chia dữ liệu training/testing
+- **Validation set**: Tập validation - dùng để tune hyperparameters
+- **Generalization**: Khả năng tổng quát hóa - performance trên unseen data
+
+## 📐 **3. Thẻ thuật toán - Linear Regression**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Dự đoán giá trị liên tục từ features
+- **Dữ liệu**: $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$ với $y_i \in \mathbb{R}$
+- **Ứng dụng**: Price prediction, demand forecasting, trend analysis
+
+### **2. Mô hình & công thức:**
+**Linear Model:**
+$$f_\theta(\mathbf{x}) = \mathbf{x}^T \theta + b = \sum_{j=1}^d x_j \theta_j + b$$
+
+**Loss Function (MSE):**
+$$\mathcal{L}(\theta) = \frac{1}{n}\sum_{i=1}^n (y_i - f_\theta(\mathbf{x}_i))^2$$
+
+**Closed-form Solution:**
+$$\theta^* = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}$$
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: Minimize mean squared error
+- **Loss**: $\mathcal{L}(\theta) = \frac{1}{n}\sum_{i=1}^n (y_i - f_\theta(\mathbf{x}_i))^2$
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: Gradient descent hoặc closed-form solution
+- **Cập nhật**: $\theta_{t+1} = \theta_t - \alpha \nabla_\theta \mathcal{L}(\theta_t)$
+
+### **5. Hyperparams:**
+- **Learning rate**: $\alpha$ (thường 0.01, 0.1)
+- **Regularization**: $\lambda$ (L1/L2 regularization)
+- **Max iterations**: Số epoch tối đa
+
+### **6. Độ phức tạp:**
+- **Time**: $O(nd^2)$ cho closed-form, $O(nd)$ cho gradient descent
+- **Space**: $O(d)$ cho storing parameters
+
+### **7. Metrics đánh giá:**
+- **R²**: Coefficient of determination
+- **RMSE**: Root Mean Square Error
+- **MAE**: Mean Absolute Error
+- **MAPE**: Mean Absolute Percentage Error
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Interpretable và simple
+- Fast training và inference
+- Closed-form solution available
+- Good baseline model
+
+**Nhược điểm:**
+- Assumes linear relationship
+- Sensitive to outliers
+- Limited expressiveness
+- May underfit complex data
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Multicollinearity → unstable estimates
+- **Bẫy**: Outliers → biased estimates
+- **Mẹo**: Scale features trước training
+- **Mẹo**: Add regularization để prevent overfitting
+
+### **10. Pseudocode:**
+```python
+def linear_regression(X, y, learning_rate=0.01, max_iter=1000):
+    # Initialize parameters
+    theta = np.zeros(X.shape[1])
+    
+    for iteration in range(max_iter):
+        # Forward pass
+        predictions = X @ theta
+        
+        # Compute gradients
+        gradients = (2/n) * X.T @ (predictions - y)
+        
+        # Update parameters
+        theta = theta - learning_rate * gradients
+        
+        # Check convergence
+        if np.linalg.norm(gradients) < 1e-6:
+            break
+    
+    return theta
+```
+
+### **11. Code mẫu:**
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+class LinearRegressionExample:
+    """Linear Regression Implementation"""
+    
+    def __init__(self):
+        self.model = LinearRegression()
+        self.coefficients = None
+        self.intercept = None
+    
+    def generate_sample_data(self, n_samples=100, noise=0.1):
+        """Generate synthetic data for demonstration"""
+        np.random.seed(42)
+        
+        # Generate features
+        X = np.random.randn(n_samples, 2)
+        
+        # Generate target with linear relationship + noise
+        true_coefficients = np.array([2.5, -1.8])
+        true_intercept = 3.2
+        y = X @ true_coefficients + true_intercept + noise * np.random.randn(n_samples)
+        
+        return X, y
+    
+    def fit_model(self, X, y):
+        """Fit linear regression model"""
+        self.model.fit(X, y)
+        self.coefficients = self.model.coef_
+        self.intercept = self.model.intercept_
+        
+        print(f"Fitted coefficients: {self.coefficients}")
+        print(f"Fitted intercept: {self.intercept}")
+    
+    def evaluate_model(self, X, y):
+        """Evaluate model performance"""
+        predictions = self.model.predict(X)
+        
+        # Calculate metrics
+        mse = mean_squared_error(y, predictions)
+        rmse = np.sqrt(mse)
+        r2 = r2_score(y, predictions)
+        
+        print(f"Mean Squared Error: {mse:.4f}")
+        print(f"Root Mean Squared Error: {rmse:.4f}")
+        print(f"R² Score: {r2:.4f}")
+        
+        return {
+            'mse': mse,
+            'rmse': rmse,
+            'r2': r2,
+            'predictions': predictions
+        }
+    
+    def plot_results(self, X, y, predictions):
+        """Plot actual vs predicted values"""
+        plt.figure(figsize=(12, 4))
+        
+        # Plot 1: Actual vs Predicted
+        plt.subplot(1, 2, 1)
+        plt.scatter(y, predictions, alpha=0.6)
+        plt.plot([y.min(), y.max()], [y.min(), y.max()], 'r--', lw=2)
+        plt.xlabel('Actual Values')
+        plt.ylabel('Predicted Values')
+        plt.title('Actual vs Predicted')
+        
+        # Plot 2: Residuals
+        plt.subplot(1, 2, 2)
+        residuals = y - predictions
+        plt.scatter(predictions, residuals, alpha=0.6)
+        plt.axhline(y=0, color='r', linestyle='--')
+        plt.xlabel('Predicted Values')
+        plt.ylabel('Residuals')
+        plt.title('Residual Plot')
+        
+        plt.tight_layout()
+        plt.show()
+    
+    def demonstrate_feature_importance(self, feature_names=None):
+        """Demonstrate feature importance"""
+        if feature_names is None:
+            feature_names = [f'Feature_{i}' for i in range(len(self.coefficients))]
+        
+        importance_df = pd.DataFrame({
+            'Feature': feature_names,
+            'Coefficient': self.coefficients,
+            'Absolute_Coefficient': np.abs(self.coefficients)
+        }).sort_values('Absolute_Coefficient', ascending=False)
+        
+        print("Feature Importance:")
+        print(importance_df)
+        
+        # Plot feature importance
+        plt.figure(figsize=(8, 6))
+        plt.barh(importance_df['Feature'], importance_df['Coefficient'])
+        plt.xlabel('Coefficient Value')
+        plt.title('Feature Importance (Linear Regression)')
+        plt.tight_layout()
+        plt.show()
+    
+    def run_complete_example(self):
+        """Run complete linear regression example"""
+        print("=== Linear Regression Example ===\n")
+        
+        # Generate data
+        X, y = self.generate_sample_data()
+        print(f"Generated {X.shape[0]} samples with {X.shape[1]} features")
+        
+        # Split data
+        from sklearn.model_selection import train_test_split
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=42
+        )
+        
+        # Fit model
+        print("\n--- Fitting Model ---")
+        self.fit_model(X_train, y_train)
+        
+        # Evaluate on training set
+        print("\n--- Training Set Evaluation ---")
+        train_metrics = self.evaluate_model(X_train, y_train)
+        
+        # Evaluate on test set
+        print("\n--- Test Set Evaluation ---")
+        test_metrics = self.evaluate_model(X_test, y_test)
+        
+        # Plot results
+        print("\n--- Visualization ---")
+        self.plot_results(X_test, y_test, test_metrics['predictions'])
+        
+        # Feature importance
+        print("\n--- Feature Importance ---")
+        self.demonstrate_feature_importance()
+        
+        return {
+            'train_metrics': train_metrics,
+            'test_metrics': test_metrics
+        }
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Data có được scale properly?
+- [ ] Features có linear relationship với target?
+- [ ] Outliers có được handle?
+- [ ] Multicollinearity có được check?
+- [ ] Model performance có acceptable?
+
+---
+
+# 🤖 Data Science / Machine Learning - Khoa học dữ liệu và học máy
+
+> **Mục tiêu**: Trở thành chuyên gia Machine Learning, có khả năng xây dựng và triển khai các mô hình AI/ML trong thực tế
+
 ## 📋 Tổng quan nội dung
 
 ```mermaid

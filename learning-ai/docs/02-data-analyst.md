@@ -2,7 +2,312 @@
 
 > **Mục tiêu**: Trở thành chuyên gia phân tích dữ liệu, có khả năng khám phá insights, tạo báo cáo và hỗ trợ ra quyết định dựa trên dữ liệu
 
-## 📋 Tổng quan nội dung
+## 📚 **1. Bảng ký hiệu (Notation)**
+
+### **Data Analysis:**
+- **Dataset**: $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$ (tập dữ liệu)
+- **Feature**: $\mathbf{x}_i = [x_{i1}, x_{i2}, \ldots, x_{id}]^T$ (vector đặc trưng)
+- **Target**: $y_i$ (biến mục tiêu)
+- **Sample**: $(\mathbf{x}_i, y_i)$ (mẫu dữ liệu)
+
+### **Statistics:**
+- **Mean**: $\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i$
+- **Median**: $\text{median}(X)$ (giá trị trung vị)
+- **Standard Deviation**: $s = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2}$
+- **Correlation**: $\rho = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}$
+
+### **Hypothesis Testing:**
+- **Null Hypothesis**: $H_0$ (giả thuyết không)
+- **Alternative Hypothesis**: $H_1$ (giả thuyết đối)
+- **P-value**: $P(\text{data}|H_0)$ (xác suất quan sát được dữ liệu nếu $H_0$ đúng)
+- **Significance Level**: $\alpha$ (mức ý nghĩa, thường 0.05)
+
+### **A/B Testing:**
+- **Control Group**: $C$ (nhóm đối chứng)
+- **Treatment Group**: $T$ (nhóm thử nghiệm)
+- **Effect Size**: $\delta = \mu_T - \mu_C$ (hiệu ứng điều trị)
+- **Confidence Interval**: $[\text{CI}_{\text{lower}}, \text{CI}_{\text{upper}}]$
+
+## 📖 **2. Glossary (Định nghĩa cốt lõi)**
+
+### **Data Analysis Process:**
+- **CRISP-DM**: Cross-Industry Standard Process for Data Mining - quy trình chuẩn phân tích dữ liệu
+- **EDA**: Exploratory Data Analysis - phân tích khám phá dữ liệu
+- **Data Cleaning**: Làm sạch dữ liệu - loại bỏ lỗi và inconsistencies
+- **Data Quality**: Chất lượng dữ liệu - độ chính xác, completeness, consistency
+
+### **Statistical Concepts:**
+- **Descriptive Statistics**: Thống kê mô tả - tóm tắt đặc điểm của dữ liệu
+- **Inferential Statistics**: Thống kê suy luận - đưa ra kết luận về population từ sample
+- **Hypothesis Testing**: Kiểm định giả thuyết - đánh giá tính hợp lý của giả thuyết
+- **Confidence Interval**: Khoảng tin cậy - khoảng ước lượng cho parameter
+
+### **Visualization:**
+- **Chart**: Biểu đồ - cách biểu diễn dữ liệu trực quan
+- **Dashboard**: Bảng điều khiển - tập hợp các biểu đồ và metrics
+- **Storytelling**: Kể chuyện bằng dữ liệu - cách trình bày insights
+- **BI Tools**: Business Intelligence Tools - công cụ phân tích kinh doanh
+
+### **A/B Testing:**
+- **Randomization**: Ngẫu nhiên hóa - phân bổ ngẫu nhiên vào các nhóm
+- **Control Group**: Nhóm đối chứng - nhóm không nhận điều trị
+- **Treatment Group**: Nhóm thử nghiệm - nhóm nhận điều trị
+- **Statistical Power**: Năng lực thống kê - khả năng phát hiện effect thực sự
+
+## 📐 **3. Thẻ thuật toán - CRISP-DM Framework**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Quy trình chuẩn để thực hiện dự án phân tích dữ liệu
+- **Dữ liệu**: Business objectives, raw data, domain knowledge
+- **Ứng dụng**: Data mining, business intelligence, analytics projects
+
+### **2. Mô hình & công thức:**
+**CRISP-DM Phases:**
+$$\text{CRISP-DM} = \{\text{BU}, \text{DU}, \text{DP}, \text{M}, \text{E}, \text{D}\}$$
+
+Trong đó:
+- $\text{BU}$: Business Understanding
+- $\text{DU}$: Data Understanding  
+- $\text{DP}$: Data Preparation
+- $\text{M}$: Modeling
+- $\text{E}$: Evaluation
+- $\text{D}$: Deployment
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: Tạo quy trình có cấu trúc để giải quyết business problems
+- **Loss**: Không có loss riêng, là process framework
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: Iterative process với feedback loops
+- **Cập nhật**: Refine process dựa trên results
+
+### **5. Hyperparams:**
+- **Project scope**: Phạm vi dự án
+- **Timeline**: Thời gian thực hiện
+- **Resources**: Nguồn lực cần thiết
+- **Success criteria**: Tiêu chí thành công
+
+### **6. Độ phức tạp:**
+- **Time**: $O(\text{project\_duration})$ (thời gian dự án)
+- **Space**: $O(\text{data\_size})$ (dung lượng dữ liệu)
+
+### **7. Metrics đánh giá:**
+- **Project success**: Đạt được business objectives
+- **Process efficiency**: Thời gian và resources sử dụng
+- **Quality of insights**: Chất lượng insights thu được
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Structured approach
+- Industry standard
+- Comprehensive coverage
+- Iterative improvement
+
+**Nhược điểm:**
+- Can be rigid
+- Time-consuming
+- May not fit all projects
+- Requires expertise
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Skip phases → incomplete analysis
+- **Bẫy**: No iteration → missed opportunities
+- **Mẹo**: Adapt to project needs
+- **Mẹo**: Document decisions và rationale
+
+### **10. Pseudocode:**
+```python
+def crisp_dm_process(business_objectives, data):
+    # Phase 1: Business Understanding
+    business_goals = understand_business(business_objectives)
+    success_criteria = define_success_criteria(business_goals)
+    
+    # Phase 2: Data Understanding
+    data_overview = explore_data(data)
+    data_quality = assess_data_quality(data)
+    
+    # Phase 3: Data Preparation
+    cleaned_data = clean_data(data)
+    prepared_data = prepare_features(cleaned_data)
+    
+    # Phase 4: Modeling
+    models = build_models(prepared_data)
+    best_model = select_best_model(models)
+    
+    # Phase 5: Evaluation
+    results = evaluate_model(best_model, success_criteria)
+    
+    # Phase 6: Deployment
+    deploy_solution(best_model, results)
+    
+    return results
+```
+
+### **11. Code mẫu:**
+```python
+class CRISPDMProcess:
+    """CRISP-DM Framework Implementation"""
+    
+    def __init__(self):
+        self.phases = ['Business Understanding', 'Data Understanding', 
+                      'Data Preparation', 'Modeling', 'Evaluation', 'Deployment']
+        self.current_phase = 0
+        self.results = {}
+    
+    def business_understanding(self, business_objectives):
+        """Phase 1: Business Understanding"""
+        print("=== Phase 1: Business Understanding ===")
+        
+        # Define business objectives
+        objectives = {
+            'primary_goal': business_objectives.get('goal'),
+            'success_metrics': business_objectives.get('metrics'),
+            'constraints': business_objectives.get('constraints'),
+            'timeline': business_objectives.get('timeline')
+        }
+        
+        # Stakeholder analysis
+        stakeholders = self.identify_stakeholders(business_objectives)
+        
+        # ROI calculation
+        roi = self.calculate_roi(business_objectives)
+        
+        self.results['business_understanding'] = {
+            'objectives': objectives,
+            'stakeholders': stakeholders,
+            'roi': roi
+        }
+        
+        return objectives
+    
+    def data_understanding(self, data_sources):
+        """Phase 2: Data Understanding"""
+        print("=== Phase 2: Data Understanding ===")
+        
+        # Data collection
+        raw_data = self.collect_data(data_sources)
+        
+        # Data description
+        data_description = self.describe_data(raw_data)
+        
+        # Data exploration
+        exploration_results = self.explore_data(raw_data)
+        
+        # Data quality assessment
+        quality_report = self.assess_data_quality(raw_data)
+        
+        self.results['data_understanding'] = {
+            'data_description': data_description,
+            'exploration': exploration_results,
+            'quality_report': quality_report
+        }
+        
+        return raw_data
+    
+    def data_preparation(self, raw_data):
+        """Phase 3: Data Preparation"""
+        print("=== Phase 3: Data Preparation ===")
+        
+        # Data selection
+        selected_data = self.select_data(raw_data)
+        
+        # Data cleaning
+        cleaned_data = self.clean_data(selected_data)
+        
+        # Feature engineering
+        engineered_data = self.engineer_features(cleaned_data)
+        
+        # Data integration
+        integrated_data = self.integrate_data(engineered_data)
+        
+        # Data formatting
+        formatted_data = self.format_data(integrated_data)
+        
+        self.results['data_preparation'] = {
+            'cleaned_data': cleaned_data,
+            'engineered_features': engineered_data,
+            'final_dataset': formatted_data
+        }
+        
+        return formatted_data
+    
+    def modeling(self, prepared_data):
+        """Phase 4: Modeling"""
+        print("=== Phase 4: Modeling ===")
+        
+        # Technique selection
+        techniques = self.select_modeling_techniques(prepared_data)
+        
+        # Test design
+        test_plan = self.design_tests(prepared_data)
+        
+        # Model building
+        models = self.build_models(prepared_data, techniques)
+        
+        # Model assessment
+        model_assessment = self.assess_models(models, test_plan)
+        
+        self.results['modeling'] = {
+            'techniques_used': techniques,
+            'models_built': models,
+            'assessment': model_assessment
+        }
+        
+        return models
+    
+    def evaluation(self, models, business_criteria):
+        """Phase 5: Evaluation"""
+        print("=== Phase 5: Evaluation ===")
+        
+        # Evaluate results
+        evaluation_results = self.evaluate_results(models, business_criteria)
+        
+        # Review process
+        process_review = self.review_process()
+        
+        # Determine next steps
+        next_steps = self.determine_next_steps(evaluation_results)
+        
+        self.results['evaluation'] = {
+            'results': evaluation_results,
+            'process_review': process_review,
+            'next_steps': next_steps
+        }
+        
+        return evaluation_results
+    
+    def deployment(self, best_model, evaluation_results):
+        """Phase 6: Deployment"""
+        print("=== Phase 6: Deployment ===")
+        
+        # Deployment planning
+        deployment_plan = self.plan_deployment(best_model)
+        
+        # Monitoring setup
+        monitoring_setup = self.setup_monitoring(best_model)
+        
+        # Final report
+        final_report = self.create_final_report(evaluation_results)
+        
+        self.results['deployment'] = {
+            'plan': deployment_plan,
+            'monitoring': monitoring_setup,
+            'report': final_report
+        }
+        
+        return final_report
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Business objectives có rõ ràng?
+- [ ] Data quality có acceptable?
+- [ ] Modeling approach có phù hợp?
+- [ ] Results có meet success criteria?
+- [ ] Deployment plan có feasible?
+
+---
+
+# 📋 Tổng quan nội dung
 
 ```mermaid
 graph TD

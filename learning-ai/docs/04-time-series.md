@@ -2,6 +2,427 @@
 
 > **Mục tiêu**: Trở thành chuyên gia Time Series Analysis, có khả năng xây dựng mô hình dự báo chính xác cho dữ liệu chuỗi thời gian
 
+## 📚 **1. Bảng ký hiệu (Notation)**
+
+### **Time Series:**
+- **Time series**: $Y_t = \{y_1, y_2, \ldots, y_T\}$ (chuỗi giá trị theo thời gian)
+- **Time index**: $t \in \{1, 2, \ldots, T\}$ (chỉ số thời gian)
+- **Lag**: $Y_{t-k}$ (giá trị tại thời điểm $t-k$)
+- **Forecast horizon**: $h$ (độ dài dự báo)
+
+### **Decomposition:**
+- **Additive model**: $Y_t = T_t + S_t + C_t + \epsilon_t$
+- **Multiplicative model**: $Y_t = T_t \times S_t \times C_t \times \epsilon_t$
+- **Trend**: $T_t$ (xu hướng dài hạn)
+- **Seasonal**: $S_t$ (tính mùa vụ)
+- **Cyclical**: $C_t$ (chu kỳ)
+- **Noise**: $\epsilon_t$ (nhiễu ngẫu nhiên)
+
+### **Autocorrelation:**
+- **ACF**: $\rho_k = \frac{\text{Cov}(Y_t, Y_{t-k})}{\sqrt{\text{Var}(Y_t) \text{Var}(Y_{t-k})}}}$
+- **PACF**: $\phi_{kk}$ (partial autocorrelation)
+- **Lag**: $k$ (độ trễ)
+
+### **Stationarity:**
+- **Weak stationarity**: $\mathbb{E}[Y_t] = \mu$, $\text{Var}(Y_t) = \sigma^2$, $\text{Cov}(Y_t, Y_{t-k}) = \gamma_k$
+- **Unit root**: $Y_t = Y_{t-1} + \epsilon_t$ (random walk)
+- **Difference operator**: $\Delta Y_t = Y_t - Y_{t-1}$
+
+### **ARIMA Models:**
+- **AR(p)**: $Y_t = c + \sum_{i=1}^p \phi_i Y_{t-i} + \epsilon_t$
+- **MA(q)**: $Y_t = \mu + \sum_{i=1}^q \theta_i \epsilon_{t-i} + \epsilon_t$
+- **ARIMA(p,d,q)**: $\Delta^d Y_t = c + \sum_{i=1}^p \phi_i \Delta^d Y_{t-i} + \sum_{i=1}^q \theta_i \epsilon_{t-i} + \epsilon_t$
+
+## 📖 **2. Glossary (Định nghĩa cốt lõi)**
+
+### **Time Series Concepts:**
+- **Time Series**: Chuỗi thời gian - dữ liệu được thu thập theo thời gian
+- **Forecasting**: Dự báo - dự đoán giá trị tương lai
+- **Trend**: Xu hướng - pattern dài hạn trong dữ liệu
+- **Seasonality**: Tính mùa vụ - pattern lặp lại theo chu kỳ
+
+### **Statistical Properties:**
+- **Stationarity**: Tính dừng - statistical properties không thay đổi theo thời gian
+- **Autocorrelation**: Tự tương quan - correlation giữa observations tại các thời điểm khác nhau
+- **White Noise**: Nhiễu trắng - random process với mean 0 và constant variance
+- **Unit Root**: Căn đơn vị - characteristic root bằng 1
+
+### **Model Types:**
+- **ARIMA**: AutoRegressive Integrated Moving Average - mô hình thống kê cổ điển
+- **SARIMA**: Seasonal ARIMA - ARIMA với seasonal components
+- **Exponential Smoothing**: Làm mượt mũ - phương pháp dự báo đơn giản
+- **VAR**: Vector Autoregression - mô hình cho multiple time series
+
+### **Evaluation Metrics:**
+- **MAE**: Mean Absolute Error - lỗi tuyệt đối trung bình
+- **RMSE**: Root Mean Square Error - căn bậc hai của lỗi bình phương trung bình
+- **MAPE**: Mean Absolute Percentage Error - lỗi phần trăm tuyệt đối trung bình
+- **MASE**: Mean Absolute Scaled Error - lỗi tuyệt đối chuẩn hóa trung bình
+
+## 📐 **3. Thẻ thuật toán - ARIMA Model**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Dự báo giá trị tương lai của time series
+- **Dữ liệu**: $Y_t = \{y_1, y_2, \ldots, y_T\}$ (univariate time series)
+- **Ứng dụng**: Sales forecasting, stock price prediction, demand planning
+
+### **2. Mô hình & công thức:**
+**ARIMA(p,d,q) Model:**
+$$\Delta^d Y_t = c + \sum_{i=1}^p \phi_i \Delta^d Y_{t-i} + \sum_{i=1}^q \theta_i \epsilon_{t-i} + \epsilon_t$$
+
+**AR(p) Component:**
+$$Y_t = c + \sum_{i=1}^p \phi_i Y_{t-i} + \epsilon_t$$
+
+**MA(q) Component:**
+$$Y_t = \mu + \sum_{i=1}^q \theta_i \epsilon_{t-i} + \epsilon_t$$
+
+Trong đó:
+- $p$: Order của AR component
+- $d$: Degree of differencing
+- $q$: Order của MA component
+- $\phi_i$: AR parameters
+- $\theta_i$: MA parameters
+- $\epsilon_t$: White noise
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: Minimize forecast error
+- **Loss**: $\mathcal{L} = \frac{1}{T} \sum_{t=1}^T (Y_t - \hat{Y}_t)^2$
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: Maximum likelihood estimation
+- **Cập nhật**: $\hat{\phi}, \hat{\theta} = \arg\max_{\phi,\theta} \mathcal{L}(\phi,\theta)$
+
+### **5. Hyperparams:**
+- **p**: AR order (thường 0-5)
+- **d**: Differencing order (thường 0-2)
+- **q**: MA order (thường 0-5)
+
+### **6. Độ phức tạp:**
+- **Time**: $O(T \times \max(p,q)^2)$ cho fitting
+- **Space**: $O(T)$ cho storing time series
+
+### **7. Metrics đánh giá:**
+- **AIC**: Akaike Information Criterion
+- **BIC**: Bayesian Information Criterion
+- **RMSE**: Root Mean Square Error
+- **MAE**: Mean Absolute Error
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Interpretable parameters
+- Handles trend và seasonality
+- Well-established theory
+- Good for short-term forecasts
+
+**Nhược điểm:**
+- Assumes linear relationships
+- Limited to univariate data
+- Requires stationarity
+- May not capture complex patterns
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Over-differencing → loss of information
+- **Bẫy**: Wrong order selection → poor performance
+- **Mẹo**: Use AIC/BIC để select orders
+- **Mẹo**: Check residuals for white noise
+
+### **10. Pseudocode:**
+```python
+def fit_arima(time_series, p, d, q):
+    # Check stationarity
+    if not is_stationary(time_series):
+        time_series = difference(time_series, d)
+    
+    # Fit ARIMA model
+    model = ARIMA(time_series, order=(p, d, q))
+    fitted_model = model.fit()
+    
+    # Check residuals
+    residuals = fitted_model.resid
+    if not is_white_noise(residuals):
+        # Try different orders
+        return fit_arima_auto(time_series)
+    
+    return fitted_model
+
+def forecast_arima(model, steps):
+    # Generate forecasts
+    forecast = model.forecast(steps=steps)
+    return forecast
+```
+
+### **11. Code mẫu:**
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+
+class ARIMAModel:
+    """ARIMA Model Implementation"""
+    
+    def __init__(self):
+        self.model = None
+        self.fitted_model = None
+        self.forecast = None
+    
+    def generate_sample_data(self, n_samples=200, trend=0.1, seasonality=0.5, noise=0.1):
+        """Generate synthetic time series data"""
+        np.random.seed(42)
+        
+        # Time index
+        t = np.arange(n_samples)
+        
+        # Components
+        trend_component = trend * t
+        seasonal_component = seasonality * np.sin(2 * np.pi * t / 12)  # 12-period seasonality
+        noise_component = noise * np.random.randn(n_samples)
+        
+        # Combine components
+        y = trend_component + seasonal_component + noise_component
+        
+        # Create time series
+        dates = pd.date_range('2020-01-01', periods=n_samples, freq='D')
+        ts = pd.Series(y, index=dates)
+        
+        return ts
+    
+    def check_stationarity(self, time_series):
+        """Check if time series is stationary"""
+        # Augmented Dickey-Fuller test
+        adf_result = adfuller(time_series)
+        
+        print("Augmented Dickey-Fuller Test:")
+        print(f"ADF Statistic: {adf_result[0]:.4f}")
+        print(f"p-value: {adf_result[1]:.4f}")
+        print(f"Critical values: {adf_result[4]}")
+        
+        is_stationary = adf_result[1] < 0.05
+        print(f"Series is {'stationary' if is_stationary else 'non-stationary'}")
+        
+        return is_stationary
+    
+    def plot_time_series(self, time_series, title="Time Series"):
+        """Plot time series with components"""
+        plt.figure(figsize=(15, 10))
+        
+        # Original time series
+        plt.subplot(3, 1, 1)
+        plt.plot(time_series.index, time_series.values)
+        plt.title(f"{title} - Original Data")
+        plt.xlabel("Time")
+        plt.ylabel("Value")
+        
+        # ACF plot
+        plt.subplot(3, 1, 2)
+        plot_acf(time_series, lags=40, ax=plt.gca())
+        plt.title("Autocorrelation Function (ACF)")
+        
+        # PACF plot
+        plt.subplot(3, 1, 3)
+        plot_pacf(time_series, lags=40, ax=plt.gca())
+        plt.title("Partial Autocorrelation Function (PACF)")
+        
+        plt.tight_layout()
+        plt.show()
+    
+    def fit_arima(self, time_series, order=(1, 1, 1)):
+        """Fit ARIMA model"""
+        print(f"Fitting ARIMA{order} model...")
+        
+        # Fit model
+        self.model = ARIMA(time_series, order=order)
+        self.fitted_model = self.model.fit()
+        
+        # Print summary
+        print(self.fitted_model.summary())
+        
+        return self.fitted_model
+    
+    def diagnose_model(self, fitted_model):
+        """Diagnose ARIMA model residuals"""
+        residuals = fitted_model.resid
+        
+        plt.figure(figsize=(15, 10))
+        
+        # Residuals plot
+        plt.subplot(3, 2, 1)
+        plt.plot(residuals.index, residuals.values)
+        plt.title("Residuals")
+        plt.xlabel("Time")
+        plt.ylabel("Residual")
+        
+        # Residuals histogram
+        plt.subplot(3, 2, 2)
+        plt.hist(residuals, bins=30, alpha=0.7)
+        plt.title("Residuals Distribution")
+        plt.xlabel("Residual")
+        plt.ylabel("Frequency")
+        
+        # Q-Q plot
+        plt.subplot(3, 2, 3)
+        from scipy import stats
+        stats.probplot(residuals, dist="norm", plot=plt)
+        plt.title("Q-Q Plot")
+        
+        # ACF of residuals
+        plt.subplot(3, 2, 4)
+        plot_acf(residuals, lags=20, ax=plt.gca())
+        plt.title("ACF of Residuals")
+        
+        # PACF of residuals
+        plt.subplot(3, 2, 5)
+        plot_pacf(residuals, lags=20, ax=plt.gca())
+        plt.title("PACF of Residuals")
+        
+        # Ljung-Box test
+        plt.subplot(3, 2, 6)
+        from statsmodels.stats.diagnostic import acorr_ljungbox
+        lb_test = acorr_ljungbox(residuals, lags=10, return_df=True)
+        plt.plot(lb_test.index, lb_test['lb_pvalue'])
+        plt.axhline(y=0.05, color='r', linestyle='--')
+        plt.title("Ljung-Box Test p-values")
+        plt.xlabel("Lag")
+        plt.ylabel("p-value")
+        
+        plt.tight_layout()
+        plt.show()
+        
+        # Check if residuals are white noise
+        is_white_noise = all(lb_test['lb_pvalue'] > 0.05)
+        print(f"Residuals are {'white noise' if is_white_noise else 'not white noise'}")
+        
+        return is_white_noise
+    
+    def forecast_arima(self, fitted_model, steps=30):
+        """Generate forecasts"""
+        # Generate forecast
+        forecast = fitted_model.forecast(steps=steps)
+        
+        # Get confidence intervals
+        forecast_ci = fitted_model.get_forecast(steps=steps).conf_int()
+        
+        self.forecast = {
+            'forecast': forecast,
+            'lower_ci': forecast_ci.iloc[:, 0],
+            'upper_ci': forecast_ci.iloc[:, 1]
+        }
+        
+        return self.forecast
+    
+    def plot_forecast(self, time_series, forecast, title="ARIMA Forecast"):
+        """Plot time series with forecast"""
+        plt.figure(figsize=(15, 8))
+        
+        # Plot historical data
+        plt.plot(time_series.index, time_series.values, label='Historical Data', color='blue')
+        
+        # Plot forecast
+        forecast_index = pd.date_range(time_series.index[-1], periods=len(forecast['forecast'])+1, freq='D')[1:]
+        plt.plot(forecast_index, forecast['forecast'], label='Forecast', color='red')
+        
+        # Plot confidence intervals
+        plt.fill_between(forecast_index, 
+                        forecast['lower_ci'], 
+                        forecast['upper_ci'], 
+                        alpha=0.3, color='red', label='95% Confidence Interval')
+        
+        plt.title(title)
+        plt.xlabel("Time")
+        plt.ylabel("Value")
+        plt.legend()
+        plt.grid(True, alpha=0.3)
+        plt.show()
+    
+    def evaluate_forecast(self, actual, forecast):
+        """Evaluate forecast performance"""
+        # Calculate metrics
+        mse = mean_squared_error(actual, forecast)
+        rmse = np.sqrt(mse)
+        mae = mean_absolute_error(actual, forecast)
+        mape = np.mean(np.abs((actual - forecast) / actual)) * 100
+        
+        print("Forecast Evaluation Metrics:")
+        print(f"MSE: {mse:.4f}")
+        print(f"RMSE: {rmse:.4f}")
+        print(f"MAE: {mae:.4f}")
+        print(f"MAPE: {mape:.2f}%")
+        
+        return {
+            'mse': mse,
+            'rmse': rmse,
+            'mae': mae,
+            'mape': mape
+        }
+    
+    def run_complete_example(self):
+        """Run complete ARIMA example"""
+        print("=== ARIMA Model Example ===\n")
+        
+        # Generate data
+        ts = self.generate_sample_data()
+        print(f"Generated time series with {len(ts)} observations")
+        
+        # Check stationarity
+        print("\n--- Stationarity Check ---")
+        is_stationary = self.check_stationarity(ts)
+        
+        # Plot time series
+        print("\n--- Time Series Analysis ---")
+        self.plot_time_series(ts, "Sample Time Series")
+        
+        # Split data
+        train_size = int(len(ts) * 0.8)
+        train_ts = ts[:train_size]
+        test_ts = ts[train_size:]
+        
+        print(f"\nTraining set: {len(train_ts)} observations")
+        print(f"Test set: {len(test_ts)} observations")
+        
+        # Fit ARIMA model
+        print("\n--- Model Fitting ---")
+        fitted_model = self.fit_arima(train_ts, order=(1, 1, 1))
+        
+        # Diagnose model
+        print("\n--- Model Diagnosis ---")
+        is_good_model = self.diagnose_model(fitted_model)
+        
+        # Generate forecast
+        print("\n--- Forecasting ---")
+        forecast = self.forecast_arima(fitted_model, steps=len(test_ts))
+        
+        # Plot forecast
+        print("\n--- Forecast Visualization ---")
+        self.plot_forecast(train_ts, forecast, "ARIMA(1,1,1) Forecast")
+        
+        # Evaluate forecast
+        print("\n--- Forecast Evaluation ---")
+        metrics = self.evaluate_forecast(test_ts.values, forecast['forecast'])
+        
+        return {
+            'model': fitted_model,
+            'forecast': forecast,
+            'metrics': metrics,
+            'is_good_model': is_good_model
+        }
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Data có stationary?
+- [ ] ACF/PACF có suggest appropriate orders?
+- [ ] Residuals có white noise?
+- [ ] Forecast có reasonable?
+- [ ] Model performance có acceptable?
+
+---
+
+# 📈 Time Series (TS) - Phân tích chuỗi thời gian
+
+> **Mục tiêu**: Trở thành chuyên gia Time Series Analysis, có khả năng xây dựng mô hình dự báo chính xác cho dữ liệu chuỗi thời gian
+
 ## 📋 Tổng quan nội dung
 
 ```mermaid

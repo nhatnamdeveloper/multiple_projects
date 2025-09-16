@@ -2,6 +2,349 @@
 
 > **Mục tiêu**: Trở thành chuyên gia Deep Learning, hiểu sâu về lý thuyết mạng nơ-ron và có khả năng xây dựng các mô hình DL phức tạp
 
+## 📚 **1. Bảng ký hiệu (Notation)**
+
+### **Neural Networks:**
+- **Input**: $\mathbf{x} \in \mathbb{R}^d$ (vector đầu vào)
+- **Weight matrix**: $\mathbf{W}^{(l)} \in \mathbb{R}^{n_{l-1} \times n_l}$ (ma trận trọng số layer $l$)
+- **Bias**: $\mathbf{b}^{(l)} \in \mathbb{R}^{n_l}$ (bias vector layer $l$)
+- **Activation**: $\mathbf{a}^{(l)} = \sigma(\mathbf{z}^{(l)})$ (activation output layer $l$)
+- **Pre-activation**: $\mathbf{z}^{(l)} = \mathbf{W}^{(l)} \mathbf{a}^{(l-1)} + \mathbf{b}^{(l)}$
+
+### **Forward Pass:**
+- **Layer output**: $\mathbf{a}^{(l)} = \sigma(\mathbf{W}^{(l)} \mathbf{a}^{(l-1)} + \mathbf{b}^{(l)})$
+- **Network output**: $f_\theta(\mathbf{x}) = \mathbf{a}^{(L)}$
+- **Parameters**: $\theta = \{\mathbf{W}^{(l)}, \mathbf{b}^{(l)}\}_{l=1}^L$
+
+### **Backpropagation:**
+- **Loss gradient**: $\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{(l)}}$
+- **Error signal**: $\delta^{(l)} = \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{(l)}}$
+- **Weight update**: $\mathbf{W}^{(l)} \leftarrow \mathbf{W}^{(l)} - \alpha \frac{\partial \mathcal{L}}{\partial \mathbf{W}^{(l)}}$
+
+### **Activation Functions:**
+- **ReLU**: $\sigma(x) = \max(0, x)$
+- **Sigmoid**: $\sigma(x) = \frac{1}{1 + e^{-x}}$
+- **Tanh**: $\sigma(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$
+- **Softmax**: $\sigma(\mathbf{x})_i = \frac{e^{x_i}}{\sum_j e^{x_j}}$
+
+### **Loss Functions:**
+- **Cross-entropy**: $\mathcal{L} = -\sum_i y_i \log(\hat{y}_i)$
+- **MSE**: $\mathcal{L} = \frac{1}{n}\sum_i (y_i - \hat{y}_i)^2$
+- **Binary cross-entropy**: $\mathcal{L} = -[y \log(\hat{y}) + (1-y)\log(1-\hat{y})]$
+
+## 📖 **2. Glossary (Định nghĩa cốt lõi)**
+
+### **Neural Network Components:**
+- **Neuron**: Đơn vị cơ bản của neural network - nhận input, tính weighted sum, apply activation
+- **Layer**: Tập hợp các neurons cùng level - input layer, hidden layers, output layer
+- **Weight**: Tham số học được - strength của connection giữa neurons
+- **Bias**: Tham số offset - giúp shift activation function
+
+### **Training Concepts:**
+- **Forward Pass**: Tính output từ input qua network
+- **Backward Pass**: Tính gradients từ output về input
+- **Backpropagation**: Algorithm để tính gradients efficiently
+- **Gradient Descent**: Optimization algorithm để update parameters
+
+### **Activation Functions:**
+- **Linear**: $f(x) = x$ - không có non-linearity
+- **Non-linear**: ReLU, Sigmoid, Tanh - introduce non-linearity
+- **Saturation**: Sigmoid/Tanh có thể saturate → vanishing gradients
+- **Sparsity**: ReLU có thể create sparse representations
+
+### **Optimization:**
+- **Learning Rate**: Step size trong gradient descent
+- **Momentum**: Accumulate gradients để accelerate convergence
+- **Adaptive Learning**: Adam, RMSprop - adjust learning rate automatically
+- **Regularization**: Techniques để prevent overfitting
+
+## 📐 **3. Thẻ thuật toán - Backpropagation**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Tính gradients của loss function với respect to network parameters
+- **Dữ liệu**: Neural network với parameters $\theta$, loss function $\mathcal{L}$
+- **Ứng dụng**: Training neural networks, gradient-based optimization
+
+### **2. Mô hình & công thức:**
+**Forward Pass:**
+$$\mathbf{z}^{(l)} = \mathbf{W}^{(l)} \mathbf{a}^{(l-1)} + \mathbf{b}^{(l)}$$
+$$\mathbf{a}^{(l)} = \sigma(\mathbf{z}^{(l)})$$
+
+**Backward Pass:**
+$$\delta^{(l)} = \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{(l)}} = \frac{\partial \mathcal{L}}{\partial \mathbf{a}^{(l)}} \odot \sigma'(\mathbf{z}^{(l)})$$
+
+**Weight Gradients:**
+$$\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{(l)}} = \delta^{(l)} (\mathbf{a}^{(l-1)})^T$$
+$$\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{(l)}} = \delta^{(l)}$$
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: Compute gradients efficiently để update parameters
+- **Loss**: $\mathcal{L}(\theta)$ - loss function cần minimize
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: Chain rule application
+- **Cập nhật**: $\theta \leftarrow \theta - \alpha \nabla_\theta \mathcal{L}(\theta)$
+
+### **5. Hyperparams:**
+- **Learning rate**: $\alpha$ (step size)
+- **Batch size**: Number of samples per update
+- **Number of epochs**: Training iterations
+
+### **6. Độ phức tạp:**
+- **Time**: $O(L \times n^2)$ với $L$ layers, $n$ neurons per layer
+- **Space**: $O(L \times n^2)$ cho storing activations và gradients
+
+### **7. Metrics đánh giá:**
+- **Gradient norm**: $\|\nabla_\theta \mathcal{L}\|$
+- **Training loss**: $\mathcal{L}(\theta)$
+- **Validation accuracy**: Performance on validation set
+- **Convergence speed**: Rate of loss decrease
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Computationally efficient
+- Automatic differentiation
+- Scales to large networks
+- Well-established theory
+
+**Nhược điểm:**
+- Vanishing/exploding gradients
+- Local minima
+- Requires careful initialization
+- Sensitive to hyperparameters
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Vanishing gradients → use ReLU, proper initialization
+- **Bẫy**: Exploding gradients → gradient clipping
+- **Mẹo**: Use batch normalization
+- **Mẹo**: Monitor gradient norms
+
+### **10. Pseudocode:**
+```python
+def backpropagation(network, x, y, loss_function):
+    # Forward pass
+    activations = forward_pass(network, x)
+    
+    # Compute loss
+    loss = loss_function(activations[-1], y)
+    
+    # Initialize gradients
+    gradients = {}
+    
+    # Backward pass
+    delta = compute_output_gradient(activations[-1], y, loss_function)
+    
+    for layer in reversed(network.layers):
+        # Compute weight gradients
+        gradients[layer.weights] = delta @ activations[layer-1].T
+        gradients[layer.bias] = delta
+        
+        # Compute error signal for next layer
+        if layer > 0:
+            delta = layer.weights.T @ delta * layer.activation_derivative(activations[layer])
+    
+    return gradients
+```
+
+### **11. Code mẫu:**
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+class NeuralNetwork:
+    """Simple Neural Network with Backpropagation"""
+    
+    def __init__(self, layer_sizes, activation='relu'):
+        self.layer_sizes = layer_sizes
+        self.activation = activation
+        self.weights = []
+        self.biases = []
+        self.initialize_parameters()
+    
+    def initialize_parameters(self):
+        """Initialize weights and biases"""
+        for i in range(len(self.layer_sizes) - 1):
+            # He initialization for ReLU
+            if self.activation == 'relu':
+                w = np.random.randn(self.layer_sizes[i+1], self.layer_sizes[i]) * np.sqrt(2.0 / self.layer_sizes[i])
+            else:
+                w = np.random.randn(self.layer_sizes[i+1], self.layer_sizes[i]) * 0.01
+            
+            b = np.zeros((self.layer_sizes[i+1], 1))
+            
+            self.weights.append(w)
+            self.biases.append(b)
+    
+    def activation_function(self, z, derivative=False):
+        """Activation function"""
+        if self.activation == 'relu':
+            if derivative:
+                return np.where(z > 0, 1, 0)
+            return np.maximum(0, z)
+        elif self.activation == 'sigmoid':
+            if derivative:
+                s = 1 / (1 + np.exp(-z))
+                return s * (1 - s)
+            return 1 / (1 + np.exp(-z))
+        elif self.activation == 'tanh':
+            if derivative:
+                return 1 - np.tanh(z)**2
+            return np.tanh(z)
+    
+    def forward_pass(self, X):
+        """Forward pass through the network"""
+        activations = [X]
+        z_values = []
+        
+        for i in range(len(self.weights)):
+            z = np.dot(self.weights[i], activations[-1]) + self.biases[i]
+            z_values.append(z)
+            a = self.activation_function(z)
+            activations.append(a)
+        
+        return activations, z_values
+    
+    def compute_loss(self, y_pred, y_true):
+        """Compute cross-entropy loss"""
+        m = y_true.shape[1]
+        loss = -np.sum(y_true * np.log(y_pred + 1e-15)) / m
+        return loss
+    
+    def compute_loss_gradient(self, y_pred, y_true):
+        """Compute gradient of loss with respect to output"""
+        return y_pred - y_true
+    
+    def backward_pass(self, X, y_true, activations, z_values):
+        """Backward pass to compute gradients"""
+        m = X.shape[1]
+        num_layers = len(self.weights)
+        
+        # Initialize gradients
+        weight_gradients = [np.zeros_like(w) for w in self.weights]
+        bias_gradients = [np.zeros_like(b) for b in self.biases]
+        
+        # Compute output gradient
+        delta = self.compute_loss_gradient(activations[-1], y_true)
+        
+        # Backpropagate through layers
+        for layer in range(num_layers - 1, -1, -1):
+            # Compute gradients for current layer
+            weight_gradients[layer] = np.dot(delta, activations[layer].T) / m
+            bias_gradients[layer] = np.sum(delta, axis=1, keepdims=True) / m
+            
+            # Compute delta for previous layer
+            if layer > 0:
+                delta = np.dot(self.weights[layer].T, delta) * self.activation_function(z_values[layer-1], derivative=True)
+        
+        return weight_gradients, bias_gradients
+    
+    def update_parameters(self, weight_gradients, bias_gradients, learning_rate):
+        """Update parameters using gradients"""
+        for i in range(len(self.weights)):
+            self.weights[i] -= learning_rate * weight_gradients[i]
+            self.biases[i] -= learning_rate * bias_gradients[i]
+    
+    def train(self, X, y, learning_rate=0.01, epochs=1000, batch_size=32):
+        """Train the neural network"""
+        losses = []
+        
+        for epoch in range(epochs):
+            # Mini-batch training
+            for i in range(0, X.shape[1], batch_size):
+                X_batch = X[:, i:i+batch_size]
+                y_batch = y[:, i:i+batch_size]
+                
+                # Forward pass
+                activations, z_values = self.forward_pass(X_batch)
+                
+                # Backward pass
+                weight_gradients, bias_gradients = self.backward_pass(X_batch, y_batch, activations, z_values)
+                
+                # Update parameters
+                self.update_parameters(weight_gradients, bias_gradients, learning_rate)
+            
+            # Compute loss for monitoring
+            if epoch % 100 == 0:
+                activations, _ = self.forward_pass(X)
+                loss = self.compute_loss(activations[-1], y)
+                losses.append(loss)
+                print(f"Epoch {epoch}, Loss: {loss:.4f}")
+        
+        return losses
+    
+    def predict(self, X):
+        """Make predictions"""
+        activations, _ = self.forward_pass(X)
+        return activations[-1]
+    
+    def evaluate(self, X, y):
+        """Evaluate model performance"""
+        predictions = self.predict(X)
+        loss = self.compute_loss(predictions, y)
+        
+        # For classification
+        if y.shape[0] == 1:  # Binary classification
+            predictions_binary = (predictions > 0.5).astype(int)
+            accuracy = np.mean(predictions_binary == y)
+        else:  # Multi-class classification
+            predictions_class = np.argmax(predictions, axis=0)
+            y_class = np.argmax(y, axis=0)
+            accuracy = np.mean(predictions_class == y_class)
+        
+        return loss, accuracy
+
+# Example usage
+def demonstrate_backpropagation():
+    """Demonstrate backpropagation with XOR problem"""
+    print("=== Backpropagation Demonstration (XOR Problem) ===\n")
+    
+    # XOR data
+    X = np.array([[0, 0, 1, 1],
+                  [0, 1, 0, 1]])
+    y = np.array([[0, 1, 1, 0]])
+    
+    # Create neural network
+    nn = NeuralNetwork([2, 4, 1], activation='sigmoid')
+    
+    # Train network
+    losses = nn.train(X, y, learning_rate=0.1, epochs=5000)
+    
+    # Evaluate
+    loss, accuracy = nn.evaluate(X, y)
+    print(f"\nFinal Loss: {loss:.4f}")
+    print(f"Accuracy: {accuracy:.4f}")
+    
+    # Make predictions
+    predictions = nn.predict(X)
+    print("\nPredictions:")
+    for i in range(X.shape[1]):
+        print(f"Input: {X[:, i]}, Target: {y[0, i]:.0f}, Prediction: {predictions[0, i]:.4f}")
+    
+    # Plot training loss
+    plt.figure(figsize=(10, 6))
+    plt.plot(range(0, 5000, 100), losses)
+    plt.title('Training Loss Over Time')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.grid(True)
+    plt.show()
+    
+    return nn, losses
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Gradients có được compute correctly?
+- [ ] Parameters có được update properly?
+- [ ] Loss có decrease over time?
+- [ ] Network có converge?
+- [ ] Performance có acceptable?
+
+---
+
+# 🧠 Deep Learning (DL) - Học sâu và mạng nơ-ron
+
+> **Mục tiêu**: Trở thành chuyên gia Deep Learning, hiểu sâu về lý thuyết mạng nơ-ron và có khả năng xây dựng các mô hình DL phức tạp
+
 ## 📋 Tổng quan nội dung
 
 ```mermaid

@@ -33,6 +33,58 @@ graph TD
     F --> F3[PAC Learning]
 ```
 
+## 📚 **1. Bảng ký hiệu (Notation)**
+
+### **Scalars & Vectors:**
+- **Scalars**: $a, b, c$ (số thực)
+- **Vectors**: $\mathbf{x}, \mathbf{y}, \mathbf{z}$ (vectơ)
+- **Matrices**: $\mathbf{X}, \mathbf{Y}, \mathbf{A}, \mathbf{B}$ (ma trận)
+- **Tensors**: $\mathcal{T}$ (tenxơ)
+
+### **Dataset & Training:**
+- **Dataset**: $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$
+- **Features**: $\mathbf{x}_i \in \mathbb{R}^d$
+- **Labels**: $y_i \in \mathbb{R}$ (regression) hoặc $y_i \in \{0,1\}$ (classification)
+- **Parameters**: $\boldsymbol{\theta} \in \mathbb{R}^p$
+
+### **Loss & Optimization:**
+- **Loss function**: $\mathcal{L}(\boldsymbol{\theta})$
+- **Gradient**: $\nabla_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta})$
+- **Hessian**: $\mathbf{H} = \nabla^2_{\boldsymbol{\theta}} \mathcal{L}(\boldsymbol{\theta})$
+
+### **Probability & Statistics:**
+- **Probability**: $P(Y|X)$, $P(X)$
+- **Expectation**: $\mathbb{E}[X]$, $\mathbb{E}_{X \sim P}[f(X)]$
+- **Variance**: $\text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2]$
+- **Covariance**: $\text{Cov}(X,Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])]$
+
+### **Linear Algebra:**
+- **Eigenvalues**: $\lambda_1, \lambda_2, \ldots, \lambda_n$
+- **Eigenvectors**: $\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n$
+- **Singular values**: $\sigma_1, \sigma_2, \ldots, \sigma_r$
+- **Matrix norm**: $\|\mathbf{A}\|_F$ (Frobenius), $\|\mathbf{A}\|_2$ (spectral)
+
+## 📖 **2. Glossary (Định nghĩa cốt lõi)**
+
+### **Core Concepts:**
+- **Feature**: Đặc trưng của dữ liệu (ví dụ: tuổi, thu nhập, điểm số)
+- **Label**: Nhãn cần dự đoán (ví dụ: mua hàng hay không, điểm số cuối kỳ)
+- **Model**: Hàm $f(\mathbf{x}; \boldsymbol{\theta})$ ánh xạ từ features sang predictions
+- **Parameter**: Các giá trị được học từ dữ liệu (weights, biases)
+- **Hyperparameter**: Các giá trị được set trước (learning rate, batch size)
+
+### **Training Concepts:**
+- **Loss**: Hàm đo lỗi giữa prediction và ground truth
+- **Metric**: Hàm đánh giá chất lượng mô hình (accuracy, precision, recall)
+- **Overfitting**: Mô hình học quá kỹ training data, kém generalization
+- **Underfitting**: Mô hình chưa học đủ, cả training và test error đều cao
+
+### **Regularization & Normalization:**
+- **Regularization**: Kỹ thuật ngăn overfitting (L1, L2, dropout)
+- **Normalization**: Chuẩn hóa dữ liệu (StandardScaler, MinMaxScaler)
+- **Batch Normalization**: Chuẩn hóa theo batch trong training
+- **Layer Normalization**: Chuẩn hóa theo layer
+
 ## 🧩 Chương trình 50/50 (Lý thuyết : Thực hành)
 
 | Mô-đun | Lý thuyết (50%) | Thực hành (50%) |
@@ -43,6 +95,530 @@ graph TD
 | Lý thuyết học | VC dimension, PAC learning | Generalization bounds |
 
 ---
+
+## 📐 **3. Thẻ thuật toán - SVD (Singular Value Decomposition)**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Phân tích ma trận $\mathbf{A} \in \mathbb{R}^{m \times n}$ thành tích của 3 ma trận
+- **Dữ liệu**: Ma trận bất kỳ (không cần đối xứng, không cần vuông)
+- **Ứng dụng**: PCA, Recommendation systems, Image compression
+
+### **2. Mô hình & công thức:**
+$$\mathbf{A} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^T$$
+
+Trong đó:
+- $\mathbf{U} \in \mathbb{R}^{m \times m}$: Left singular vectors (orthogonal)
+- $\mathbf{\Sigma} \in \mathbb{R}^{m \times n}$: Singular values (diagonal)
+- $\mathbf{V} \in \mathbb{R}^{n \times n}$: Right singular vectors (orthogonal)
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: Tìm decomposition sao cho $\|\mathbf{A} - \mathbf{U} \mathbf{\Sigma} \mathbf{V}^T\|_F$ nhỏ nhất
+- **Loss**: $\mathcal{L} = \|\mathbf{A} - \mathbf{U} \mathbf{\Sigma} \mathbf{V}^T\|_F^2$
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: Power iteration hoặc QR decomposition
+- **Cập nhật**: Không có gradient descent, dùng eigenvalue decomposition
+
+### **5. Hyperparams:**
+- **Rank**: Số singular values giữ lại
+- **Tolerance**: Ngưỡng dừng cho convergence
+
+### **6. Độ phức tạp:**
+- **Time**: $O(mn^2)$ cho ma trận $m \times n$
+- **Space**: $O(mn)$
+
+### **7. Metrics đánh giá:**
+- **Reconstruction error**: $\|\mathbf{A} - \mathbf{A}_{reconstructed}\|_F$
+- **Explained variance ratio**: $\frac{\sum_{i=1}^k \sigma_i^2}{\sum_{i=1}^r \sigma_i^2}$
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Hoạt động với ma trận bất kỳ
+- Stable numerical computation
+- Có ý nghĩa geometric rõ ràng
+
+**Nhược điểm:**
+- Computational cost cao
+- Không unique khi có singular values bằng nhau
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Quên normalize vectors
+- **Mẹo**: Dùng `np.linalg.svd()` thay vì implement từ đầu
+- **Mẹo**: Chỉ giữ top-k singular values để compression
+
+### **10. Pseudocode:**
+```python
+def svd_decomposition(A):
+    # 1. Compute A^T A and AA^T
+    ATA = A.T @ A
+    AAT = A @ A.T
+    
+    # 2. Find eigenvalues and eigenvectors
+    eigenvals_V, eigenvecs_V = eig(ATA)
+    eigenvals_U, eigenvecs_U = eig(AAT)
+    
+    # 3. Sort by eigenvalues (descending)
+    sorted_indices = argsort(eigenvals_V)[::-1]
+    V = eigenvecs_V[:, sorted_indices]
+    U = eigenvecs_U[:, sorted_indices]
+    
+    # 4. Compute singular values
+    sigma = sqrt(eigenvals_V[sorted_indices])
+    Sigma = diag(sigma)
+    
+    return U, Sigma, V.T
+```
+
+### **11. Code mẫu:**
+```python
+import numpy as np
+from scipy import linalg
+
+def demonstrate_svd():
+    """Demonstrate SVD decomposition"""
+    # Tạo ma trận mẫu
+    A = np.random.randn(10, 8)
+    
+    # SVD decomposition
+    U, s, Vt = linalg.svd(A, full_matrices=False)
+    
+    # Kiểm tra reconstruction
+    A_reconstructed = U @ np.diag(s) @ Vt
+    
+    print(f"Original matrix shape: {A.shape}")
+    print(f"U shape: {U.shape}, s length: {len(s)}, Vt shape: {Vt.shape}")
+    print(f"Reconstruction error: {np.linalg.norm(A - A_reconstructed):.2e}")
+    
+    return U, s, Vt, A_reconstructed
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Ma trận input có đúng shape?
+- [ ] Singular values có sắp xếp giảm dần?
+- [ ] U và V có orthogonal?
+- [ ] Reconstruction error có nhỏ?
+- [ ] Số singular values có phù hợp với rank?
+
+---
+
+## 📈 **4. Thẻ thuật toán - Gradient Descent**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Tìm minimum của hàm $f(\boldsymbol{\theta})$
+- **Dữ liệu**: Hàm differentiable, starting point $\boldsymbol{\theta}_0$
+- **Ứng dụng**: Training neural networks, optimization
+
+### **2. Mô hình & công thức:**
+$$\boldsymbol{\theta}_{t+1} = \boldsymbol{\theta}_t - \alpha \nabla f(\boldsymbol{\theta}_t)$$
+
+Trong đó:
+- $\alpha$: Learning rate
+- $\nabla f(\boldsymbol{\theta}_t)$: Gradient tại điểm $\boldsymbol{\theta}_t$
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: $\min_{\boldsymbol{\theta}} f(\boldsymbol{\theta})$
+- **Loss**: $f(\boldsymbol{\theta})$ (function value)
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: Iterative gradient descent
+- **Cập nhật**: $\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} - \alpha \nabla f(\boldsymbol{\theta})$
+
+### **5. Hyperparams:**
+- **Learning rate**: $\alpha$ (thường 0.01 - 0.1)
+- **Max iterations**: Số lần lặp tối đa
+- **Tolerance**: Ngưỡng dừng cho gradient norm
+
+### **6. Độ phức tạp:**
+- **Time per iteration**: $O(n)$ với $n$ là số parameters
+- **Space**: $O(n)$ cho storing parameters
+
+### **7. Metrics đánh giá:**
+- **Function value**: $f(\boldsymbol{\theta})$
+- **Gradient norm**: $\|\nabla f(\boldsymbol{\theta})\|$
+- **Convergence rate**: Tốc độ giảm của function value
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Đơn giản, dễ implement
+- Hoạt động với mọi hàm differentiable
+- Memory efficient
+
+**Nhược điểm:**
+- Chậm convergence với ill-conditioned problems
+- Cần tuning learning rate
+- Có thể stuck ở local minima
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Learning rate quá lớn → divergence
+- **Bẫy**: Learning rate quá nhỏ → chậm convergence
+- **Mẹo**: Dùng adaptive learning rate (Adam, RMSprop)
+- **Mẹo**: Normalize data trước khi training
+
+### **10. Pseudocode:**
+```python
+def gradient_descent(f, grad_f, theta0, alpha, max_iter, tol):
+    theta = theta0
+    for t in range(max_iter):
+        gradient = grad_f(theta)
+        if norm(gradient) < tol:
+            break
+        theta = theta - alpha * gradient
+    return theta
+```
+
+### **11. Code mẫu:**
+```python
+def gradient_descent_example():
+    """Gradient descent for quadratic function"""
+    
+    def f(theta):
+        """f(x,y) = x^2 + y^2"""
+        return theta[0]**2 + theta[1]**2
+    
+    def grad_f(theta):
+        """Gradient: [2x, 2y]"""
+        return np.array([2*theta[0], 2*theta[1]])
+    
+    # Parameters
+    theta0 = np.array([1.0, 1.0])
+    alpha = 0.1
+    max_iter = 100
+    
+    # Gradient descent
+    theta = theta0.copy()
+    trajectory = [theta.copy()]
+    
+    for i in range(max_iter):
+        gradient = grad_f(theta)
+        theta = theta - alpha * gradient
+        trajectory.append(theta.copy())
+        
+        if np.linalg.norm(gradient) < 1e-6:
+            break
+    
+    print(f"Final theta: {theta}")
+    print(f"Final function value: {f(theta)}")
+    
+    return np.array(trajectory)
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Learning rate có phù hợp?
+- [ ] Gradient có được tính đúng?
+- [ ] Function value có giảm?
+- [ ] Có convergence?
+- [ ] Có stuck ở local minimum?
+
+---
+
+## 🎲 **5. Thẻ thuật toán - Bayesian Inference**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Cập nhật belief về parameters dựa trên data
+- **Dữ liệu**: Prior $P(\theta)$, Likelihood $P(D|\theta)$, Data $D$
+- **Ứng dụng**: Uncertainty quantification, decision making
+
+### **2. Mô hình & công thức:**
+**Bayes' Rule:**
+$$P(\theta|D) = \frac{P(D|\theta) P(\theta)}{P(D)}$$
+
+Trong đó:
+- $P(\theta)$: Prior distribution
+- $P(D|\theta)$: Likelihood function
+- $P(\theta|D)$: Posterior distribution
+- $P(D)$: Evidence (normalizing constant)
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: Tìm posterior distribution $P(\theta|D)$
+- **Loss**: Negative log-likelihood hoặc KL divergence
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: MCMC, Variational inference, Laplace approximation
+- **Cập nhật**: Sampling từ posterior hoặc optimizing variational parameters
+
+### **5. Hyperparams:**
+- **Prior distribution**: Choice of prior (conjugate, non-informative)
+- **MCMC parameters**: Number of samples, burn-in period
+- **Variational parameters**: Family of approximating distributions
+
+### **6. Độ phức tạp:**
+- **Time**: $O(n \times \text{samples})$ với $n$ là data size
+- **Space**: $O(\text{samples} \times \text{parameters})$
+
+### **7. Metrics đánh giá:**
+- **Posterior mean**: $\mathbb{E}[\theta|D]$
+- **Posterior variance**: $\text{Var}[\theta|D]$
+- **Credible intervals**: 95% confidence intervals
+- **Effective sample size**: ESS for MCMC
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Quantifies uncertainty
+- Incorporates prior knowledge
+- Natural for sequential learning
+
+**Nhược điểm:**
+- Computationally expensive
+- Sensitive to prior choice
+- Difficult to scale to large datasets
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Prior quá strong → bias
+- **Bẫy**: MCMC không converge
+- **Mẹo**: Dùng conjugate priors khi có thể
+- **Mẹo**: Check convergence với multiple chains
+
+### **10. Pseudocode:**
+```python
+def bayesian_inference(prior, likelihood, data):
+    # 1. Compute posterior (up to constant)
+    def posterior(theta):
+        return likelihood(data, theta) * prior(theta)
+    
+    # 2. Sample from posterior using MCMC
+    samples = mcmc_sample(posterior, n_samples=1000)
+    
+    # 3. Compute posterior statistics
+    mean = np.mean(samples)
+    std = np.std(samples)
+    
+    return mean, std, samples
+```
+
+### **11. Code mẫu:**
+```python
+def bayesian_linear_regression():
+    """Bayesian linear regression with conjugate priors"""
+    
+    # Generate synthetic data
+    np.random.seed(42)
+    n_samples = 100
+    x = np.random.randn(n_samples, 1)
+    true_w = 2.0
+    true_b = 1.0
+    y = true_w * x + true_b + 0.1 * np.random.randn(n_samples, 1)
+    
+    # Prior parameters
+    prior_w_mean = 0.0
+    prior_w_var = 1.0
+    prior_b_mean = 0.0
+    prior_b_var = 1.0
+    
+    # Noise variance
+    noise_var = 0.1**2
+    
+    # Bayesian update
+    def bayesian_update(x, y, prior_mean, prior_var, noise_var):
+        """Bayesian update for linear regression"""
+        # Design matrix
+        X = np.column_stack([x, np.ones_like(x)])
+        
+        # Posterior precision (inverse of covariance)
+        posterior_precision = X.T @ X / noise_var + 1/prior_var
+        posterior_cov = np.linalg.inv(posterior_precision)
+        
+        # Posterior mean
+        posterior_mean = posterior_cov @ (X.T @ y / noise_var + prior_mean / prior_var)
+        
+        return posterior_mean, posterior_cov
+    
+    # Update for both parameters
+    prior_mean = np.array([prior_w_mean, prior_b_mean])
+    prior_var = np.array([prior_w_var, prior_b_var])
+    
+    posterior_mean, posterior_cov = bayesian_update(x, y, prior_mean, prior_var, noise_var)
+    
+    print("Bayesian Linear Regression:")
+    print(f"True parameters: w={true_w}, b={true_b}")
+    print(f"Posterior mean: w={posterior_mean[0]:.4f}, b={posterior_mean[1]:.4f}")
+    print(f"Posterior std: w={np.sqrt(posterior_cov[0,0]):.4f}, b={np.sqrt(posterior_cov[1,1]):.4f}")
+    
+    return posterior_mean, posterior_cov
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Prior có reasonable?
+- [ ] Likelihood có được tính đúng?
+- [ ] MCMC có converge?
+- [ ] Posterior có meaningful?
+- [ ] Uncertainty có được quantify?
+
+---
+
+## 🧪 **6. Thực hành & Ứng dụng**
+
+### **6.1 PCA với SVD**
+
+```python
+def pca_implementation():
+    """PCA implementation using SVD"""
+    
+    # Generate sample data
+    np.random.seed(42)
+    n_samples, n_features = 1000, 10
+    
+    # Create data with structure
+    data = np.random.randn(n_samples, n_features)
+    
+    # Add some correlation structure
+    data[:, 2] = 0.8 * data[:, 0] + 0.2 * np.random.randn(n_samples)
+    data[:, 3] = 0.6 * data[:, 1] + 0.4 * np.random.randn(n_samples)
+    
+    # Center the data
+    data_centered = data - np.mean(data, axis=0)
+    
+    # PCA using SVD
+    U, s, Vt = linalg.svd(data_centered, full_matrices=False)
+    
+    # Project data onto principal components
+    data_pca = data_centered @ Vt.T
+    
+    # Explained variance
+    explained_variance = s**2 / (n_samples - 1)
+    explained_variance_ratio = explained_variance / np.sum(explained_variance)
+    
+    # Cumulative explained variance
+    cumulative_variance = np.cumsum(explained_variance_ratio)
+    
+    print("PCA Results:")
+    print(f"Original dimensions: {n_features}")
+    print(f"Top 3 explained variance ratios: {explained_variance_ratio[:3]}")
+    print(f"Cumulative variance (top 3): {cumulative_variance[:3]}")
+    
+    return data_pca, explained_variance_ratio, cumulative_variance
+```
+
+### **6.2 Information Theory**
+
+```python
+def information_theory():
+    """Information theory concepts"""
+    
+    def entropy(p):
+        """Calculate entropy H(X) = -Σ p(x) log p(x)"""
+        # Remove zero probabilities to avoid log(0)
+        p = p[p > 0]
+        return -np.sum(p * np.log2(p))
+    
+    def mutual_information(p_xy, p_x, p_y):
+        """Calculate mutual information I(X;Y)"""
+        # I(X;Y) = Σ p(x,y) log(p(x,y)/(p(x)p(y)))
+        mutual_info = 0
+        for i in range(len(p_x)):
+            for j in range(len(p_y)):
+                if p_xy[i,j] > 0:
+                    mutual_info += p_xy[i,j] * np.log2(p_xy[i,j] / (p_x[i] * p_y[j]))
+        return mutual_info
+    
+    def kl_divergence(p, q):
+        """Calculate KL divergence D_KL(P||Q)"""
+        # D_KL(P||Q) = Σ p(x) log(p(x)/q(x))
+        # Add small epsilon to avoid log(0)
+        epsilon = 1e-10
+        p = p + epsilon
+        q = q + epsilon
+        return np.sum(p * np.log2(p / q))
+    
+    # Example: Binary random variables
+    p_x = np.array([0.7, 0.3])  # P(X=0) = 0.7, P(X=1) = 0.3
+    p_y = np.array([0.6, 0.4])  # P(Y=0) = 0.6, P(Y=1) = 0.4
+    
+    # Joint distribution (example)
+    p_xy = np.array([[0.5, 0.2], [0.1, 0.2]])
+    
+    # Calculate entropies
+    h_x = entropy(p_x)
+    h_y = entropy(p_y)
+    h_xy = entropy(p_xy.flatten())
+    
+    # Calculate mutual information
+    i_xy = mutual_information(p_xy, p_x, p_y)
+    
+    print(f"Entropy H(X): {h_x:.4f}")
+    print(f"Entropy H(Y): {h_y:.4f}")
+    print(f"Joint entropy H(X,Y): {h_xy:.4f}")
+    print(f"Mutual information I(X;Y): {i_xy:.4f}")
+    print(f"Verification: I(X;Y) = H(X) + H(Y) - H(X,Y) = {h_x + h_y - h_xy:.4f}")
+    
+    return h_x, h_y, h_xy, i_xy
+```
+
+---
+
+## 📚 **Tài liệu tham khảo**
+
+### **Sách giáo khoa:**
+- [Mathematics for Machine Learning](https://mml-book.github.io/) - Deisenroth, Faisal, Ong
+- [Linear Algebra Done Right](https://linear.axler.net/) - Sheldon Axler
+- [Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/) - Boyd & Vandenberghe
+- [Pattern Recognition and Machine Learning](https://www.springer.com/gp/book/9780387310732) - Bishop
+- [Information Theory, Inference, and Learning Algorithms](https://www.inference.org.uk/mackay/itila/) - MacKay
+
+### **Papers quan trọng:**
+- [Statistical Learning Theory](https://www.springer.com/gp/book/9780387943274) - Vapnik
+- [PAC Learning](https://en.wikipedia.org/wiki/Probably_approximately_correct_learning) - Valiant
+- [Information Theory](https://ieeexplore.ieee.org/document/6773024) - Shannon
+
+### **Online Resources:**
+- [MIT OpenCourseWare - Linear Algebra](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/)
+- [Stanford CS229 - Machine Learning](http://cs229.stanford.edu/)
+- [CMU 10-701 - Introduction to Machine Learning](https://www.cs.cmu.edu/~tom/10701_sp11/)
+
+---
+
+## 🎯 **Bài tập thực hành**
+
+### **Bài tập 1: SVD Analysis**
+1. Tạo ma trận 10x8 với rank thấp
+2. Thực hiện SVD và phân tích singular values
+3. Reconstruct với k singular values đầu tiên
+4. Tính reconstruction error
+
+### **Bài tập 2: Bayesian Inference**
+1. Implement Bayesian linear regression
+2. So sánh với frequentist approach
+3. Visualize posterior distributions
+4. Tính credible intervals
+
+### **Bài tập 3: Information Theory**
+1. Tính entropy cho các distribution khác nhau
+2. Implement mutual information calculation
+3. Analyze KL divergence between distributions
+4. Apply to feature selection
+
+### **Bài tập 4: Optimization**
+1. Implement gradient descent với momentum
+2. So sánh với Newton's method
+3. Analyze convergence rates
+4. Apply to logistic regression
+
+---
+
+## 🎓 **Cách học hiệu quả**
+
+### **Bước 1: Đọc công thức → tra ký hiệu → hiểu trực giác**
+- Đọc công thức toán học
+- Tra cứu bảng ký hiệu để hiểu từng thành phần
+- Tìm hiểu ý nghĩa trực giác của công thức
+
+### **Bước 2: Điền "Thẻ thuật toán" cho từng mô hình**
+- Hoàn thành 12 mục trong thẻ thuật toán
+- Viết pseudocode và code mẫu
+- Kiểm tra checklist
+
+### **Bước 3: Làm Lab nhỏ → Mini-project → Case study**
+- Bắt đầu với lab đơn giản
+- Tiến tới mini-project phức tạp hơn
+- Áp dụng vào case study thực tế
+
+### **Bước 4: Đánh giá bằng metric phù hợp**
+- Chọn metric đánh giá phù hợp với bài toán
+- So sánh với baseline
+- Phân tích kết quả
+
+---
+
+*Chúc bạn học tập hiệu quả! 🚀*
 
 ## 📐 1. Đại số tuyến tính nâng cao
 

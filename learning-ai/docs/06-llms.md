@@ -2,6 +2,406 @@
 
 > **Mục tiêu**: Trở thành chuyên gia LLMs, hiểu sâu về kiến trúc Transformer, fine-tuning và triển khai các ứng dụng AI thực tế
 
+## 📚 **1. Bảng ký hiệu (Notation)**
+
+### **Language Modeling:**
+- **Vocabulary**: $\mathcal{V} = \{w_1, w_2, \ldots, w_V\}$ (tập từ vựng)
+- **Sequence**: $\mathbf{x} = (x_1, x_2, \ldots, x_T)$ (chuỗi tokens)
+- **Context**: $\mathbf{x}_{<t} = (x_1, x_2, \ldots, x_{t-1})$ (context trước token $t$)
+- **Probability**: $P(x_t | \mathbf{x}_{<t})$ (xác suất token $t$ given context)
+
+### **Transformer Architecture:**
+- **Input embedding**: $\mathbf{E} \in \mathbb{R}^{V \times d}$ (embedding matrix)
+- **Positional encoding**: $\mathbf{P} \in \mathbb{R}^{T \times d}$ (positional encoding)
+- **Query/Key/Value**: $\mathbf{Q}, \mathbf{K}, \mathbf{V} \in \mathbb{R}^{T \times d_k}$
+- **Attention weights**: $\mathbf{A} = \text{softmax}(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}})$
+
+### **Attention Mechanism:**
+- **Scaled Dot-Product**: $\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}})\mathbf{V}$
+- **Multi-Head**: $\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)\mathbf{W}^O$
+- **Head**: $\text{head}_i = \text{Attention}(\mathbf{Q}\mathbf{W}_i^Q, \mathbf{K}\mathbf{W}_i^K, \mathbf{V}\mathbf{W}_i^V)$
+
+### **Training & Loss:**
+- **Cross-entropy loss**: $\mathcal{L} = -\sum_{t=1}^T \log P(x_t | \mathbf{x}_{<t})$
+- **Perplexity**: $\text{PP} = \exp(\frac{1}{T}\sum_{t=1}^T \log P(x_t | \mathbf{x}_{<t}))$
+- **Learning rate**: $\alpha$ (step size)
+- **Batch size**: $B$ (số sequences per update)
+
+### **Fine-tuning:**
+- **LoRA**: $\mathbf{W} = \mathbf{W}_0 + \mathbf{B}\mathbf{A}$ với $\mathbf{B} \in \mathbb{R}^{d \times r}, \mathbf{A} \in \mathbb{R}^{r \times d}$
+- **Adapter**: $\mathbf{h}' = \mathbf{h} + \text{Adapter}(\mathbf{h})$
+- **Prefix tuning**: $\mathbf{h}' = \text{LM}([\mathbf{P}_1, \ldots, \mathbf{P}_k, \mathbf{x}])$
+
+## 📖 **2. Glossary (Định nghĩa cốt lõi)**
+
+### **Language Modeling:**
+- **Autoregressive**: Tự hồi quy - dự đoán token tiếp theo dựa trên context
+- **Perplexity**: Độ bối rối - measure của model uncertainty
+- **Tokenization**: Phân đoạn - chuyển text thành tokens
+- **Vocabulary**: Từ vựng - tập hợp tất cả tokens có thể
+
+### **Transformer Components:**
+- **Self-Attention**: Tự chú ý - mechanism để capture dependencies
+- **Positional Encoding**: Mã hóa vị trí - encode position information
+- **Feed-Forward**: Truyền thẳng - MLP trong transformer block
+- **Layer Normalization**: Chuẩn hóa lớp - normalize activations
+
+### **Training Techniques:**
+- **Fine-tuning**: Tinh chỉnh - adapt pre-trained model cho specific task
+- **LoRA**: Low-Rank Adaptation - efficient fine-tuning technique
+- **RLHF**: Reinforcement Learning from Human Feedback - align model với human preferences
+- **Instruction Tuning**: Hướng dẫn tinh chỉnh - fine-tune với instruction data
+
+### **Deployment:**
+- **Model Serving**: Phục vụ mô hình - serve model cho inference
+- **Quantization**: Lượng tử hóa - reduce model precision để save memory
+- **Pruning**: Cắt tỉa - remove unnecessary weights
+- **Distillation**: Chưng cất - transfer knowledge từ large model sang small model
+
+## 📐 **3. Thẻ thuật toán - Self-Attention**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Compute attention weights cho sequence để capture dependencies
+- **Dữ liệu**: Input sequence $\mathbf{X} \in \mathbb{R}^{T \times d}$ (sequence length $T$, dimension $d$)
+- **Ứng dụng**: Language modeling, sequence modeling, transformer architecture
+
+### **2. Mô hình & công thức:**
+**Self-Attention:**
+$$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}})\mathbf{V}$$
+
+**Query/Key/Value Computation:**
+$$\mathbf{Q} = \mathbf{X}\mathbf{W}_Q, \quad \mathbf{K} = \mathbf{X}\mathbf{W}_K, \quad \mathbf{V} = \mathbf{X}\mathbf{W}_V$$
+
+**Multi-Head Attention:**
+$$\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)\mathbf{W}^O$$
+
+Trong đó:
+- $\mathbf{W}_Q, \mathbf{W}_K, \mathbf{W}_V \in \mathbb{R}^{d \times d_k}$: Query/Key/Value projection matrices
+- $\mathbf{W}^O \in \mathbb{R}^{hd_k \times d}$: Output projection matrix
+- $h$: Number of attention heads
+- $d_k = d/h$: Dimension per head
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: Capture long-range dependencies trong sequence
+- **Loss**: Không có loss riêng, là component của transformer
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: Matrix multiplication và softmax
+- **Cập nhật**: Không có parameter learning riêng
+
+### **5. Hyperparams:**
+- **Number of heads**: $h$ (thường 8, 16, 32)
+- **Head dimension**: $d_k = d/h$
+- **Sequence length**: $T$ (context window size)
+
+### **6. Độ phức tạp:**
+- **Time**: $O(T^2 \times d)$ cho attention computation
+- **Space**: $O(T^2)$ cho attention matrix storage
+
+### **7. Metrics đánh giá:**
+- **Attention weights**: Distribution và sparsity
+- **Gradient flow**: Vanishing/exploding gradients
+- **Memory usage**: Memory consumption
+- **Computation speed**: Time per forward pass
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Captures long-range dependencies
+- Parallelizable computation
+- Interpretable attention weights
+- Scalable architecture
+
+**Nhược điểm:**
+- Quadratic complexity $O(T^2)$
+- Memory intensive
+- May not capture all dependencies
+- Position information needed
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Quadratic complexity → memory issues với long sequences
+- **Bẫy**: Attention collapse → all tokens attend to same position
+- **Mẹo**: Use relative positional encoding
+- **Mẹo**: Implement attention caching cho inference
+
+### **10. Pseudocode:**
+```python
+def self_attention(X, W_Q, W_K, W_V, W_O, d_k):
+    # Compute Q, K, V
+    Q = X @ W_Q
+    K = X @ W_K
+    V = X @ W_V
+    
+    # Compute attention scores
+    scores = Q @ K.T / np.sqrt(d_k)
+    attention_weights = softmax(scores)
+    
+    # Apply attention to values
+    output = attention_weights @ V
+    
+    # Apply output projection
+    output = output @ W_O
+    
+    return output, attention_weights
+
+def multi_head_attention(X, num_heads, d_model):
+    d_k = d_model // num_heads
+    outputs = []
+    attention_weights = []
+    
+    for head in range(num_heads):
+        # Get head-specific parameters
+        W_Q = get_head_weights('Q', head, d_k)
+        W_K = get_head_weights('K', head, d_k)
+        W_V = get_head_weights('V', head, d_k)
+        W_O = get_head_weights('O', head, d_k)
+        
+        # Compute attention for this head
+        output, weights = self_attention(X, W_Q, W_K, W_V, W_O, d_k)
+        outputs.append(output)
+        attention_weights.append(weights)
+    
+    # Concatenate outputs
+    concatenated = np.concatenate(outputs, axis=-1)
+    
+    return concatenated, attention_weights
+```
+
+### **11. Code mẫu:**
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class SelfAttention(nn.Module):
+    """Self-Attention Implementation"""
+    
+    def __init__(self, d_model, num_heads, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        
+        # Linear projections
+        self.W_Q = nn.Linear(d_model, d_model)
+        self.W_K = nn.Linear(d_model, d_model)
+        self.W_V = nn.Linear(d_model, d_model)
+        self.W_O = nn.Linear(d_model, d_model)
+        
+        self.dropout = nn.Dropout(dropout)
+        
+    def forward(self, x, mask=None):
+        batch_size, seq_len, d_model = x.size()
+        
+        # Linear projections and reshape
+        Q = self.W_Q(x).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        K = self.W_K(x).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        V = self.W_V(x).view(batch_size, seq_len, self.num_heads, self.d_k).transpose(1, 2)
+        
+        # Compute attention scores
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / np.sqrt(self.d_k)
+        
+        # Apply mask if provided
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -1e9)
+        
+        # Apply softmax
+        attention_weights = F.softmax(scores, dim=-1)
+        attention_weights = self.dropout(attention_weights)
+        
+        # Apply attention to values
+        output = torch.matmul(attention_weights, V)
+        
+        # Reshape and apply output projection
+        output = output.transpose(1, 2).contiguous().view(
+            batch_size, seq_len, d_model
+        )
+        output = self.W_O(output)
+        
+        return output, attention_weights
+
+class TransformerBlock(nn.Module):
+    """Transformer Block with Self-Attention"""
+    
+    def __init__(self, d_model, num_heads, d_ff, dropout=0.1):
+        super().__init__()
+        self.attention = SelfAttention(d_model, num_heads, dropout)
+        self.norm1 = nn.LayerNorm(d_model)
+        self.norm2 = nn.LayerNorm(d_model)
+        
+        self.feed_forward = nn.Sequential(
+            nn.Linear(d_model, d_ff),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(d_ff, d_model),
+            nn.Dropout(dropout)
+        )
+        
+    def forward(self, x, mask=None):
+        # Self-attention with residual connection
+        attn_output, attention_weights = self.attention(x, mask)
+        x = self.norm1(x + attn_output)
+        
+        # Feed-forward with residual connection
+        ff_output = self.feed_forward(x)
+        x = self.norm2(x + ff_output)
+        
+        return x, attention_weights
+
+class SimpleTransformer(nn.Module):
+    """Simple Transformer for Language Modeling"""
+    
+    def __init__(self, vocab_size, d_model, num_heads, num_layers, max_seq_len, dropout=0.1):
+        super().__init__()
+        self.d_model = d_model
+        self.vocab_size = vocab_size
+        
+        # Embeddings
+        self.token_embedding = nn.Embedding(vocab_size, d_model)
+        self.position_embedding = nn.Embedding(max_seq_len, d_model)
+        
+        # Transformer blocks
+        self.transformer_blocks = nn.ModuleList([
+            TransformerBlock(d_model, num_heads, d_model * 4, dropout)
+            for _ in range(num_layers)
+        ])
+        
+        # Output projection
+        self.output_projection = nn.Linear(d_model, vocab_size)
+        self.dropout = nn.Dropout(dropout)
+        
+    def forward(self, x, mask=None):
+        batch_size, seq_len = x.size()
+        
+        # Create position indices
+        positions = torch.arange(seq_len, device=x.device).unsqueeze(0).expand(batch_size, -1)
+        
+        # Get embeddings
+        token_emb = self.token_embedding(x)
+        pos_emb = self.position_embedding(positions)
+        
+        # Combine embeddings
+        x = token_emb + pos_emb
+        x = self.dropout(x)
+        
+        # Pass through transformer blocks
+        attention_weights = []
+        for block in self.transformer_blocks:
+            x, attn_weights = block(x, mask)
+            attention_weights.append(attn_weights)
+        
+        # Output projection
+        output = self.output_projection(x)
+        
+        return output, attention_weights
+
+def demonstrate_attention():
+    """Demonstrate self-attention mechanism"""
+    print("=== Self-Attention Demonstration ===\n")
+    
+    # Model parameters
+    vocab_size = 1000
+    d_model = 128
+    num_heads = 8
+    num_layers = 4
+    max_seq_len = 50
+    
+    # Create model
+    model = SimpleTransformer(vocab_size, d_model, num_heads, num_layers, max_seq_len)
+    
+    # Create sample input
+    batch_size = 2
+    seq_len = 10
+    x = torch.randint(0, vocab_size, (batch_size, seq_len))
+    
+    print(f"Input shape: {x.shape}")
+    print(f"Vocabulary size: {vocab_size}")
+    print(f"Model dimension: {d_model}")
+    print(f"Number of heads: {num_heads}")
+    
+    # Forward pass
+    output, attention_weights = model(x)
+    
+    print(f"\nOutput shape: {output.shape}")
+    print(f"Number of attention layers: {len(attention_weights)}")
+    print(f"Attention weights shape per layer: {attention_weights[0].shape}")
+    
+    # Analyze attention weights
+    print("\n--- Attention Analysis ---")
+    
+    # Get attention weights from first layer, first head
+    first_layer_attention = attention_weights[0][0, 0]  # [seq_len, seq_len]
+    
+    print(f"Attention matrix shape: {first_layer_attention.shape}")
+    print(f"Attention matrix sum per row: {first_layer_attention.sum(dim=-1)}")
+    
+    # Visualize attention weights
+    plt.figure(figsize=(10, 8))
+    plt.imshow(first_layer_attention.detach().numpy(), cmap='Blues')
+    plt.colorbar()
+    plt.title('Self-Attention Weights (Layer 1, Head 1)')
+    plt.xlabel('Key Position')
+    plt.ylabel('Query Position')
+    plt.show()
+    
+    # Compute perplexity
+    logits = output.view(-1, vocab_size)
+    targets = x.view(-1)
+    loss = F.cross_entropy(logits, targets)
+    perplexity = torch.exp(loss)
+    
+    print(f"\nLoss: {loss.item():.4f}")
+    print(f"Perplexity: {perplexity.item():.4f}")
+    
+    return model, attention_weights
+
+def analyze_attention_patterns(attention_weights, layer_idx=0, head_idx=0):
+    """Analyze attention patterns"""
+    attention = attention_weights[layer_idx][0, head_idx]  # [seq_len, seq_len]
+    
+    plt.figure(figsize=(15, 5))
+    
+    # Plot attention matrix
+    plt.subplot(1, 3, 1)
+    plt.imshow(attention.detach().numpy(), cmap='Blues')
+    plt.title(f'Attention Matrix (Layer {layer_idx+1}, Head {head_idx+1})')
+    plt.xlabel('Key Position')
+    plt.ylabel('Query Position')
+    
+    # Plot attention distribution
+    plt.subplot(1, 3, 2)
+    attention_flat = attention.detach().numpy().flatten()
+    plt.hist(attention_flat, bins=50, alpha=0.7)
+    plt.title('Attention Weight Distribution')
+    plt.xlabel('Attention Weight')
+    plt.ylabel('Frequency')
+    
+    # Plot average attention per position
+    plt.subplot(1, 3, 3)
+    avg_attention = attention.mean(dim=0).detach().numpy()
+    plt.bar(range(len(avg_attention)), avg_attention)
+    plt.title('Average Attention per Position')
+    plt.xlabel('Position')
+    plt.ylabel('Average Attention')
+    
+    plt.tight_layout()
+    plt.show()
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Attention weights có sum to 1?
+- [ ] Multi-head có capture different patterns?
+- [ ] Positional encoding có work properly?
+- [ ] Memory usage có acceptable?
+- [ ] Attention có capture dependencies?
+
+---
+
+# 🤖 LLMs và ứng dụng - Large Language Models
+
+> **Mục tiêu**: Trở thành chuyên gia LLMs, hiểu sâu về kiến trúc Transformer, fine-tuning và triển khai các ứng dụng AI thực tế
+
 ## 📋 Tổng quan nội dung
 
 ```mermaid

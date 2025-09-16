@@ -2,6 +2,168 @@
 
 > **Mục tiêu**: Xây dựng nền tảng vững chắc về lập trình, toán học và công cụ cần thiết để trở thành chuyên gia AI/ML
 
+## 📚 **1. Bảng ký hiệu (Notation)**
+
+### **Programming & Data Structures:**
+- **Variable**: $x, y, z$ (biến trong chương trình)
+- **Function**: $f(x), g(x, y)$ (hàm số)
+- **List**: $L = [x_1, x_2, \ldots, x_n]$ (danh sách)
+- **Dictionary**: $D = \{k_1: v_1, k_2: v_2, \ldots\}$ (từ điển)
+- **Set**: $S = \{x_1, x_2, \ldots, x_n\}$ (tập hợp)
+
+### **Mathematics:**
+- **Vector**: $\mathbf{x} = [x_1, x_2, \ldots, x_n]^T$
+- **Matrix**: $\mathbf{A} \in \mathbb{R}^{m \times n}$
+- **Scalar**: $a, b, c \in \mathbb{R}$
+- **Function**: $f: \mathbb{R}^n \rightarrow \mathbb{R}$
+- **Gradient**: $\nabla f(\mathbf{x}) = [\frac{\partial f}{\partial x_1}, \ldots, \frac{\partial f}{\partial x_n}]^T$
+
+### **Statistics & Probability:**
+- **Mean**: $\mu = \frac{1}{n}\sum_{i=1}^n x_i$
+- **Variance**: $\sigma^2 = \frac{1}{n}\sum_{i=1}^n (x_i - \mu)^2$
+- **Probability**: $P(A)$ (xác suất của sự kiện A)
+- **Expectation**: $\mathbb{E}[X] = \sum_x x \cdot P(X=x)$
+
+### **Database:**
+- **Table**: $T(A_1, A_2, \ldots, A_n)$ (bảng với attributes)
+- **Query**: $Q = \sigma_{condition}(T)$ (selection query)
+- **Join**: $T_1 \bowtie_{condition} T_2$ (join operation)
+
+## 📖 **2. Glossary (Định nghĩa cốt lõi)**
+
+### **Programming Concepts:**
+- **Algorithm**: Thuật toán - tập hợp các bước để giải quyết bài toán
+- **Data Structure**: Cấu trúc dữ liệu - cách tổ chức và lưu trữ dữ liệu
+- **Time Complexity**: Độ phức tạp thời gian - thời gian chạy của thuật toán
+- **Space Complexity**: Độ phức tạp không gian - bộ nhớ cần thiết
+
+### **Mathematics:**
+- **Linear Algebra**: Đại số tuyến tính - nghiên cứu về vectors, matrices
+- **Calculus**: Giải tích - nghiên cứu về derivatives, integrals
+- **Statistics**: Thống kê - thu thập, phân tích và diễn giải dữ liệu
+- **Probability**: Xác suất - nghiên cứu về uncertainty và randomness
+
+### **Database:**
+- **SQL**: Structured Query Language - ngôn ngữ truy vấn cơ sở dữ liệu
+- **Index**: Chỉ mục - cấu trúc dữ liệu để tăng tốc truy vấn
+- **Normalization**: Chuẩn hóa - quá trình tổ chức dữ liệu để giảm redundancy
+
+### **Visualization:**
+- **Chart**: Biểu đồ - cách biểu diễn dữ liệu trực quan
+- **Dashboard**: Bảng điều khiển - tập hợp các biểu đồ và metrics
+- **Storytelling**: Kể chuyện bằng dữ liệu - cách trình bày insights
+
+## 📐 **3. Thẻ thuật toán - List Comprehension**
+
+### **1. Bài toán & dữ liệu:**
+- **Bài toán**: Tạo list mới từ iterable với điều kiện và transformation
+- **Dữ liệu**: Iterable $I = \{x_1, x_2, \ldots, x_n\}$, condition $C(x)$, transformation $T(x)$
+- **Ứng dụng**: Data processing, feature engineering, filtering
+
+### **2. Mô hình & công thức:**
+**List Comprehension:**
+$$L = [T(x) \text{ for } x \text{ in } I \text{ if } C(x)]$$
+
+**Generator Expression:**
+$$G = (T(x) \text{ for } x \text{ in } I \text{ if } C(x))$$
+
+Trong đó:
+- $T(x)$: Transformation function
+- $C(x)$: Condition function
+- $I$: Input iterable
+
+### **3. Loss & mục tiêu:**
+- **Mục tiêu**: Tạo collection mới một cách concise và readable
+- **Loss**: Không có loss, là data transformation
+
+### **4. Tối ưu hoá & cập nhật:**
+- **Algorithm**: Iterate through input và apply transformation
+- **Cập nhật**: Không có parameter learning
+
+### **5. Hyperparams:**
+- **Input size**: $n$ (số phần tử trong iterable)
+- **Condition complexity**: $O(C(x))$ (độ phức tạp của condition)
+- **Transformation complexity**: $O(T(x))$ (độ phức tạp của transformation)
+
+### **6. Độ phức tạp:**
+- **Time**: $O(n \times (C(x) + T(x)))$
+- **Space**: 
+  - List comprehension: $O(n)$ (lưu toàn bộ result)
+  - Generator: $O(1)$ (chỉ lưu iterator state)
+
+### **7. Metrics đánh giá:**
+- **Readability**: Code có dễ đọc không?
+- **Performance**: Memory usage và execution time
+- **Maintainability**: Code có dễ maintain không?
+
+### **8. Ưu / Nhược:**
+**Ưu điểm:**
+- Concise và readable
+- Pythonic style
+- Memory efficient với generator
+
+**Nhược điểm:**
+- Có thể khó debug
+- Không phù hợp cho complex logic
+- Nested comprehension có thể khó đọc
+
+### **9. Bẫy & mẹo:**
+- **Bẫy**: Nested comprehension quá phức tạp → khó đọc
+- **Bẫy**: Quên condition → tạo list không mong muốn
+- **Mẹo**: Dùng generator cho large datasets
+- **Mẹo**: Break complex logic thành multiple steps
+
+### **10. Pseudocode:**
+```python
+def list_comprehension(iterable, condition, transform):
+    result = []
+    for item in iterable:
+        if condition(item):
+            result.append(transform(item))
+    return result
+
+def generator_expression(iterable, condition, transform):
+    for item in iterable:
+        if condition(item):
+            yield transform(item)
+```
+
+### **11. Code mẫu:**
+```python
+# List comprehension - tạo list các số chẵn bình phương
+squares = [x**2 for x in range(10) if x % 2 == 0]
+# Kết quả: [0, 4, 16, 36, 64]
+
+# Generator expression - tiết kiệm bộ nhớ, chỉ tính khi cần
+squares_gen = (x**2 for x in range(10) if x % 2 == 0)
+# Kết quả: generator object, không chiếm bộ nhớ
+
+# Feature engineering với generator - tiết kiệm memory
+def feature_generator(data_stream):
+    """Tạo features từ data stream mà không load toàn bộ vào memory"""
+    for batch in data_stream:
+        features = [extract_feature(x) for x in batch]
+        yield features
+
+# Nested comprehension example
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened = [item for row in matrix for item in row]
+# Kết quả: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Dictionary comprehension
+squares_dict = {x: x**2 for x in range(5)}
+# Kết quả: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+```
+
+### **12. Checklist kiểm tra nhanh:**
+- [ ] Comprehension có readable?
+- [ ] Condition có đúng logic?
+- [ ] Transformation có efficient?
+- [ ] Memory usage có acceptable?
+- [ ] Code có maintainable?
+
+---
+
 ## 📋 Tổng quan nội dung
 
 ```mermaid

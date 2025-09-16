@@ -773,6 +773,25 @@ graph TD
 - **Nâng cao**: AMP (Mixed Precision), Distributed (DDP), Checkpointing, Logging
 - **Hiệu năng & Triển khai**: Profiling, TorchScript/JIT, ONNX, FastAPI/TorchServe/Triton
 
+### 🧮 **Toán học nâng cao** - [16-advanced-mathematics.md](./16-advanced-mathematics.md)
+> **Mục tiêu**: Hiểu sâu các khái niệm toán học cốt lõi trong AI/ML
+
+**Nội dung chính**:
+- **Đại số tuyến tính**: SVD, Eigenvalue theory, Tensor operations
+- **Giải tích & Tối ưu**: Convex optimization, Gradient methods, Lagrange multipliers
+- **Xác suất & Thống kê**: Bayesian inference, Statistical learning theory, Information theory
+- **Lý thuyết học máy**: VC dimension, PAC learning, Generalization bounds
+
+### 🖼️ **Computer Vision nâng cao** - [17-computer-vision.md](./17-computer-vision.md)
+> **Mục tiêu**: Hiểu sâu về Computer Vision từ lý thuyết đến triển khai thực tế
+
+**Nội dung chính**:
+- **Image Processing**: Filters, Edge detection, Convolution operations
+- **Deep Learning CV**: CNN architectures, Transfer learning, Attention mechanisms
+- **Object Detection**: YOLO, R-CNN, Non-maximum suppression
+- **Image Segmentation**: U-Net, Mask R-CNN, Dice loss
+- **Feature Extraction**: SIFT, Deep features, Feature matching
+
 ### 🔍 **Tìm kiếm ngữ nghĩa** - [search.md](./search.md)
 > **Mục tiêu**: Hỗ trợ tìm kiếm thông tin trong tài liệu một cách thông minh
 
