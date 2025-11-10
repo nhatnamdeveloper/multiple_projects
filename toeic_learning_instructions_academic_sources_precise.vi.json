@@ -1,0 +1,800 @@
+{
+  "version": "1.0",
+  "type": "my_gpt_instructions",
+  "language": "vi",
+  "name": "TOEIC — Academic Curriculum",
+  "instructions": {
+    "role": "Bạn là trợ lý học thuật TOEIC",
+    "goals": [
+      "Giáo trình Bachelor→Master→PhD",
+      "Nguồn chính thống ETS/Oxford/Cambridge"
+    ],
+    "style": [
+      "Hàn lâm nhưng thực dụng"
+    ]
+  },
+  "conversation_starters": [
+    {
+      "label": "[Mini-project] Luyện Part 1 với 100 tranh mô tả cơ bản",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/sample-questions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Part 2: phân tích 50 câu bẫy Q&A",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/sample-questions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Part 3: shadowing transcript hội thoại",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/overview"
+      ]
+    },
+    {
+      "label": "[Mini-project] Part 4: nghe tin tức & note-taking",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/overview"
+      ]
+    },
+    {
+      "label": "[Mini-project] Luyện connected speech và nuốt âm",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://www.cambridge.org/elt/blog/2020/03/09/connected-speech/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Luyện giọng đa quốc gia (Anh, Mỹ, Úc, Ấn, Singapore)",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://learnenglish.britishcouncil.org/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Tự tạo mock test Listening 45 phút",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/sample-questions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Nghe podcast business (BBC, NPR)",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://www.bbc.co.uk/learningenglish",
+        "https://www.npr.org/sections/education/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Listening chuyên ngành (HR, Finance, Tech)",
+      "group": [
+        "Listening"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://learnenglish.britishcouncil.org/skills/listening"
+      ]
+    },
+    {
+      "label": "[Research-level] Phân tích corpus TOEIC Listening tìm mẫu câu bẫy",
+      "group": [
+        "Listening"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://journals.sagepub.com/home/lal"
+      ]
+    },
+    {
+      "label": "[Mini-project] Part 5: ngữ pháp thì và mệnh đề quan hệ",
+      "group": [
+        "Reading"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.oxfordlearnersdictionaries.com/grammar/english-grammar-today/relative-clauses"
+      ]
+    },
+    {
+      "label": "[Mini-project] Part 5 nâng cao: giới từ & inversions",
+      "group": [
+        "Reading"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://dictionary.cambridge.org/grammar/british-grammar/prepositions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Part 6: điền từ theo ngữ cảnh",
+      "group": [
+        "Reading"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/sample-questions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Part 7: luyện đọc hiểu đoạn đơn",
+      "group": [
+        "Reading"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/sample-questions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Part 7: multi-passage và tìm thông tin chéo",
+      "group": [
+        "Reading"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/sample-questions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Đọc nhanh (skimming) 500 từ/phút",
+      "group": [
+        "Reading"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://owl.purdue.edu/owl/english_as_a_second_language/esl_students/skimming_and_scanning.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Đọc chi tiết (scanning) để tìm số liệu",
+      "group": [
+        "Reading"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://owl.purdue.edu/owl/english_as_a_second_language/esl_students/skimming_and_scanning.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Luyện idioms và phrasal verbs",
+      "group": [
+        "Reading"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://dictionary.cambridge.org/dictionary/english/phrasal-verb"
+      ]
+    },
+    {
+      "label": "[Mini-project] Business English hiện đại (remote work, e-commerce, AI)",
+      "group": [
+        "Reading"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://www.cambridge.org/elt/catalogue/subject/project/custom/item6646603/Business-Benchmark"
+      ]
+    },
+    {
+      "label": "[Research-level] Corpus linguistics phân tích đề TOEIC Part 7",
+      "group": [
+        "Reading"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://journals.sagepub.com/home/lal"
+      ]
+    },
+    {
+      "label": "[Mini-project] Bộ 50 từ vựng chủ đề Office & HR",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.oxfordlearnersdictionaries.com/wordlists/oxford3000-5000"
+      ]
+    },
+    {
+      "label": "[Mini-project] Bộ 50 từ vựng Finance & Accounting",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://dictionary.cambridge.org/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Bộ 50 từ vựng Travel & Hotel",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://www.oxfordlearnersdictionaries.com/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Bộ 50 từ vựng Technology",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://dictionary.cambridge.org/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Bộ collocations TOEIC thường gặp",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://www.oxfordlearnersdictionaries.com/wordlists/oxford-collocations"
+      ]
+    },
+    {
+      "label": "[Mini-project] Flashcards bằng Anki/Quizlet",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://apps.ankiweb.net/",
+        "https://quizlet.com/en-gb"
+      ]
+    },
+    {
+      "label": "[Mini-project] Luyện từ vựng qua email mẫu",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://learnenglish.britishcouncil.org/skills/writing"
+      ]
+    },
+    {
+      "label": "[Mini-project] Luyện từ vựng qua hợp đồng",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://dictionary.cambridge.org/"
+      ]
+    },
+    {
+      "label": "[Research-level] Thống kê từ vựng high-frequency trong TOEIC",
+      "group": [
+        "Vocabulary"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://www.ets.org/toeic/research"
+      ]
+    },
+    {
+      "label": "[Mini-project] Làm đề ETS TOEIC 2023",
+      "group": [
+        "Practice & Tools"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/official-prep-materials"
+      ]
+    },
+    {
+      "label": "[Mini-project] Làm đề Economy TOEIC 1000",
+      "group": [
+        "Practice & Tools"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://hackerspublishers.com/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Adaptive testing bằng AI",
+      "group": [
+        "Practice & Tools"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://www.ets.org/research/topics/ai-ml"
+      ]
+    },
+    {
+      "label": "[Mini-project] Tạo mock test 200 câu",
+      "group": [
+        "Practice & Tools"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/sample-questions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Dùng Voice AI luyện Part 2–4",
+      "group": [
+        "Practice & Tools"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://speech.microsoft.com/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Podcast dictation 15 phút/ngày",
+      "group": [
+        "Practice & Tools"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://www.npr.org/sections/education/"
+      ]
+    },
+    {
+      "label": "[Mini-project] App TOEIC Test Pro luyện daily quiz",
+      "group": [
+        "Practice & Tools"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://toeic-testpro.com/"
+      ]
+    },
+    {
+      "label": "[Research-level] Dùng LLM tạo câu hỏi TOEIC mới",
+      "group": [
+        "Practice & Tools"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://arxiv.org/abs/2307.03172"
+      ]
+    },
+    {
+      "label": "[Mini-project] Speaking Part 1: đọc đoạn văn",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Mini-project] Speaking Part 2: mô tả tranh",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Mini-project] Speaking Part 3: trả lời câu hỏi",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Mini-project] Speaking Part 4: trả lời theo biểu đồ",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Mini-project] Speaking Part 5: đề xuất giải pháp business",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Mini-project] Speaking Part 6: nêu quan điểm",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Mini-project] Writing Part 1: viết câu mô tả tranh",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Mini-project] Writing Part 2: viết email trả lời khách hàng",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Mini-project] Writing Part 3: luận 300 từ về đề business",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/speaking-writing/about/content"
+      ]
+    },
+    {
+      "label": "[Research-level] Phân tích rubric chấm Speaking & Writing TOEIC",
+      "group": [
+        "Speaking & Writing"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://www.ets.org/toeic/research"
+      ]
+    },
+    {
+      "label": "[Mini-project] Thi thử 1 đề full → phân tích điểm mạnh/yếu",
+      "group": [
+        "Tracking"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/tests/sample-questions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Theo dõi trajectory điểm 3 tuần",
+      "group": [
+        "Tracking"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/overview"
+      ]
+    },
+    {
+      "label": "[Mini-project] Lập plan 2 tháng từ 500 → 750",
+      "group": [
+        "Tracking"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://www.ets.org/toeic/test-takers/prepare/overview"
+      ]
+    },
+    {
+      "label": "[Mini-project] Sử dụng AI để generate flashcards từ lỗi sai",
+      "group": [
+        "Tracking"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://arxiv.org/abs/2307.03172"
+      ]
+    },
+    {
+      "label": "[Research-level] Machine learning dự đoán điểm TOEIC dựa trên kết quả practice",
+      "group": [
+        "Tracking"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://arxiv.org/abs/1811.00731"
+      ]
+    }
+  ]
+}

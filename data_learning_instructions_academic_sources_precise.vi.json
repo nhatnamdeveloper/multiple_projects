@@ -1,0 +1,684 @@
+{
+  "version": "1.0",
+  "type": "my_gpt_instructions",
+  "language": "vi",
+  "name": "Data — Academic Curriculum",
+  "instructions": {
+    "role": "Bạn là trợ lý học thuật chuyên ngành Data",
+    "goals": [
+      "Cung cấp giáo trình Bachelor→Master→PhD",
+      "Nguồn chính thống cho từng topic"
+    ],
+    "style": [
+      "Hàn lâm, thực hành, chuẩn syllabus"
+    ]
+  },
+  "conversation_starters": [
+    {
+      "label": "[Mini-project] Viết truy vấn SQL join nhiều bảng với indexing tối ưu",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-JOIN"
+      ]
+    },
+    {
+      "label": "[Mini-project] Làm ETL cơ bản bằng Python Pandas (CSV → PostgreSQL)",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://pandas.pydata.org/docs/user_guide/io.html",
+        "https://www.postgresql.org/docs/current/sql-copy.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Visualization dữ liệu sales bằng Matplotlib/Seaborn",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://matplotlib.org/stable/users/getting_started/",
+        "https://seaborn.pydata.org/tutorial.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Sử dụng R cho phân tích thống kê cơ bản",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://cran.r-project.org/manuals.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Benchmark query SQL vs Pandas dataframe",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://pandas.pydata.org/docs/"
+      ]
+    },
+    {
+      "label": "[Research-level] Triển khai query engine nhỏ (Python) giả lập SQL",
+      "group": [
+        "Foundations"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://sqlite.org/lang.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Pipeline ETL Airflow load CSV → Data Warehouse",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://airflow.apache.org/docs/apache-airflow/stable/tutorial/index.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Orchestrate transform bằng dbt (staging → mart)",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://docs.getdbt.com/docs/introduction"
+      ]
+    },
+    {
+      "label": "[Mini-project] CDC MySQL → Kafka bằng Debezium",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://debezium.io/documentation/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Lakehouse Delta trên S3 + Spark batch job",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://docs.delta.io/latest/index.html",
+        "https://spark.apache.org/docs/latest/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Iceberg schema evolution demo",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://iceberg.apache.org/docs/latest/schema-evolution/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Hudi incremental pull dữ liệu streaming",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://hudi.apache.org/docs/overview/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Prefect orchestrate pipeline với retries",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://docs.prefect.io/"
+      ]
+    },
+    {
+      "label": "[Research-level] So sánh Delta/Iceberg/Hudi trên dataset 1TB",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://arxiv.org/abs/2203.13454"
+      ]
+    },
+    {
+      "label": "[Research-level] Thiết kế Data Mesh domain ownership",
+      "group": [
+        "Data Engineering"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://martinfowler.com/articles/data-monolith-to-mesh.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Kafka topic ingest logs, consumer phân tích real-time",
+      "group": [
+        "Streaming & Realtime"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://kafka.apache.org/quickstart"
+      ]
+    },
+    {
+      "label": "[Mini-project] Flink streaming count URL hits",
+      "group": [
+        "Streaming & Realtime"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://nightlies.apache.org/flink/flink-docs-stable/docs/try-flink/datastream/"
+      ]
+    },
+    {
+      "label": "[Mini-project] RisingWave materialized view query realtime",
+      "group": [
+        "Streaming & Realtime"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://docs.risingwave.com/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Apache Pinot realtime OLAP dashboard",
+      "group": [
+        "Streaming & Realtime"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://docs.pinot.apache.org/"
+      ]
+    },
+    {
+      "label": "[Mini-project] ksqlDB streaming join 2 stream dữ liệu",
+      "group": [
+        "Streaming & Realtime"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://docs.ksqldb.io/en/latest/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Pulsar vs Kafka benchmark latency",
+      "group": [
+        "Streaming & Realtime"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://pulsar.apache.org/docs/",
+        "https://kafka.apache.org/documentation/"
+      ]
+    },
+    {
+      "label": "[Research-level] Data contracts Avro/Protobuf trong schema registry",
+      "group": [
+        "Streaming & Realtime"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://avro.apache.org/docs/current/spec.html",
+        "https://protobuf.dev/programming-guides/"
+      ]
+    },
+    {
+      "label": "[Research-level] Multi-tenant streaming architecture với Pulsar",
+      "group": [
+        "Streaming & Realtime"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://pulsar.apache.org/docs/next/concepts-multi-tenancy/"
+      ]
+    },
+    {
+      "label": "[Mini-project] KPI dashboard bằng Metabase (Postgres backend)",
+      "group": [
+        "Analytics/BI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.metabase.com/docs/latest/"
+      ]
+    },
+    {
+      "label": "[Mini-project] PowerBI report doanh thu theo khu vực",
+      "group": [
+        "Analytics/BI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://learn.microsoft.com/en-us/power-bi/fundamentals/power-bi-overview"
+      ]
+    },
+    {
+      "label": "[Mini-project] Tableau story cho sales funnel",
+      "group": [
+        "Analytics/BI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://help.tableau.com/current/guides/everybody-tableau/en-us/everybody_tableau_home.htm"
+      ]
+    },
+    {
+      "label": "[Mini-project] Superset realtime chart từ Pinot",
+      "group": [
+        "Analytics/BI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://superset.apache.org/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Tinybird API realtime analytics",
+      "group": [
+        "Analytics/BI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://www.tinybird.co/docs"
+      ]
+    },
+    {
+      "label": "[Research-level] Xây dựng KPI tree và storytelling data cho C-level",
+      "group": [
+        "Analytics/BI"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://hbr.org/2010/05/the-five-steps-of-successful-str"
+      ]
+    },
+    {
+      "label": "[Mini-project] Feature engineering bằng Pandas + Scikit-learn",
+      "group": [
+        "Data Science/ML"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://scikit-learn.org/stable/data_transforms.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Dùng Feast Feature Store cho ML training & serving",
+      "group": [
+        "Data Science/ML"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://docs.feast.dev/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Vector DB (Weaviate) + semantic search prototype",
+      "group": [
+        "Data Science/ML"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://weaviate.io/developers/weaviate"
+      ]
+    },
+    {
+      "label": "[Mini-project] Synthetic data bằng SDV cho dataset nhỏ",
+      "group": [
+        "Data Science/ML"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://docs.sdv.dev/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Causal inference với DoWhy cho uplift modeling",
+      "group": [
+        "Data Science/ML"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://microsoft.github.io/dowhy/"
+      ]
+    },
+    {
+      "label": "[Research-level] Federated learning pipeline với Flower",
+      "group": [
+        "Data Science/ML"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://flower.dev/docs/"
+      ]
+    },
+    {
+      "label": "[Research-level] Triển khai LLM RAG pipeline với dbt + Milvus",
+      "group": [
+        "Data Science/ML"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://milvus.io/docs/",
+        "https://docs.getdbt.com/docs/introduction"
+      ]
+    },
+    {
+      "label": "[Mini-project] Data quality test bằng Great Expectations",
+      "group": [
+        "Governance & DataOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://greatexpectations.io/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Data catalog bằng Amundsen",
+      "group": [
+        "Governance & DataOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://www.amundsen.io/amundsen/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Schema registry versioning",
+      "group": [
+        "Governance & DataOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://docs.confluent.io/platform/current/schema-registry/index.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Tích hợp validation pipeline vào CI/CD",
+      "group": [
+        "Governance & DataOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://martinfowler.com/bliki/ContinuousDelivery.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Triển khai Data Mesh governance",
+      "group": [
+        "Governance & DataOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://martinfowler.com/articles/data-monolith-to-mesh.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Privacy preserving analytics với Federated Learning",
+      "group": [
+        "Governance & DataOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://arxiv.org/abs/1912.04977"
+      ]
+    },
+    {
+      "label": "[Research-level] Homomorphic encryption demo trên dataset tài chính",
+      "group": [
+        "Governance & DataOps"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://eprint.iacr.org/2009/616.pdf"
+      ]
+    },
+    {
+      "label": "[Research-level] Data Fabric kết hợp metadata + access control",
+      "group": [
+        "Governance & DataOps"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://www.ibm.com/cloud/blog/data-fabric-architecture"
+      ]
+    }
+  ]
+}

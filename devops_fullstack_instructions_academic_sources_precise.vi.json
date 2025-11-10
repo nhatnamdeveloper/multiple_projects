@@ -1,0 +1,1004 @@
+{
+  "version": "1.0",
+  "type": "my_gpt_instructions",
+  "language": "vi",
+  "name": "DevOps & Fullstack Developer — Academic Curriculum",
+  "instructions": {
+    "role": "Bạn là trợ lý DevOps & Fullstack Developer chuyên gia học thuật",
+    "goals": [
+      "Cung cấp giáo trình học thuật Bachelor→Master→PhD",
+      "Mỗi topic có source chính xác"
+    ],
+    "style": [
+      "Hàn lâm, thực hành, dẫn chứng chuẩn"
+    ]
+  },
+  "conversation_starters": [
+    {
+      "label": "[Mini-project] Tạo trang web HTML/CSS/JS đơn giản (portfolio)",
+      "group": [
+        "Frontend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web"
+      ]
+    },
+    {
+      "label": "[Mini-project] Xây ứng dụng React todo list với state hook",
+      "group": [
+        "Frontend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://react.dev/learn/tutorial-tic-tac-toe"
+      ]
+    },
+    {
+      "label": "[Mini-project] Dùng Vue + Pinia quản lý state shopping cart",
+      "group": [
+        "Frontend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://pinia.vuejs.org/introduction.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] SSR bằng Next.js: blog cá nhân",
+      "group": [
+        "Frontend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts"
+      ]
+    },
+    {
+      "label": "[Mini-project] Micro-frontend với Module Federation (2 app React + 1 app Vue)",
+      "group": [
+        "Frontend"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://webpack.js.org/concepts/module-federation/"
+      ]
+    },
+    {
+      "label": "[Mini-project] So sánh hiệu năng Vite vs Webpack (bundle report)",
+      "group": [
+        "Frontend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://vitejs.dev/guide/why.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] WebAssembly (Rust → Wasm) hiển thị trong React app",
+      "group": [
+        "Frontend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://rustwasm.github.io/docs/book/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Tích hợp TailwindCSS + Storybook xây design system",
+      "group": [
+        "Frontend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://tailwindcss.com/docs/installation",
+        "https://storybook.js.org/docs/react/get-started/introduction"
+      ]
+    },
+    {
+      "label": "[Research-level] Kiến trúc micro-frontend cho SaaS 100+ module",
+      "group": [
+        "Frontend"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://micro-frontends.org/"
+      ]
+    },
+    {
+      "label": "[Research-level] Progressive Web App (PWA) với offline caching + push notification",
+      "group": [
+        "Frontend"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://web.dev/learn/pwa/"
+      ]
+    },
+    {
+      "label": "[Mini-project] REST API CRUD bằng Express + PostgreSQL",
+      "group": [
+        "Backend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://expressjs.com/en/starter/basic-routing.html",
+        "https://www.postgresql.org/docs/current/tutorial-start.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] API NestJS + Prisma ORM + migrations",
+      "group": [
+        "Backend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://docs.nestjs.com/",
+        "https://www.prisma.io/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Realtime chat bằng WebSocket + Redis Pub/Sub",
+      "group": [
+        "Backend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+        "https://redis.io/docs/interact/pubsub/"
+      ]
+    },
+    {
+      "label": "[Mini-project] GraphQL API với Apollo Federation (multi service)",
+      "group": [
+        "Backend"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://www.apollographql.com/docs/federation/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Rust web service với Actix Web, kết nối DB",
+      "group": [
+        "Backend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://actix.rs/docs/",
+        "https://docs.rs/sqlx/latest/sqlx/"
+      ]
+    },
+    {
+      "label": "[Mini-project] gRPC service Node.js ↔ Rust",
+      "group": [
+        "Backend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://grpc.io/docs/languages/node/",
+        "https://grpc.io/docs/languages/rust/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Authentication: JWT + Refresh Token rotation",
+      "group": [
+        "Backend"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://jwt.io/introduction/"
+      ]
+    },
+    {
+      "label": "[Mini-project] CQRS + Event Sourcing với Kafka",
+      "group": [
+        "Backend"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://martinfowler.com/bliki/CQRS.html",
+        "https://kafka.apache.org/documentation/"
+      ]
+    },
+    {
+      "label": "[Research-level] Saga pattern với microservices giao dịch đa bước",
+      "group": [
+        "Backend"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://microservices.io/patterns/data/saga.html"
+      ]
+    },
+    {
+      "label": "[Research-level] BFF GraphQL cho mobile/web app",
+      "group": [
+        "Backend"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://www.apollographql.com/docs/apollo-server/schema/apollo-federation/"
+      ]
+    },
+    {
+      "label": "[Research-level] Benchmark Node.js cluster vs Rust Actix throughput",
+      "group": [
+        "Backend"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 10,
+      "source": [
+        "https://nodejs.org/api/cluster.html",
+        "https://actix.rs/"
+      ]
+    },
+    {
+      "label": "[Research-level] Xây dựng hệ thống recommendation realtime với gRPC streaming",
+      "group": [
+        "Backend"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 11,
+      "source": [
+        "https://grpc.io/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] PostgreSQL schema + indexing cho app bán hàng",
+      "group": [
+        "Database"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.postgresql.org/docs/current/indexes-intro.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] MongoDB schema cho blog (comments + likes)",
+      "group": [
+        "Database"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://www.mongodb.com/docs/manual/core/data-model-design/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Redis cache layer cho API responses",
+      "group": [
+        "Database"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://redis.io/docs/interact/cache/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Vector DB (Weaviate) + semantic search demo",
+      "group": [
+        "Database"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://weaviate.io/developers/weaviate"
+      ]
+    },
+    {
+      "label": "[Mini-project] Time-series DB (QuestDB) lưu logs",
+      "group": [
+        "Database"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://questdb.io/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Replication PostgreSQL (primary → standby)",
+      "group": [
+        "Database"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://www.postgresql.org/docs/current/warm-standby.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] CDC MySQL → Kafka → Data Warehouse",
+      "group": [
+        "Database"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://debezium.io/documentation/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Benchmark query SQL vs NoSQL",
+      "group": [
+        "Database"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://www.mongodb.com/nosql-explained/nosql-vs-sql"
+      ]
+    },
+    {
+      "label": "[Research-level] Sharding CockroachDB multi-region",
+      "group": [
+        "Database"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://www.cockroachlabs.com/docs/stable/multiregion-overview.html"
+      ]
+    },
+    {
+      "label": "[Research-level] Tích hợp PostgreSQL + Vector DB cho RAG pipeline",
+      "group": [
+        "Database"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://github.com/pgvector/pgvector"
+      ]
+    },
+    {
+      "label": "[Research-level] Tối ưu hóa hybrid database cho AI application",
+      "group": [
+        "Database"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 10,
+      "source": [
+        "https://arxiv.org/abs/2206.01620"
+      ]
+    },
+    {
+      "label": "[Mini-project] Viết Dockerfile cho Node.js + Rust app",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://docs.docker.com/engine/reference/builder/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Compose multi-service (Node + DB + Redis)",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://docs.docker.com/compose/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Triển khai app bằng Podman rootless",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://podman.io/docs"
+      ]
+    },
+    {
+      "label": "[Mini-project] CI/CD GitHub Actions build/test/lint",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://docs.github.com/en/actions"
+      ]
+    },
+    {
+      "label": "[Mini-project] GitOps pipeline với ArgoCD sync từ Git",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://argo-cd.readthedocs.io/en/stable/"
+      ]
+    },
+    {
+      "label": "[Mini-project] IaC bằng Terraform: tạo EC2 + RDS",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://developer.hashicorp.com/terraform/docs"
+      ]
+    },
+    {
+      "label": "[Mini-project] Kubernetes deployment cho Node.js app + autoscaling",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Helm chart custom cho microservice",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://helm.sh/docs/topics/charts/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Canary deployment với Istio",
+      "group": [
+        "DevOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://istio.io/latest/docs/tasks/traffic-management/canary/"
+      ]
+    },
+    {
+      "label": "[Research-level] Multi-cluster Kubernetes federation",
+      "group": [
+        "DevOps"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://kubernetes.io/docs/concepts/cluster-administration/federation/"
+      ]
+    },
+    {
+      "label": "[Research-level] Chaos Engineering với LitmusChaos: mô phỏng mất node",
+      "group": [
+        "DevOps"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 10,
+      "source": [
+        "https://litmuschaos.io/docs/"
+      ]
+    },
+    {
+      "label": "[Research-level] FinOps dashboard tính chi phí cloud tự động",
+      "group": [
+        "DevOps"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 11,
+      "source": [
+        "https://www.finops.org/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Logging tập trung bằng Loki + Grafana",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://grafana.com/docs/loki/latest/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Metrics Prometheus + dashboard Grafana",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://prometheus.io/docs/introduction/overview/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Tracing với OpenTelemetry (Node + Rust)",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://opentelemetry.io/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Alerting với Alertmanager khi CPU > 80%",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://prometheus.io/docs/alerting/latest/alertmanager/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Secrets management bằng Vault",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://developer.hashicorp.com/vault/docs"
+      ]
+    },
+    {
+      "label": "[Mini-project] Dependency scanning bằng npm audit + cargo audit",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://docs.npmjs.com/cli/v9/commands/npm-audit",
+        "https://github.com/rustsec/rustsec"
+      ]
+    },
+    {
+      "label": "[Mini-project] Build SBOM bằng Syft, kiểm thử bằng Grype",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://github.com/anchore/syft",
+        "https://github.com/anchore/grype"
+      ]
+    },
+    {
+      "label": "[Mini-project] eBPF Pixie để trace network trong Kubernetes",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://px.dev/"
+      ]
+    },
+    {
+      "label": "[Research-level] End-to-end observability với OpenTelemetry across 10 services",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://opentelemetry.io/docs/"
+      ]
+    },
+    {
+      "label": "[Research-level] Supply chain security với Sigstore cosign",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://docs.sigstore.dev/signing/cosign/"
+      ]
+    },
+    {
+      "label": "[Research-level] Zero Trust architecture demo với Istio + OPA/Gatekeeper",
+      "group": [
+        "Observability & Security"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 10,
+      "source": [
+        "https://istio.io/latest/docs/concepts/security/",
+        "https://open-policy-agent.github.io/gatekeeper/website/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Hello World Cloudflare Workers",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://developers.cloudflare.com/workers/get-started/guide/"
+      ]
+    },
+    {
+      "label": "[Mini-project] API serverless bằng Vercel Edge Functions",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://vercel.com/docs/functions/edge-functions"
+      ]
+    },
+    {
+      "label": "[Mini-project] CRUD database bằng Supabase",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://supabase.com/docs"
+      ]
+    },
+    {
+      "label": "[Mini-project] Appwrite backend (auth + DB + file)",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://appwrite.io/docs"
+      ]
+    },
+    {
+      "label": "[Mini-project] Firebase Functions xử lý event realtime",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://firebase.google.com/docs/functions"
+      ]
+    },
+    {
+      "label": "[Mini-project] Deploy AI inference tại edge (Cloudflare Workers AI)",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://developers.cloudflare.com/workers-ai/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Benchmark latency giữa Edge vs Centralized server",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://developers.cloudflare.com/workers/learning/"
+      ]
+    },
+    {
+      "label": "[Research-level] Multi-cloud Edge deployment strategy",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://arxiv.org/abs/2209.13477"
+      ]
+    },
+    {
+      "label": "[Research-level] Distributed caching layer tại edge (FaunaDB, Cloudflare KV)",
+      "group": [
+        "Edge/Serverless"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://developers.cloudflare.com/workers/runtime-apis/kv/"
+      ]
+    }
+  ]
+}

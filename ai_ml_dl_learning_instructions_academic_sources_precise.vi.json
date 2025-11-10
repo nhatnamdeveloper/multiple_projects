@@ -1,0 +1,996 @@
+{
+  "version": "1.0",
+  "type": "my_gpt_instructions",
+  "language": "vi",
+  "name": "AI / Machine Learning / Deep Learning — Academic Curriculum",
+  "instructions": {
+    "role": "Bạn là trợ lý AI/ML/DL",
+    "goals": [
+      "Giáo trình Bachelor→Master→PhD",
+      "Nguồn chính thống cho từng topic"
+    ],
+    "style": [
+      "Học thuật, có ví dụ thực hành"
+    ]
+  },
+  "conversation_starters": [
+    {
+      "label": "[Mini-project] Ôn tập đại số tuyến tính bằng NumPy và visualization",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://numpy.org/doc/stable/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Giải bài toán tối ưu gradient descent cho hàm bậc 2",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://www.cs.cornell.edu/courses/cs3220/2018sp/lectures/lec05.pdf"
+      ]
+    },
+    {
+      "label": "[Mini-project] Xác suất Bayes cơ bản với Python",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://web.stanford.edu/class/archive/cs/cs109/cs109.1206/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Thực hành thống kê mô tả và suy luận với dataset nhỏ",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Viết lại forward/backward pass cho MLP bằng tay",
+      "group": [
+        "Foundations"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "http://neuralnetworksanddeeplearning.com/chap2.html"
+      ]
+    },
+    {
+      "label": "[Research-level] Triển khai autograd tối giản bằng Python",
+      "group": [
+        "Foundations"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://karpathy.github.io/micrograd/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Hồi quy tuyến tính trên dataset nhà ở (Scikit-learn)",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://scikit-learn.org/stable/modules/linear_model.html#ordinary-least-squares"
+      ]
+    },
+    {
+      "label": "[Mini-project] Logistic regression phân loại spam",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression"
+      ]
+    },
+    {
+      "label": "[Mini-project] Decision Tree vs Random Forest benchmark",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://scikit-learn.org/stable/modules/tree.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] XGBoost cho dataset tabular lớn",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://xgboost.readthedocs.io/en/stable/tutorials/model.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] K-means clustering và trực quan hóa kết quả",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://scikit-learn.org/stable/modules/clustering.html#k-means"
+      ]
+    },
+    {
+      "label": "[Mini-project] PCA giảm chiều dữ liệu ảnh",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://scikit-learn.org/stable/modules/decomposition.html#pca"
+      ]
+    },
+    {
+      "label": "[Mini-project] Cross-validation & hyperparameter tuning",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://scikit-learn.org/stable/modules/cross_validation.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Triển khai MLflow tracking cho training run",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://mlflow.org/docs/latest/"
+      ]
+    },
+    {
+      "label": "[Research-level] Federated learning demo với Flower",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://flower.dev/docs/"
+      ]
+    },
+    {
+      "label": "[Research-level] Graph Neural Network cho citation network",
+      "group": [
+        "Machine Learning"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://pytorch-geometric.readthedocs.io/en/latest/"
+      ]
+    },
+    {
+      "label": "[Mini-project] CNN đơn giản phân loại CIFAR-10 bằng PyTorch",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] RNN dự đoán chuỗi ký tự",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://pytorch.org/tutorials/intermediate/char_rnn_generation_tutorial.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] LSTM phân tích sentiment IMDB dataset",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Transformer attention cơ bản từ đầu",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://peterbloem.nl/blog/transformers"
+      ]
+    },
+    {
+      "label": "[Mini-project] Fine-tune BERT với HuggingFace Transformers",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://huggingface.co/docs/transformers/tasks/sequence_classification"
+      ]
+    },
+    {
+      "label": "[Mini-project] GAN sinh ảnh số viết tay MNIST",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Diffusion model huấn luyện trên dataset ảnh nhỏ",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://huggingface.co/docs/diffusers/index"
+      ]
+    },
+    {
+      "label": "[Mini-project] ViT (Vision Transformer) phân loại ảnh",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "Master",
+      "complexityPoint": [
+        41,
+        75
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://huggingface.co/docs/transformers/model_doc/vit"
+      ]
+    },
+    {
+      "label": "[Research-level] ControlNet cho Stable Diffusion",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://arxiv.org/abs/2302.05543"
+      ]
+    },
+    {
+      "label": "[Research-level] Text-to-video với mô hình diffusion mới",
+      "group": [
+        "Deep Learning"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://arxiv.org/abs/2302.01831"
+      ]
+    },
+    {
+      "label": "[Mini-project] Q-learning cho bài toán FrozenLake",
+      "group": [
+        "Reinforcement Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://www.gymlibrary.dev/environments/toy_text/frozen_lake/"
+      ]
+    },
+    {
+      "label": "[Mini-project] SARSA cho Taxi-v2 environment",
+      "group": [
+        "Reinforcement Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://www.gymlibrary.dev/environments/toy_text/taxi/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Deep Q-Network (DQN) cho CartPole",
+      "group": [
+        "Reinforcement Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] PPO trên LunarLander",
+      "group": [
+        "Reinforcement Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://www.gymlibrary.dev/environments/box2d/lunar_lander/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Actor-Critic cho MountainCar",
+      "group": [
+        "Reinforcement Learning"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://spinningup.openai.com/en/latest/"
+      ]
+    },
+    {
+      "label": "[Research-level] Curriculum learning trong RL",
+      "group": [
+        "Reinforcement Learning"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://arxiv.org/abs/2003.04960"
+      ]
+    },
+    {
+      "label": "[Research-level] Multi-agent RL demo với PettingZoo",
+      "group": [
+        "Reinforcement Learning"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://www.pettingzoo.ml/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Model tracking bằng MLflow",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://mlflow.org/docs/latest/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Model serving bằng TorchServe",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://pytorch.org/serve/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Deploy model bằng Docker + Kubernetes",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+      ]
+    },
+    {
+      "label": "[Mini-project] CI/CD pipeline cho training → deploy",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://docs.github.com/en/actions"
+      ]
+    },
+    {
+      "label": "[Mini-project] RAG pipeline với LangChain + Pinecone",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://python.langchain.com/docs/get_started/introduction",
+        "https://docs.pinecone.io/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Guardrails AI kiểm tra PII trong output",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://www.guardrailsai.com/docs/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Benchmark inference với vLLM",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://vllm.ai/"
+      ]
+    },
+    {
+      "label": "[Research-level] LoRA/QLoRA fine-tune LLM 7B",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://arxiv.org/abs/2106.09685",
+        "https://arxiv.org/abs/2305.14314"
+      ]
+    },
+    {
+      "label": "[Research-level] Mixture of Experts routing demo",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 8,
+      "source": [
+        "https://arxiv.org/abs/1701.06538"
+      ]
+    },
+    {
+      "label": "[Research-level] Distillation từ BERT large → BERT small",
+      "group": [
+        "MLOps/LLMOps"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 9,
+      "source": [
+        "https://arxiv.org/abs/1503.02531"
+      ]
+    },
+    {
+      "label": "[Mini-project] Distributed training bằng Ray",
+      "group": [
+        "Infra & Edge"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://docs.ray.io/en/latest/train/train.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Benchmark GPU vs TPU cho training nhỏ",
+      "group": [
+        "Infra & Edge"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://cloud.google.com/tpu/docs"
+      ]
+    },
+    {
+      "label": "[Mini-project] Edge inference với TFLite",
+      "group": [
+        "Infra & Edge"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://www.tensorflow.org/lite/guide"
+      ]
+    },
+    {
+      "label": "[Mini-project] TinyML demo trên Arduino",
+      "group": [
+        "Infra & Edge"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://arduino-tutorials.readthedocs.io/projects/machine-learning/en/latest/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Triển khai ONNX runtime cho model PyTorch",
+      "group": [
+        "Infra & Edge"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://onnxruntime.ai/docs/"
+      ]
+    },
+    {
+      "label": "[Research-level] Multi-cloud GPU orchestration với KubeRay",
+      "group": [
+        "Infra & Edge"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://docs.ray.io/en/latest/cluster/kubernetes/index.html"
+      ]
+    },
+    {
+      "label": "[Research-level] Benchmark MLPerf cho ResNet-50",
+      "group": [
+        "Infra & Edge"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://mlcommons.org/en/training-datasets/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Prompt engineering với GPT",
+      "group": [
+        "Generative AI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://platform.openai.com/docs/guides/prompt-engineering"
+      ]
+    },
+    {
+      "label": "[Mini-project] Fine-tune LLaMA-2 cho tác vụ Q&A",
+      "group": [
+        "Generative AI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://ai.meta.com/llama/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Triển khai chatbot RAG với LlamaIndex",
+      "group": [
+        "Generative AI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://docs.llamaindex.ai/en/stable/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Dùng HuggingFace Diffusers sinh ảnh",
+      "group": [
+        "Generative AI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://huggingface.co/docs/diffusers/index"
+      ]
+    },
+    {
+      "label": "[Mini-project] So sánh GPT-4 vs Claude vs Gemini cho cùng prompt",
+      "group": [
+        "Generative AI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://arxiv.org/abs/2306.05685"
+      ]
+    },
+    {
+      "label": "[Mini-project] Multimodal demo với GPT-4o",
+      "group": [
+        "Generative AI"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://platform.openai.com/docs/guides/vision"
+      ]
+    },
+    {
+      "label": "[Research-level] Huấn luyện mô hình nhỏ từ đầu bằng JAX",
+      "group": [
+        "Generative AI"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://jax.readthedocs.io/en/latest/notebooks/quickstart.html"
+      ]
+    },
+    {
+      "label": "[Research-level] Triển khai agent framework với LangGraph",
+      "group": [
+        "Generative AI"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 7,
+      "source": [
+        "https://langchain-ai.github.io/langgraph/"
+      ]
+    },
+    {
+      "label": "[Mini-project] Phân tích bias trong dataset phân loại khuôn mặt",
+      "group": [
+        "Ethics & Governance"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 0,
+      "source": [
+        "https://arxiv.org/abs/1812.00099"
+      ]
+    },
+    {
+      "label": "[Mini-project] Explainable AI với LIME/SHAP",
+      "group": [
+        "Ethics & Governance"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 1,
+      "source": [
+        "https://arxiv.org/abs/1602.04938",
+        "https://arxiv.org/abs/1705.07874"
+      ]
+    },
+    {
+      "label": "[Mini-project] Thực hành anonymization dataset y tế",
+      "group": [
+        "Ethics & Governance"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 2,
+      "source": [
+        "https://www.hhs.gov/hipaa/for-professionals/privacy/special-topics/de-identification/index.html"
+      ]
+    },
+    {
+      "label": "[Mini-project] Nghiên cứu AI Act của EU và case study",
+      "group": [
+        "Ethics & Governance"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 3,
+      "source": [
+        "https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence"
+      ]
+    },
+    {
+      "label": "[Mini-project] US AI Bill of Rights và áp dụng",
+      "group": [
+        "Ethics & Governance"
+      ],
+      "level": "Bachelor",
+      "complexityPoint": [
+        0,
+        40
+      ],
+      "startLevel": 4,
+      "source": [
+        "https://www.whitehouse.gov/ostp/ai-bill-of-rights/"
+      ]
+    },
+    {
+      "label": "[Research-level] RLHF demo cho chatbot an toàn",
+      "group": [
+        "Ethics & Governance"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 5,
+      "source": [
+        "https://arxiv.org/abs/2009.01325"
+      ]
+    },
+    {
+      "label": "[Research-level] Constitutional AI rule-based demo",
+      "group": [
+        "Ethics & Governance"
+      ],
+      "level": "PhD",
+      "complexityPoint": [
+        76,
+        100
+      ],
+      "startLevel": 6,
+      "source": [
+        "https://arxiv.org/abs/2212.08073"
+      ]
+    }
+  ]
+}
