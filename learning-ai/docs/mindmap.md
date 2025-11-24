@@ -88,8 +88,10 @@ mindmap
       🤖 Large Language Models
         Language Modeling Theory
         Transformer Architecture
-        PEFT (LoRA) & RLHF
-        RAG & Vector Search
+        PEFT (LoRA)
+        RLHF
+        RAG
+        Vector Search
       🎨 Generative Models
         GANs (Generator vs Discriminator)
         VAEs (Encoder/Decoder, Reparameterization)

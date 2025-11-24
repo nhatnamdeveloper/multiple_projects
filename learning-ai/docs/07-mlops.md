@@ -346,20 +346,7 @@ def predict(request: PredictionRequest):
         3.  **Theo lịch trình**: Huấn luyện lại mô hình hàng tuần hoặc hàng tháng.
     -   **Quy trình**: Hệ thống tự động khởi chạy một pipeline để huấn luyện lại mô hình trên dữ liệu mới. Mô hình mới sau đó sẽ được đánh giá. Nếu nó tốt hơn mô hình hiện tại, nó sẽ được đăng ký vào Model Registry và trở thành một "ứng cử viên" cho việc triển khai ra production (thông qua pipeline CD).
 
-## 🔄 3. CI/CD/CT cho Machine Learning
 
-Đây là nơi MLOps thực sự tỏa sáng, tự động hóa vòng đời ML.
-
--   **CI (Continuous Integration - Tích hợp liên tục)**: Giống như trong phát triển phần mềm truyền thống. Mỗi khi có một thay đổi trong code (ví dụ: một pull request), hệ thống sẽ tự động chạy linting, unit test, và kiểm tra chất lượng code.
--   **CD (Continuous Delivery - Giao hàng liên tục)**: Sau khi CI thành công, hệ thống sẽ tự động build các "hiện vật" (ví dụ: Docker image) và triển khai chúng lên môi trường Staging. Sau khi các bài test trên Staging thành công, việc đẩy lên Production có thể cần một bước phê duyệt thủ công.
--   **CT (Continuous Training - Huấn luyện liên tục)**: Đây là điểm độc đáo của MLOps.
-    -   **Trigger**: Một quy trình CT có thể được kích hoạt bởi nhiều yếu tố:
-        1.  **Có dữ liệu mới**: Hệ thống giám sát phát hiện có một lượng lớn dữ liệu mới.
-        2.  **Hiệu suất mô hình giảm sút (Model Decay)**: Mô hình production hoạt động kém đi theo thời gian.
-        3.  **Theo lịch trình**: Huấn luyện lại mô hình hàng tuần hoặc hàng tháng.
-    -   **Quy trình**: Hệ thống tự động khởi chạy một pipeline để huấn luyện lại mô hình trên dữ liệu mới. Mô hình mới sau đó sẽ được đánh giá. Nếu nó tốt hơn mô hình hiện tại, nó sẽ được đăng ký vào Model Registry và trở thành một "ứng cử viên" cho việc triển khai ra production (thông qua pipeline CD).
-
----
 
 ## 📈 4. Giám sát và Khả năng quan sát (Monitoring & Observability)
 

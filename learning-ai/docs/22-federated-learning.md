@@ -91,19 +91,21 @@ FL không phải là một giải pháp hoàn hảo và đi kèm với nhiều t
 
 -   **Data Heterogeneity (Tính không đồng nhất của dữ liệu - Non-IID)**:
     -   **Vấn đề**: Dữ liệu trên mỗi client rất khác nhau (ví dụ: người A gõ nhiều về công nghệ, người B gõ nhiều về nấu ăn). Khi server lấy trung bình các cập nhật, các cập nhật từ các client khác nhau có thể "xung đột" với nhau, làm cho mô hình toàn cục hội tụ chậm hoặc không chính xác.
-    -   **Giải pháp**: Các thuật toán như `FedProx` thêm một thành phần vào hàm mất mát cục bộ để "kéo" mô hình cục bộ không đi quá xa so với mô hình toàn cục.
+    -   **Giải pháp**: Các thuật toán như **FedProx** thêm một thành phần vào hàm mất mát cục bộ để "kéo" mô hình cục bộ không đi quá xa so với mô hình toàn cục. Điều này giúp các mô hình cục bộ không bị "lệch" quá mức do dữ liệu Non-IID, cải thiện sự ổn định và hội tụ của mô hình toàn cục.
 
 -   **Communication Bottleneck (Nút cổ chai giao tiếp)**:
     -   **Vấn đề**: Mặc dù không gửi dữ liệu, việc gửi toàn bộ trọng số của một mô hình lớn (hàng triệu tham số) từ hàng nghìn client vẫn rất tốn băng thông.
     -   **Giải pháp**:
-        -   **Quantization**: Giảm độ chính xác của các trọng số (ví dụ: từ float32 xuống int8).
-        -   **Sparsification**: Chỉ gửi các cập nhật trọng số quan trọng nhất.
+        -   **Quantization**: Giảm độ chính xác của các trọng số (ví dụ: từ float32 xuống int8, hoặc thậm chí nhị phân hóa).
+        -   **Sparsification**: Chỉ gửi các cập nhật trọng số quan trọng nhất (những trọng số có thay đổi lớn nhất).
+        -   **Federated Dropout**: Một biến thể của dropout được áp dụng cho việc truyền thông, nơi chỉ một phần các trọng số được cập nhật và gửi đi.
 
 -   **Privacy Concerns (Lo ngại về quyền riêng tư nâng cao)**:
-    -   **Vấn đề**: Mặc dù không gửi dữ liệu gốc, các cập nhật mô hình vẫn có thể bị tấn công để suy ngược ra thông tin về dữ liệu training (inference attacks).
+    -   **Vấn đề**: Mặc dù không gửi dữ liệu gốc, các cập nhật mô hình vẫn có thể bị tấn công để suy ngược ra thông tin nhạy cảm về dữ liệu training (inference attacks, reconstruction attacks).
     -   **Giải pháp**:
-        -   **Differential Privacy (Quyền riêng tư vi phân)**: Thêm một lượng nhiễu (noise) có kiểm soát vào các cập nhật trước khi gửi về server.
-        -   **Secure Aggregation**: Sử dụng các kỹ thuật mã hóa để server chỉ có thể giải mã được tổng của các cập nhật, chứ không thể xem được cập nhật của từng client riêng lẻ.
+        -   **Differential Privacy (Quyền riêng tư vi phân)**: Thêm một lượng nhiễu (noise) có kiểm soát vào các cập nhật (trọng số hoặc gradient) trước khi gửi về server. Điều này đảm bảo rằng sự hiện diện hay vắng mặt của bất kỳ một mẫu dữ liệu cá nhân nào trong tập training sẽ không ảnh hưởng đáng kể đến output của mô hình.
+        -   **Secure Aggregation (Tổng hợp bảo mật)**: Sử dụng các kỹ thuật mã hóa đồng cấu (Homomorphic Encryption) hoặc tính toán đa bên an toàn (Secure Multi-Party Computation - SMPC) để server chỉ có thể giải mã được tổng của các cập nhật, chứ không thể xem được cập nhật của từng client riêng lẻ. Điều này ngăn chặn server nhìn thấy thông tin từ từng client.
+        -   **Homomorphic Encryption (Mã hóa đồng cấu)**: Một kỹ thuật mã hóa cho phép thực hiện các phép toán trên dữ liệu đã mã hóa mà không cần giải mã. Điều này có thể được sử dụng để tổng hợp các cập nhật mô hình mà server không cần nhìn thấy các giá trị cập nhật riêng lẻ.
 
 ---
 
