@@ -42,52 +42,37 @@ mindmap
         Experimental Design
         Statistical Testing
         Causal Inference
-      📈 Data Visualization
-        Chart Selection
-        Interactive Dashboards
-        Business Reports
     
     🤖 Machine Learning
       🔧 Feature Engineering
         Temporal Features
         Categorical Encoding
+        Feature Scaling
         Domain Knowledge
       🎯 Feature Selection
-        Statistical Methods
-        Model-based Selection
+        Filter, Wrapper, Embedded
         Dimensionality Reduction
       🏗️ Supervised Learning
-        Linear Models
+        Linear Models & Regularization
         Tree-based Models
         Ensemble Methods
       📊 Model Evaluation
         Cross-validation
         Performance Metrics
         Error Analysis
-    
-    📈 Time Series
-      🔍 Exploratory Analysis
-        Trend Analysis
-        Seasonality Detection
-        Stationarity Testing
-      📊 Statistical Models
-        ARIMA Models
-        Exponential Smoothing
-        State Space Models
-      🧠 Deep Learning
-        LSTM Networks
-        Transformer Models
-        Attention Mechanisms
-    
+      🔍 Unsupervised Learning
+        Clustering (K-Means, DBSCAN)
+        Dimensionality Reduction (PCA)
+
     🧠 Deep Learning
       🧮 Neural Network Theory
         Universal Approximation
         Backpropagation
         Activation Functions
       ⚡ Optimization
-        Gradient Descent
+        Gradient Descent Variants
         Learning Rate Scheduling
-        Regularization
+        Regularization (Dropout, Early Stopping)
       🏗️ Architecture Design
         CNN Architectures
         RNN & LSTM
@@ -98,24 +83,50 @@ mindmap
         CNN/RNN/Transformer
         AMP & DDP
         TorchScript/ONNX & Serving
+
+    🌟 Chủ đề Nâng cao & Chuyên biệt
+      🤖 Large Language Models
+        Language Modeling Theory
+        Transformer Architecture
+        PEFT (LoRA) & RLHF
+        RAG & Vector Search
+      🎨 Generative Models
+        GANs (Generator vs Discriminator)
+        VAEs (Encoder/Decoder, Reparameterization)
+        Diffusion Models
+      🕸️ Graph Neural Networks
+        Message Passing
+        GCN, GraphSAGE, GAT
+      🤖 Reinforcement Learning
+        MDPs & Bellman Equations
+        Value-Based (Q-Learning, DQN)
+        Policy-Based (REINFORCE)
+        Actor-Critic (PPO)
+      💡 Explainable AI (XAI)
+        LIME & SHAP
+        Fairness, Accountability, Transparency
+      🌐 Federated Learning
+        Federated Averaging (FedAvg)
+        Privacy & Security
+        Non-IID Data
     
-    🤖 Large Language Models
-      📚 Language Modeling
-        Autoregressive Models
-        Perplexity & Loss
-        Scaling Laws
-      🏗️ Architecture
-        Transformer Blocks
-        Attention Mechanisms
-        Positional Encoding
-      🎯 Training & Fine-tuning
-        Pre-training Objectives
-        Instruction Tuning
-        RLHF
-      🚀 Applications
-        Text Generation
-        Question Answering
-        Code Generation
+    🚀 MLOps & Production
+      🔧 Vòng đời ML
+        Experiment Tracking
+        Model Registry
+        Data/Feature Versioning
+      📊 Triển khai & Phục vụ
+        Online vs. Batch Serving
+        Containerization (Docker)
+        Orchestration (Kubernetes)
+      🔄 CI/CD/CT Pipelines
+        Automated Testing
+        Automated Training
+        Automated Deployment
+      📈 Giám sát
+        Model Performance
+        Data & Concept Drift
+        Infrastructure
 ```
 
 ---

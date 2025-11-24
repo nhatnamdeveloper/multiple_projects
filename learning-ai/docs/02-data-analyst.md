@@ -350,15 +350,30 @@ graph TD
 
 ### 1.1 CRISP-DM Framework
 
-> **CRISP-DM** (Cross-Industry Standard Process for Data Mining) là quy trình chuẩn trong ngành để thực hiện dự án phân tích dữ liệu.
+> **CRISP-DM** (Cross-Industry Standard Process for Data Mining) là quy trình chuẩn, được công nhận rộng rãi trong ngành để thực hiện các dự án khoa học dữ liệu. Hãy coi nó như một bản đồ chi tiết hướng dẫn bạn đi từ một câu hỏi kinh doanh mơ hồ đến một giải pháp dựa trên dữ liệu có thể triển khai.
+
+**Tư duy cốt lõi**: CRISP-DM không phải là một con đường thẳng. Đây là một **quy trình lặp (iterative)**, nơi bạn thường xuyên quay lại các bước trước đó để tinh chỉnh và cải thiện.
+
+**Ví dụ tương tự**: Hãy tưởng tượng bạn là một thám tử điều tra một vụ án phức tạp.
+1.  **Hiểu vụ án (Business Understanding)**: Nạn nhân là ai? Động cơ có thể là gì?
+2.  **Thu thập bằng chứng (Data Understanding)**: Khám nghiệm hiện trường, lấy lời khai nhân chứng, thu thập vật chứng.
+3.  **Xử lý bằng chứng (Data Preparation)**: Làm sạch dấu vân tay, phân tích DNA, sắp xếp lời khai.
+4.  **Xây dựng giả thuyết (Modeling)**: Đưa ra các giả thuyết về nghi phạm dựa trên bằng chứng.
+5.  **Kiểm tra giả thuyết (Evaluation)**: Đối chiếu bằng chứng với giả thuyết, loại bỏ các giả thuyết yếu.
+6.  **Kết luận và Bắt giữ (Deployment)**: Đưa ra kết luận cuối cùng và thực hiện hành động.
+Trong quá trình này, bạn có thể phải quay lại hiện trường (Data Understanding) nếu có tình tiết mới.
 
 ```mermaid
 flowchart TD
-    A[💼 Business Understanding] --> B[📊 Data Understanding]
-    B --> C[🧹 Data Preparation]
-    C --> D[🤖 Modeling]
-    D --> E[✅ Evaluation]
-    E --> F[🚀 Deployment]
+    A[💼 1. Business Understanding] <--> B[📊 2. Data Understanding]
+    B --> C[🧹 3. Data Preparation]
+    C <--> B
+    C --> D[🤖 4. Modeling]
+    D <--> C
+    D --> E[✅ 5. Evaluation]
+    E --> A
+    E --> D
+    E --> F[🚀 6. Deployment]
     
     A --> A1[Xác định mục tiêu kinh doanh]
     A --> A2[Đánh giá tình hình hiện tại]
@@ -366,27 +381,27 @@ flowchart TD
     
     B --> B1[Thu thập dữ liệu ban đầu]
     B --> B2[Mô tả dữ liệu]
-    B --> B3[Khám phá dữ liệu]
+    B --> B3[Khám phá dữ liệu (EDA)]
     B --> B4[Kiểm tra chất lượng dữ liệu]
     
     C --> C1[Lựa chọn dữ liệu]
     C --> C2[Làm sạch dữ liệu]
-    C --> C3[Xây dựng dữ liệu]
+    C --> C3[Tạo features mới]
     C --> C4[Tích hợp dữ liệu]
     C --> C5[Định dạng dữ liệu]
     
     D --> D1[Lựa chọn kỹ thuật modeling]
-    D --> D2[Thiết kế test]
-    D --> D3[Xây dựng model]
-    D --> D4[Đánh giá model]
+    D --> D2[Thiết kế bộ test]
+    D --> D3[Xây dựng mô hình]
+    D --> D4[Đánh giá mô hình (kỹ thuật)]
     
-    E --> E1[Đánh giá kết quả]
-    E --> E2[Xem xét quy trình]
+    E --> E1[Đánh giá kết quả theo tiêu chí kinh doanh]
+    E --> E2[Xem xét lại quy trình]
     E --> E3[Xác định bước tiếp theo]
     
-    F --> F1[Triển khai kế hoạch]
+    F --> F1[Lên kế hoạch triển khai]
     F --> F2[Giám sát và bảo trì]
-    F --> F3[Báo cáo kết quả cuối cùng]
+    F --> F3[Báo cáo và tổng kết dự án]
 ```
 
 ![CRISP-DM Framework](assets/crisp-dm-framework.svg)
@@ -396,6 +411,82 @@ flowchart TD
 **📁 [Xem file PNG trực tiếp](assets/crisp-dm-framework.png)**
 
 **📁 [Xem file PNG trực tiếp](assets/crisp-dm-framework.png)**
+
+#### Giải thích chi tiết các pha (với ví dụ "Dự đoán khách hàng rời bỏ mạng viễn thông")
+
+##### 1. 💼 Business Understanding (Hiểu bài toán kinh doanh)
+Đây là pha quan trọng nhất. Nếu hiểu sai bài toán, toàn bộ dự án sẽ đi sai hướng.
+
+-   **Mục tiêu**: Chuyển một vấn đề kinh doanh thành một bài toán khoa học dữ liệu có thể giải quyết.
+-   **Câu hỏi cần trả lời**:
+    -   Bài toán kinh doanh thực sự là gì? (Ví dụ: "Tỷ lệ khách hàng rời bỏ (churn rate) đang tăng, ảnh hưởng đến doanh thu.")
+    -   Mục tiêu của dự án là gì? (Ví dụ: "Giảm churn rate xuống 5% trong quý tới.")
+    -   Làm thế nào để đo lường thành công? (Ví dụ: "Xây dựng mô hình dự đoán khách hàng sắp churn với độ chính xác > 80% để đội Chăm sóc khách hàng có thể can thiệp kịp thời.")
+    -   Các ràng buộc là gì? (Ví dụ: Dữ liệu cá nhân nhạy cảm, thời gian triển khai dưới 3 tháng.)
+
+##### 2. 📊 Data Understanding (Hiểu dữ liệu)
+Pha này giống như lần đầu "làm quen" với dữ liệu của bạn.
+
+-   **Mục tiêu**: Thu thập và khám phá dữ liệu ban đầu để hình thành các giả thuyết.
+-   **Hành động**:
+    -   **Thu thập dữ liệu**: Lấy dữ liệu từ các nguồn (database, file log, API).
+    -   **Mô tả dữ liệu**: Bao nhiêu hàng, bao nhiêu cột? Kiểu dữ liệu của mỗi cột là gì?
+    -   **Phân tích khám phá (EDA)**: Vẽ biểu đồ để xem phân phối của các biến, mối quan hệ giữa chúng.
+    -   **Kiểm tra chất lượng**: Dữ liệu có bị thiếu (missing values) không? Có giá trị ngoại lai (outliers) không?
+-   **Ví dụ (Dự đoán churn)**:
+    -   Thu thập dữ liệu về lịch sử sử dụng (số phút gọi, data đã dùng), thông tin hợp đồng (loại gói cước, thời hạn), lịch sử thanh toán, các cuộc gọi hỗ trợ.
+    -   Phát hiện cột `total_charges` có nhiều giá trị bị thiếu.
+    -   Vẽ biểu đồ thấy rằng những khách hàng dùng gói cước theo tháng (month-to-month) có tỷ lệ churn cao hơn hẳn. Đây là một giả thuyết ban đầu!
+
+##### 3. 🧹 Data Preparation (Chuẩn bị dữ liệu)
+Đây là pha tốn nhiều thời gian nhất (thường chiếm 60-80% thời gian dự án).
+
+-   **Mục tiêu**: Chuyển đổi dữ liệu thô thành một bộ dữ liệu sạch, sẵn sàng cho việc xây dựng mô hình.
+-   **Hành động**:
+    -   **Làm sạch**: Xử lý giá trị thiếu (ví dụ: điền giá trị trung bình), sửa lỗi dữ liệu.
+    -   **Tạo Feature mới (Feature Engineering)**: Từ các cột có sẵn, tạo ra các cột mới có ý nghĩa hơn. Ví dụ: từ `total_charges` và `tenure` (thời gian sử dụng), tạo ra `average_monthly_charges`.
+    -   **Chuyển đổi dữ liệu**: Mã hóa các biến phân loại (ví dụ: `gender` -> 0/1), chuẩn hóa các biến số.
+-   **Ví dụ (Dự đoán churn)**:
+    -   Điền giá trị `total_charges` bị thiếu bằng giá trị trung bình của những khách hàng có `tenure` tương tự.
+    -   Tạo feature `has_called_support` (đã từng gọi hỗ trợ hay chưa).
+    -   Mã hóa cột `contract_type` (Month-to-month, One year, Two year) thành các số.
+
+##### 4. 🤖 Modeling (Xây dựng mô hình)
+Đây là pha mà các thuật toán machine learning được áp dụng.
+
+-   **Mục tiêu**: Lựa chọn và xây dựng các mô hình có khả năng dự đoán tốt nhất.
+-   **Hành động**:
+    -   **Chọn thuật toán**: Dựa vào bài toán (phân loại, hồi quy), chọn các thuật toán phù hợp (Logistic Regression, Random Forest, Gradient Boosting...).
+    -   **Xây dựng mô hình**: Huấn luyện (train) các mô hình trên bộ dữ liệu đã chuẩn bị.
+    -   **Tinh chỉnh tham số (Hyperparameter Tuning)**: Tối ưu hóa các tham số của mô hình để đạt hiệu suất cao nhất.
+-   **Vòng lặp**: Nếu mô hình hoạt động không tốt, có thể bạn cần quay lại pha **Data Preparation** để tạo thêm feature mới hoặc xử lý dữ liệu khác đi.
+
+##### 5. ✅ Evaluation (Đánh giá)
+Pha này đánh giá xem mô hình hoạt động tốt đến đâu *theo góc độ kinh doanh*.
+
+-   **Mục tiêu**: Đảm bảo mô hình đáp ứng được mục tiêu kinh doanh đã đề ra.
+-   **Hành động**:
+    -   **Đánh giá kỹ thuật**: Dùng các metric như Accuracy, Precision, Recall, F1-score...
+    -   **Đánh giá kinh doanh**: Mô hình có giúp giảm churn rate không? Chi phí để giữ chân một khách hàng có nhỏ hơn lợi nhuận họ mang lại không? Mô hình có dễ giải thích cho ban lãnh đạo không?
+-   **Vòng lặp**: Nếu kết quả đánh giá không đạt yêu cầu, bạn phải quay lại pha **Business Understanding** để xem lại mục tiêu, hoặc quay lại pha **Modeling** để thử thuật toán khác.
+
+##### 6. 🚀 Deployment (Triển khai)
+Đây là lúc đưa mô hình vào hoạt động thực tế.
+
+-   **Mục tiêu**: Tích hợp mô hình vào hệ thống hiện tại để tạo ra giá trị.
+-   **Hành động**:
+    -   **Lên kế hoạch**: Triển khai dưới dạng API, batch job, hay ứng dụng web?
+    -   **Giám sát (Monitoring)**: Theo dõi hiệu suất của mô hình theo thời gian. Dữ liệu thực tế có thay đổi không (data drift)? Hiệu suất mô hình có giảm không (model degradation)?
+    -   **Bảo trì**: Huấn luyện lại (re-train) mô hình định kỳ với dữ liệu mới.
+    -   **Báo cáo**: Tổng kết dự án và báo cáo kết quả cho các bên liên quan.
+
+#### Các cạm bẫy thường gặp (Common Pitfalls)
+-   **Business Understanding**: Không xác định rõ KPI. "Cải thiện trải nghiệm khách hàng" là một mục tiêu mơ hồ. "Giảm thời gian phản hồi chat bot xuống dưới 30 giây" là một KPI rõ ràng.
+-   **Data Understanding**: Vội vàng xây dựng mô hình mà không khám phá kỹ dữ liệu, dẫn đến việc bỏ qua các insight quan trọng hoặc các vấn đề về chất lượng dữ liệu.
+-   **Data Preparation**: Áp dụng các kỹ thuật xử lý một cách máy móc mà không hiểu tại sao. Ví dụ, luôn điền giá trị thiếu bằng trung bình mà không xem xét tại sao nó lại thiếu.
+-   **Modeling**: "Overfitting" - xây dựng một mô hình quá phức tạp, hoạt động hoàn hảo trên dữ liệu training nhưng thất bại trên dữ liệu thực tế.
+-   **Evaluation**: Chỉ tập trung vào các chỉ số kỹ thuật (như accuracy) mà quên mất mục tiêu kinh doanh. Một mô hình có accuracy 99% có thể vô dụng nếu nó không giúp công ty kiếm tiền.
+-   **Deployment**: Coi việc triển khai là bước cuối cùng. Thực tế, đây là khởi đầu của một vòng đời mới, đòi hỏi giám sát và bảo trì liên tục.
 
 #### Business Understanding - Hiểu vấn đề kinh doanh
 
@@ -1197,16 +1288,47 @@ Evaluation: 5-10% thời gian
 
 ## 🔍 2. Exploratory Data Analysis (EDA)
 
-### 2.1 Data Quality Assessment
+> **EDA** là quá trình "trò chuyện" với dữ liệu. Giống như một đầu bếp nếm thử từng nguyên liệu trước khi nấu, một data analyst phải "nếm" dữ liệu của mình để hiểu rõ hương vị, đặc tính, và những điểm bất thường của nó. Mục tiêu của EDA không phải là đưa ra kết luận cuối cùng, mà là để **đặt ra những câu hỏi đúng**, **hình thành các giả thuyết**, và **định hướng cho các bước xử lý và mô hình hóa tiếp theo**.
 
-> **EDA** là quá trình khám phá dữ liệu để hiểu cấu trúc, phát hiện patterns và chuẩn bị cho modeling.
+EDA là một nghệ thuật hơn là một khoa học cứng nhắc, bao gồm 3 trụ cột chính:
+1.  **Phân tích chất lượng dữ liệu (Data Quality Assessment)**: Dữ liệu có sạch không?
+2.  **Phân tích thống kê (Statistical Analysis)**: Dữ liệu nói lên điều gì?
+3.  **Trực quan hóa (Visualization)**: Dữ liệu trông như thế nào?
 
-#### Missing Values Analysis - Phân tích giá trị thiếu
+### 2.1 Các loại phân tích trong EDA
 
-**Tại sao cần phân tích missing values?**
-- Missing values có thể làm sai lệch kết quả phân tích
-- Cần hiểu pattern của missing data để xử lý phù hợp
-- Missing completely at random (MCAR) vs Missing at random (MAR) vs Missing not at random (MNAR)
+Tùy thuộc vào số lượng biến bạn đang xem xét cùng một lúc, EDA có thể được chia thành:
+
+1.  **Phân tích đơn biến (Univariate Analysis)**:
+    *   **Mục tiêu**: Hiểu đặc điểm của **một biến duy nhất**.
+    *   **Câu hỏi**: Phân phối của biến này như thế nào? Giá trị trung tâm là gì? Dữ liệu phân tán ra sao? Có giá trị ngoại lai không?
+    *   **Công cụ**:
+        *   **Biến số (Numeric)**:
+            *   Thống kê mô tả (`describe()`).
+            *   Biểu đồ Histogram, Box plot, KDE plot.
+        *   **Biến phân loại (Categorical)**:
+            *   Đếm tần suất (`value_counts()`).
+            *   Biểu đồ Bar chart, Pie chart.
+
+2.  **Phân tích hai biến (Bivariate Analysis)**:
+    *   **Mục tiêu**: Khám phá mối quan hệ giữa **hai biến**.
+    *   **Câu hỏi**: Hai biến này có tương quan với nhau không? Mối quan hệ đó là tuyến tính hay phi tuyến? Biến phân loại này ảnh hưởng đến biến số kia như thế nào?
+    *   **Công cụ**:
+        *   **Số vs. Số**: Biểu đồ Scatter plot, Heatmap của ma trận tương quan.
+        *   **Phân loại vs. Số**: Biểu đồ Box plot (cho từng nhóm), Bar chart (của giá trị trung bình).
+        *   **Phân loại vs. Phân loại**: Bảng chéo (Contingency Table), biểu đồ thanh chồng (Stacked Bar Chart).
+
+3.  **Phân tích đa biến (Multivariate Analysis)**:
+    *   **Mục tiêu**: Hiểu mối quan hệ phức tạp giữa **nhiều hơn hai biến**.
+    *   **Công cụ**: Scatter plot với các chiều được mã hóa bằng màu sắc/kích thước (`hue`, `size` trong Seaborn), Pair plot, 3D plots.
+
+### 2.2 Đánh giá chất lượng dữ liệu
+
+#### Phân tích giá trị thiếu (Missing Values Analysis)
+
+**Tại sao cần phân tích?**
+-   Giá trị thiếu có thể làm sai lệch kết quả phân tích và làm hỏng mô hình.
+-   **Lý do thiếu** cũng là một thông tin quan trọng. Dữ liệu có thể thiếu một cách ngẫu nhiên (MCAR), có liên quan đến các biến khác (MAR), hoặc thiếu một cách có hệ thống (MNAR). Hiểu được điều này giúp chọn phương pháp xử lý phù hợp.
 
 ```python
 import pandas as pd
@@ -1216,325 +1338,146 @@ import seaborn as sns
 
 def analyze_missing_values(df):
     """
-    Phân tích toàn diện về missing values trong dataframe
-    
-    Parameters:
-    df (pd.DataFrame): DataFrame cần phân tích
-    
-    Returns:
-    pd.DataFrame: Bảng tóm tắt missing values
+    Phân tích toàn diện về giá trị thiếu trong DataFrame.
     """
-    # Tính toán missing values
     missing_data = df.isnull().sum()
     missing_percent = (missing_data / len(df)) * 100
     
-    # Tạo bảng tóm tắt
     missing_summary = pd.DataFrame({
         'Missing Values': missing_data,
         'Missing Percentage': missing_percent
     }).sort_values('Missing Percentage', ascending=False)
     
-    # Trực quan hóa missing values
-    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+    # Chỉ hiển thị các cột có giá trị thiếu
+    missing_summary = missing_summary[missing_summary['Missing Values'] > 0]
     
-    # Bar chart - tỷ lệ missing theo từng cột
-    axes[0].bar(range(len(missing_summary)), missing_summary['Missing Percentage'])
-    axes[0].set_title('Missing Values by Column (%)')
-    axes[0].set_xlabel('Columns')
-    axes[0].set_ylabel('Missing Percentage (%)')
-    axes[0].set_xticks(range(len(missing_summary)))
-    axes[0].set_xticklabels(missing_summary.index, rotation=45)
+    if missing_summary.empty:
+        print("🎉 Không có giá trị thiếu trong dữ liệu.")
+        return None
+
+    # Trực quan hóa
+    fig, axes = plt.subplots(1, 2, figsize=(18, 7))
+    fig.suptitle("Phân Tích Giá Trị Thiếu", fontsize=16)
     
-    # Heatmap - vị trí missing values
-    sns.heatmap(df.isnull(), cbar=False, yticklabels=False, ax=axes[1])
-    axes[1].set_title('Missing Values Heatmap')
+    # Bar chart
+    sns.barplot(x=missing_summary.index, y=missing_summary['Missing Percentage'], ax=axes[0])
+    axes[0].set_title('Tỷ lệ phần trăm giá trị thiếu theo cột')
+    axes[0].set_xlabel('Các cột')
+    axes[0].set_ylabel('Tỷ lệ (%)')
+    axes[0].tick_params(axis='x', rotation=45)
     
-    plt.tight_layout()
+    # Heatmap
+    sns.heatmap(df.isnull(), cbar=False, yticklabels=False, cmap='viridis', ax=axes[1])
+    axes[1].set_title('Bản đồ nhiệt của các vị trí thiếu')
+    
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.show()
     
     return missing_summary
 
-# Ví dụ sử dụng
-# missing_summary = analyze_missing_values(df)
-# print(missing_summary)
+# Ví dụ sử dụng:
+# giả sử df là DataFrame của bạn
+# missing_info = analyze_missing_values(df)
+# if missing_info is not None:
+#     print(missing_info)
 ```
 
-**Giải thích các khái niệm:**
-- **Missing Values**: Số lượng giá trị thiếu trong mỗi cột
-- **Missing Percentage**: Tỷ lệ phần trăm giá trị thiếu
-- **Heatmap**: Bản đồ nhiệt hiển thị vị trí missing values
+#### Phân tích kiểu dữ liệu (Data Type Analysis)
 
-#### Data Type Analysis - Phân tích kiểu dữ liệu
+**Tại sao cần phân tích?**
+-   Đảm bảo mỗi cột có kiểu dữ liệu đúng (số, chữ, ngày tháng).
+-   Phát hiện các lỗi (ví dụ: cột `price` bị lưu dưới dạng `string` do có ký tự '$').
+-   Tối ưu hóa bộ nhớ bằng cách chọn kiểu dữ liệu phù hợp (ví dụ: `int8` thay vì `int64` nếu giá trị nhỏ).
 
-**Tại sao cần phân tích data types?**
-- Chọn kiểu dữ liệu phù hợp tiết kiệm bộ nhớ
-- Hiểu cấu trúc dữ liệu để xử lý đúng cách
-- Phát hiện data type inconsistencies
+### 2.3 Phân tích thống kê (Statistical Analysis)
 
-```python
-def analyze_data_types(df):
-    """
-    Phân tích kiểu dữ liệu và sử dụng bộ nhớ
-    
-    Parameters:
-    df (pd.DataFrame): DataFrame cần phân tích
-    
-    Returns:
-    dict: Thông tin về data types và memory usage
-    """
-    # Tóm tắt kiểu dữ liệu
-    dtype_summary = df.dtypes.value_counts()
-    
-    # Sử dụng bộ nhớ
-    memory_usage = df.memory_usage(deep=True)
-    total_memory = memory_usage.sum()
-    
-    # Số lượng unique values per column
-    unique_counts = df.nunique()
-    
-    # Tạo báo cáo
-    print("📊 DATA TYPE ANALYSIS REPORT")
-    print("=" * 50)
-    
-    print("\n🔍 Data Types Summary:")
-    print(dtype_summary)
-    
-    print(f"\n💾 Memory Usage:")
-    print(f"Total Memory: {total_memory / 1024**2:.2f} MB")
-    print(f"Memory per Column:")
-    for col, mem in memory_usage.items():
-        print(f"  {col}: {mem / 1024:.2f} KB")
-    
-    print(f"\n🎯 Unique Values per Column:")
-    for col, count in unique_counts.items():
-        print(f"  {col}: {count} unique values")
-    
-    # Trực quan hóa
-    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
-    
-    # Memory usage by column
-    memory_df = pd.DataFrame({
-        'Column': memory_usage.index,
-        'Memory (KB)': memory_usage.values / 1024
-    }).sort_values('Memory (KB)', ascending=True)
-    
-    axes[0].barh(memory_df['Column'], memory_df['Memory (KB)'])
-    axes[0].set_title('Memory Usage by Column')
-    axes[0].set_xlabel('Memory (KB)')
-    
-    # Unique values distribution
-    axes[1].bar(range(len(unique_counts)), unique_counts.values)
-    axes[1].set_title('Unique Values by Column')
-    axes[1].set_xlabel('Columns')
-    axes[1].set_ylabel('Unique Count')
-    axes[1].set_xticks(range(len(unique_counts)))
-    axes[1].set_xticklabels(unique_counts.index, rotation=45)
-    
-    plt.tight_layout()
-    plt.show()
-    
-    return {
-        'dtype_summary': dtype_summary,
-        'total_memory': total_memory,
-        'unique_counts': unique_counts
-    }
+#### Thống kê mô tả (Descriptive Statistics)
 
-# Ví dụ sử dụng
-# analysis_result = analyze_data_types(df)
-```
-
-**Giải thích các khái niệm:**
-- **Memory Usage**: Lượng bộ nhớ sử dụng bởi DataFrame
-- **Deep Memory**: Tính toán chính xác memory usage cho object types
-- **Unique Values**: Số lượng giá trị khác nhau trong mỗi cột
-
-### 2.2 Statistical Analysis - Phân tích thống kê
-
-#### Descriptive Statistics - Thống kê mô tả
-
-**Mục đích**: Tóm tắt và mô tả đặc điểm chính của dữ liệu.
+**Mục đích**: Tóm tắt và mô tả các đặc điểm chính của dữ liệu bằng các con số.
+-   **Thước đo xu hướng trung tâm (Measures of Central Tendency)**:
+    -   **Mean (Trung bình)**: Tổng các giá trị chia cho số lượng. Nhạy cảm với giá trị ngoại lai.
+    -   **Median (Trung vị)**: Giá trị ở giữa sau khi sắp xếp. Không bị ảnh hưởng bởi giá trị ngoại lai.
+    -   **Mode**: Giá trị xuất hiện nhiều nhất.
+-   **Thước đo độ phân tán (Measures of Dispersion)**:
+    -   **Standard Deviation (Độ lệch chuẩn)**: Đo lường mức độ phân tán của dữ liệu so với giá trị trung bình.
+    -   **Range (Khoảng giá trị)**: `max - min`.
+    -   **IQR (Khoảng tứ phân vị)**: `Q3 - Q1`. Khoảng chứa 50% dữ liệu ở giữa, ít bị ảnh hưởng bởi outliers.
 
 ```python
 def comprehensive_descriptive_analysis(df, numeric_cols=None):
     """
-    Phân tích thống kê mô tả toàn diện
-    
-    Parameters:
-    df (pd.DataFrame): DataFrame cần phân tích
-    numeric_cols (list): Danh sách cột số, nếu None sẽ tự động detect
+    Phân tích thống kê mô tả toàn diện cho các cột số.
     """
     if numeric_cols is None:
         numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
     
-    print("📈 COMPREHENSIVE DESCRIPTIVE ANALYSIS")
+    if not numeric_cols:
+        print("Không tìm thấy cột số nào để phân tích.")
+        return None
+
+    print("📈 PHÂN TÍCH THỐNG KÊ MÔ TẢ")
     print("=" * 60)
     
-    # 1. Basic statistics
-    print("\n🔢 Basic Statistics:")
+    # 1. Các chỉ số thống kê cơ bản
     basic_stats = df[numeric_cols].describe()
     print(basic_stats)
     
-    # 2. Skewness và Kurtosis
-    print("\n📊 Distribution Shape:")
-    for col in numeric_cols:
-        skewness = df[col].skew()
-        kurtosis = df[col].kurtosis()
-        
-        # Interpret skewness
-        if abs(skewness) < 0.5:
-            skew_interpretation = "Approximately symmetric"
-        elif skewness > 0.5:
-            skew_interpretation = "Right-skewed (positive skew)"
-        else:
-            skew_interpretation = "Left-skewed (negative skew)"
-        
-        # Interpret kurtosis
-        if abs(kurtosis) < 2:
-            kurt_interpretation = "Normal distribution"
-        elif kurtosis > 2:
-            kurt_interpretation = "Heavy tails (leptokurtic)"
-        else:
-            kurt_interpretation = "Light tails (platykurtic)"
-        
-        print(f"\n{col}:")
-        print(f"  Skewness: {skewness:.3f} - {skew_interpretation}")
-        print(f"  Kurtosis: {kurtosis:.3f} - {kurt_interpretation}")
-    
-    # 3. Outlier detection using IQR method
-    print("\n🚨 Outlier Detection (IQR Method):")
-    for col in numeric_cols:
-        Q1 = df[col].quantile(0.25)
-        Q3 = df[col].quantile(0.75)
-        IQR = Q3 - Q1
-        
-        lower_bound = Q1 - 1.5 * IQR
-        upper_bound = Q3 + 1.5 * IQR
-        
-        outliers = df[(df[col] < lower_bound) | (df[col] > upper_bound)][col]
-        
-        print(f"\n{col}:")
-        print(f"  Q1: {Q1:.3f}, Q3: {Q3:.3f}, IQR: {IQR:.3f}")
-        print(f"  Lower bound: {lower_bound:.3f}, Upper bound: {upper_bound:.3f}")
-        print(f"  Outliers: {len(outliers)} values ({len(outliers)/len(df)*100:.2f}%)")
-    
-    # 4. Visualizations
-    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
-    
-    # Histogram với KDE
-    for i, col in enumerate(numeric_cols[:4]):  # Chỉ vẽ 4 cột đầu
-        row = i // 2
-        col_idx = i % 2
-        
-        axes[row, col_idx].hist(df[col].dropna(), bins=30, alpha=0.7, density=True)
-        axes[row, col_idx].set_title(f'Distribution of {col}')
-        axes[row, col_idx].set_xlabel(col)
-        axes[row, col_idx].set_ylabel('Density')
-        
-        # Add KDE
-        from scipy.stats import gaussian_kde
-        data = df[col].dropna()
-        if len(data) > 1:
-            kde = gaussian_kde(data)
-            x_range = np.linspace(data.min(), data.max(), 100)
-            axes[row, col_idx].plot(x_range, kde(x_range), 'r-', linewidth=2)
-    
-    plt.tight_layout()
-    plt.show()
+    # ... (phần code còn lại để phân tích Skewness, Kurtosis và Outliers)
     
     return basic_stats
 
-# Ví dụ sử dụng
+# Ví dụ:
 # stats_result = comprehensive_descriptive_analysis(df)
 ```
 
-**Giải thích các khái niệm thống kê:**
-- **Skewness**: Độ lệch của phân phối (dương = lệch phải, âm = lệch trái)
-- **Kurtosis**: Độ nhọn của phân phối (cao = nhọn, thấp = phẳng)
-- **IQR**: Khoảng tứ phân vị (Q3 - Q1), dùng để phát hiện outliers
-- **Outliers**: Giá trị bất thường, vượt quá 1.5 × IQR
+#### Phân tích tương quan (Correlation Analysis)
 
-#### Correlation Analysis - Phân tích tương quan
+**Mục đích**: Hiểu mối quan hệ **tuyến tính** giữa các biến số.
+-   **Hệ số tương quan (Correlation Coefficient)**: Một giá trị từ -1 đến 1.
+    -   **+1**: Tương quan dương hoàn hảo (biến này tăng thì biến kia tăng).
+    -   **-1**: Tương quan âm hoàn hảo (biến này tăng thì biến kia giảm).
+    -   **0**: Không có tương quan tuyến tính.
 
-**Mục đích**: Hiểu mối quan hệ giữa các biến số.
+**Cạm bẫy quan trọng: Tương quan không có nghĩa là Nhân quả (Correlation does not imply causation)!**
+-   Ví dụ: Doanh số bán kem và số vụ chết đuối có tương quan dương mạnh.
+-   **Tương quan**: Cả hai đều tăng vào mùa hè.
+-   **Nhân quả**: Không phải ăn kem gây ra chết đuối. Biến thứ ba (nhiệt độ mùa hè) là nguyên nhân chung gây ra cả hai.
+-   Luôn đặt câu hỏi "Tại sao?" khi thấy một mối tương quan.
+
+**Các phương pháp tính tương quan**:
+-   **Pearson**: Đo lường mối quan hệ **tuyến tính**. Yêu cầu dữ liệu có phân phối gần chuẩn.
+-   **Spearman**: Đo lường mối quan hệ **đơn điệu** (cứ tăng/giảm là được, không cần thẳng). Hoạt động trên thứ hạng của dữ liệu, do đó ít bị ảnh hưởng bởi outliers.
 
 ```python
 def correlation_analysis(df, numeric_cols=None, method='pearson'):
     """
-    Phân tích tương quan toàn diện
-    
-    Parameters:
-    df (pd.DataFrame): DataFrame cần phân tích
-    numeric_cols (list): Danh sách cột số
-    method (str): Phương pháp tương quan ('pearson', 'spearman', 'kendall')
+    Phân tích tương quan và trực quan hóa bằng heatmap.
     """
     if numeric_cols is None:
         numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
-    
-    # Tính correlation matrix
+        
+    if len(numeric_cols) < 2:
+        print("Cần ít nhất 2 cột số để phân tích tương quan.")
+        return None
+
     corr_matrix = df[numeric_cols].corr(method=method)
     
-    print(f"🔗 CORRELATION ANALYSIS ({method.upper()})")
-    print("=" * 50)
-    
-    # 1. Correlation matrix
-    print("\n📊 Correlation Matrix:")
-    print(corr_matrix.round(3))
-    
-    # 2. Strong correlations (|r| > 0.7)
-    print(f"\n💪 Strong Correlations (|r| > 0.7):")
-    strong_corr = []
-    for i in range(len(corr_matrix.columns)):
-        for j in range(i+1, len(corr_matrix.columns)):
-            corr_val = corr_matrix.iloc[i, j]
-            if abs(corr_val) > 0.7:
-                strong_corr.append({
-                    'var1': corr_matrix.columns[i],
-                    'var2': corr_matrix.columns[j],
-                    'correlation': corr_val
-                })
-    
-    if strong_corr:
-        for corr in strong_corr:
-            print(f"  {corr['var1']} ↔ {corr['var2']}: {corr['correlation']:.3f}")
-    else:
-        print("  Không có tương quan mạnh")
-    
-    # 3. Visualizations
-    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
-    
-    # Heatmap
-    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', center=0, 
-                square=True, ax=axes[0])
-    axes[0].set_title(f'Correlation Heatmap ({method.title()})')
-    
-    # Scatter plot matrix cho các cặp có tương quan cao
-    if strong_corr:
-        # Chọn 4 cặp có tương quan cao nhất
-        top_corr = sorted(strong_corr, key=lambda x: abs(x['correlation']), reverse=True)[:4]
-        
-        for i, corr in enumerate(top_corr):
-            row = i // 2
-            col = i % 2
-            if i < 4:  # Chỉ vẽ tối đa 4 plots
-                axes[1].scatter(df[corr['var1']], df[corr['var2']], alpha=0.6)
-                axes[1].set_xlabel(corr['var1'])
-                axes[1].set_ylabel(corr['var2'])
-                axes[1].set_title(f'Strongest Correlation: {corr["correlation"]:.3f}')
-    
-    plt.tight_layout()
+    plt.figure(figsize=(12, 10))
+    sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f", center=0)
+    plt.title(f'Ma trận tương quan ({method.capitalize()})')
     plt.show()
+    
+    # Tìm các cặp có tương quan mạnh
+    strong_corr = corr_matrix.abs().unstack().sort_values(ascending=False)
+    strong_corr = strong_corr[strong_corr != 1.0] # Bỏ các cặp tự tương quan
+    print("\nCác cặp tương quan mạnh nhất:")
+    print(strong_corr.head(10))
     
     return corr_matrix
 
-# Ví dụ sử dụng
-# corr_result = correlation_analysis(df, method='pearson')
+# Ví dụ:
+# corr_result = correlation_analysis(df)
 ```
-
-**Giải thích các phương pháp tương quan:**
-- **Pearson**: Tương quan tuyến tính, yêu cầu dữ liệu có phân phối chuẩn
-- **Spearman**: Tương quan hạng, không yêu cầu phân phối chuẩn
-- **Kendall**: Tương quan hạng, robust với outliers
-
 ## 📈 3. Trực quan hóa dữ liệu
 
 ### 3.1 Dashboard Creation - Tạo Dashboard

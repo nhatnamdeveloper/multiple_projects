@@ -1063,534 +1063,261 @@ def demonstrate_universal_approximation():
 
 ### 1.2 Backpropagation - Lan truyền ngược
 
-> **Backpropagation** là thuật toán cơ bản để tính gradient của loss function theo các tham số của neural network.
+> **Backpropagation** (lan truyền ngược) là thuật toán cốt lõi, là "phép màu" giúp cho mạng nơ-ron có thể học được. Về bản chất, nó là một cách thông minh để áp dụng **quy tắc chuỗi (Chain Rule)** trong giải tích để tính toán gradient (độ dốc) của hàm mất mát theo từng tham số (trọng số và bias) trong mạng.
+
+#### Tư duy trực quan
+1.  **Forward Pass (Lan truyền xuôi)**: Bạn đưa dữ liệu vào mạng, tính toán qua từng layer để ra được một dự đoán (output).
+2.  **Tính lỗi (Compute Loss)**: Bạn so sánh dự đoán này với "đáp án" đúng (ground truth) để tính ra một con số thể hiện "mức độ sai" của mạng, gọi là **loss**.
+3.  **Backward Pass (Lan truyền ngược)**:
+    *   Bắt đầu từ con số `loss` ở cuối mạng, backpropagation "lan truyền" lỗi này ngược về các layer phía trước.
+    *   Tại mỗi layer, nó tự hỏi: "Layer này đã 'đóng góp' vào cái lỗi cuối cùng này như thế nào?"
+    *   Dựa trên sự "đóng góp" đó, nó tính toán gradient cho các tham số của layer đó. Gradient này cho biết: "Để giảm `loss`, ta nên điều chỉnh tham số này theo hướng nào (tăng hay giảm) và với mức độ bao nhiêu?"
+4.  **Cập nhật trọng số (Update Weights)**: Dùng các gradient đã tính được để cập nhật lại tất cả các tham số trong mạng theo thuật toán Gradient Descent (hoặc các biến thể của nó).
+
+Về cơ bản, Backpropagation là quy trình "quy trách nhiệm" cho từng tham số về cái lỗi tổng thể.
 
 #### Chain Rule và Gradient Flow
 
-**Chain rule trong backpropagation**:
-```
-∂L/∂wᵢⱼ = ∂L/∂aⱼ × ∂aⱼ/∂zⱼ × ∂zⱼ/∂wᵢⱼ
-```
+Quy tắc chuỗi cho phép chúng ta tính đạo hàm của một hàm hợp. Ví dụ, nếu `L` là hàm của `a`, và `a` là hàm của `z`, và `z` là hàm của `w`, thì:
+$$ \frac{\partial L}{\partial w} = \frac{\partial L}{\partial a} \cdot \frac{\partial a}{\partial z} \cdot \frac{\partial z}{\partial w} $$
 
-**Giải thích các ký hiệu:**
-- **∂L/∂wᵢⱼ**: Gradient của loss theo weight wᵢⱼ
-- **∂L/∂aⱼ**: Gradient của loss theo activation aⱼ
-- **∂aⱼ/∂zⱼ**: Gradient của activation theo pre-activation zⱼ
-- **∂zⱼ/∂wᵢⱼ**: Gradient của pre-activation theo weight wᵢⱼ
+Backpropagation áp dụng quy tắc này một cách có hệ thống từ layer cuối cùng ngược về layer đầu tiên.
 
-**Trong đó:**
-- **aⱼ = σ(zⱼ)**: Activation output của nơ-ron j
-- **zⱼ = Σᵢ wᵢⱼaᵢ**: Pre-activation (tổng có trọng số của inputs)
-- **σ**: Activation function (ReLU, Tanh, Sigmoid, etc.)
+**Luồng tính toán gradient (Gradient Flow):**
 
-**Gradient flow tổng quát**:
-```
-∂L/∂θ = (∂L/∂ŷ) × (∂ŷ/∂θ)
-```
+1.  **Gradient của Loss theo Output của mạng ($\frac{\partial L}{\partial \hat{y}}$)**: Bước đầu tiên, dễ tính.
+2.  **Gradient tại layer cuối cùng**:
+    -   $\frac{\partial L}{\partial z^{(L)}} = \frac{\partial L}{\partial a^{(L)}} \odot \sigma'(z^{(L)})$ (với $a^{(L)} = \hat{y}$)
+    -   $\frac{\partial L}{\partial W^{(L)}} = \frac{\partial L}{\partial z^{(L)}} \cdot (a^{(L-1)})^T$
+3.  **Lan truyền ngược ra sau**:
+    -   $\frac{\partial L}{\partial a^{(L-1)}} = (W^{(L)})^T \cdot \frac{\partial L}{\partial z^{(L)}}$
+    -   Sau đó, lặp lại quy trình tính $\frac{\partial L}{\partial z^{(L-1)}}$ và $\frac{\partial L}{\partial W^{(L-1)}}$ và tiếp tục lan truyền ngược.
 
-**Giải thích:**
-- **θ**: Tất cả tham số của mạng
-- **ŷ**: Dự đoán của mạng
-- **∂L/∂ŷ**: Gradient của loss theo output
+#### Ví dụ cụ thể bằng số
+Hãy xem một mạng nơ-ron cực kỳ đơn giản: 1 input, 1 hidden neuron, 1 output neuron.
+-   Input `x = 2`
+-   Target `y = 1`
+-   Weights `w1 = 0.5`, `w2 = 0.8`
+-   Biases `b1 = 0.1`, `b2 = 0.2`
+-   Activation function: Sigmoid, $\sigma(z) = 1 / (1 + e^{-z})$
+-   Loss function: Mean Squared Error, $L = \frac{1}{2}(\hat{y} - y)^2$
+
+**1. Forward Pass:**
+-   $z_1 = w_1 \cdot x + b_1 = 0.5 \cdot 2 + 0.1 = 1.1$
+-   $a_1 = \sigma(z_1) = \sigma(1.1) \approx 0.75$
+-   $z_2 = w_2 \cdot a_1 + b_2 = 0.8 \cdot 0.75 + 0.2 = 0.8$
+-   $\hat{y} = a_2 = \sigma(z_2) = \sigma(0.8) \approx 0.69$
+-   $L = \frac{1}{2}(0.69 - 1)^2 \approx 0.048$
+
+**2. Backward Pass (tính gradient cho `w2`):**
+-   Ta cần $\frac{\partial L}{\partial w_2}$. Áp dụng chain rule:
+    $$ \frac{\partial L}{\partial w_2} = \frac{\partial L}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial z_2} \cdot \frac{\partial z_2}{\partial w_2} $$
+-   Tính từng thành phần:
+    -   $\frac{\partial L}{\partial \hat{y}} = (\hat{y} - y) = 0.69 - 1 = -0.31$
+    -   $\frac{\partial \hat{y}}{\partial z_2} = \sigma'(z_2) = \sigma(z_2)(1 - \sigma(z_2)) = 0.69 \cdot (1 - 0.69) \approx 0.21$
+    -   $\frac{\partial z_2}{\partial w_2} = a_1 = 0.75$
+-   Kết hợp lại:
+    -   $\frac{\partial L}{\partial w_2} = -0.31 \cdot 0.21 \cdot 0.75 \approx -0.049$
+
+**3. Cập nhật `w2`:**
+-   Giả sử learning rate `α = 0.1`.
+-   $w_{2, \text{new}} = w_{2, \text{old}} - \alpha \cdot \frac{\partial L}{\partial w_2} = 0.8 - 0.1 \cdot (-0.049) \approx 0.8049$
+-   Trọng số `w2` đã được cập nhật một chút để giảm loss. Quá trình này được lặp lại cho tất cả các tham số khác (`w1`, `b1`, `b2`) và cho hàng nghìn, hàng triệu mẫu dữ liệu.
 
 #### Implementation với PyTorch
+PyTorch tự động hóa hoàn toàn quá trình này với `autograd`.
 
 ```python
 import torch
 import torch.nn as nn
 
-class SimpleNN(nn.Module):
-    """
-    Neural network đơn giản để minh họa backpropagation
-    
-    Architecture:
-    Input (10) → Hidden (20) → Output (1)
-    """
-    
-    def __init__(self):
-        super().__init__()
-        self.fc1 = nn.Linear(10, 20)      # Fully connected layer 1
-        self.fc2 = nn.Linear(20, 1)       # Fully connected layer 2
-        self.relu = nn.ReLU()             # Activation function
-        
-    def forward(self, x):
-        """
-        Forward pass: tính output từ input
-        
-        Parameters:
-        x (torch.Tensor): Input tensor shape (batch_size, 10)
-        
-        Returns:
-        torch.Tensor: Output tensor shape (batch_size, 1)
-        """
-        # Layer 1: input → hidden
-        x = self.fc1(x)        # Linear transformation: x @ W1 + b1
-        x = self.relu(x)       # Non-linear activation: max(0, x)
-        
-        # Layer 2: hidden → output
-        x = self.fc2(x)        # Linear transformation: x @ W2 + b2
-        
-        return x
+# Dữ liệu và mô hình giống ví dụ trên
+x = torch.tensor([2.0])
+y = torch.tensor([1.0])
 
-def demonstrate_backpropagation():
-    """
-    Minh họa quá trình backpropagation
-    """
-    
-    # Khởi tạo mô hình
-    model = SimpleNN()
-    
-    # Tạo dữ liệu mẫu
-    batch_size = 32
-    x = torch.randn(batch_size, 10)    # Input: 32 samples, 10 features
-    y = torch.randn(batch_size, 1)     # Target: 32 samples, 1 output
-    
-    print("🔍 MODEL ARCHITECTURE:")
-    print(f"Input shape: {x.shape}")
-    print(f"Target shape: {y.shape}")
-    print(f"Model parameters: {sum(p.numel() for p in model.parameters())}")
-    
-    # Forward pass
-    print("\n➡️ FORWARD PASS:")
-    y_pred = model(x)
-    print(f"Prediction shape: {y_pred.shape}")
-    print(f"Prediction range: [{y_pred.min().item():.4f}, {y_pred.max().item():.4f}]")
-    
-    # Loss calculation
-    criterion = nn.MSELoss()
-    loss = criterion(y_pred, y)
-    print(f"Initial Loss: {loss.item():.6f}")
-    
-    # Backward pass (automatic differentiation)
-    print("\n⬅️ BACKWARD PASS:")
-    print("Computing gradients...")
-    loss.backward()  # Automatic backpropagation
-    
-    # Kiểm tra gradients
-    print("\n📊 GRADIENTS ANALYSIS:")
-    for name, param in model.named_parameters():
-        if param.grad is not None:
-            grad_norm = param.grad.norm().item()
-            param_norm = param.norm().item()
-            print(f"{name}:")
-            print(f"  Parameter norm: {param_norm:.4f}")
-            print(f"  Gradient norm: {grad_norm:.4f}")
-            print(f"  Gradient/Parameter ratio: {grad_norm/param_norm:.4f}")
-    
-    # Gradient clipping (tránh gradient explosion)
-    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-    print("\n✂️ GRADIENT CLIPPING APPLIED (max_norm=1.0)")
-    
-    return model, loss
+w1 = torch.tensor([0.5], requires_grad=True)
+b1 = torch.tensor([0.1], requires_grad=True)
+w2 = torch.tensor([0.8], requires_grad=True)
+b2 = torch.tensor([0.2], requires_grad=True)
 
-# Ví dụ sử dụng
-# model, loss = demonstrate_backpropagation()
+# 1. Forward Pass
+z1 = w1 * x + b1
+a1 = torch.sigmoid(z1)
+z2 = w2 * a1 + b2
+y_hat = torch.sigmoid(z2)
+loss = 0.5 * (y_hat - y)**2
+
+print(f"Dự đoán y_hat: {y_hat.item():.4f}")
+print(f"Loss ban đầu: {loss.item():.4f}")
+
+# 2. Backward Pass
+loss.backward() # PyTorch tự động tính tất cả gradient!
+
+# In ra gradient
+print(f"\nGradient của loss theo w2 (tính tay ≈ -0.049): {w2.grad.item():.4f}")
+print(f"Gradient của loss theo b2: {b2.grad.item():.4f}")
+print(f"Gradient của loss theo w1: {w1.grad.item():.4f}")
+print(f"Gradient của loss theo b1: {b1.grad.item():.4f}")
+
+# 3. Cập nhật trọng số (thủ công)
+lr = 0.1
+with torch.no_grad(): # Tắt theo dõi gradient khi cập nhật
+    w2 -= lr * w2.grad
+    b2 -= lr * b2.grad
+    w1 -= lr * w1.grad
+    b1 -= lr * b1.grad
+
+    # Reset gradients cho lần lặp tiếp theo
+    w2.grad.zero_()
+    b2.grad.zero_()
+    w1.grad.zero_()
+    b1.grad.zero_()
+
+print(f"\nw2 mới sau 1 bước cập nhật: {w2.item():.4f}")
 ```
-
-**Giải thích các khái niệm:**
-- **Forward Pass**: Tính output từ input qua các layer
-- **Backward Pass**: Tính gradient của loss theo các tham số
-- **Gradient Norm**: Độ lớn của gradient vector
-- **Gradient Clipping**: Kỹ thuật tránh gradient explosion
+**Giải thích khái niệm:**
+- **Forward Pass**: Tính toán "xuôi" từ input đến output để ra dự đoán.
+- **Backward Pass**: Tính toán "ngược" từ loss về input để tính gradient cho mỗi tham số.
+- **Chain Rule**: Công cụ giải tích cốt lõi cho phép "bẻ nhỏ" đạo hàm của một hàm phức tạp thành tích của các đạo hàm đơn giản hơn.
+- **Gradient**: Vector chỉ hướng và độ lớn của sự thay đổi lớn nhất của hàm số, là kim chỉ nam cho việc cập nhật trọng số.
 
 ## ⚡ 2. Optimization trong Deep Learning
 
+Tối ưu hóa là quá trình điều chỉnh các tham số của mô hình (trọng số và bias) để giảm thiểu hàm mất mát. Đây là trái tim của quá trình training.
+
 ### 2.1 Initialization Strategies - Chiến lược khởi tạo
 
-> **Weight Initialization** là yếu tố quan trọng ảnh hưởng đến hiệu suất training của neural network.
+> **Tại sao quan trọng?** Việc khởi tạo trọng số ban đầu có ảnh hưởng rất lớn đến quá trình hội tụ của mô hình. Khởi tạo sai cách có thể dẫn đến hiện tượng **vanishing gradients** (gradient quá nhỏ) hoặc **exploding gradients** (gradient quá lớn), khiến mô hình không học được.
 
 #### Xavier/Glorot Initialization
-
-**Công thức Xavier/Glorot**:
-```
-Wᵢⱼ ~ N(0, 2/(n_in + n_out))
-```
-
-**Giải thích ký hiệu:**
-- **Wᵢⱼ**: Weight từ nơ-ron i đến nơ-ron j
-- **N(μ, σ²)**: Phân phối chuẩn với mean μ và variance σ²
-- **n_in**: Số nơ-ron input của layer
-- **n_out**: Số nơ-ron output của layer
-
-**Lý do sử dụng**:
-- Giữ variance của activations ổn định qua các layer
-- Tránh vanishing/exploding gradients
-- Đặc biệt hiệu quả với activation functions như Tanh, Sigmoid
+- **Tư tưởng**: Giữ cho phương sai (variance) của các activation và gradient không đổi qua các layer.
+- **Công thức**: Lấy mẫu từ phân phối chuẩn với mean=0 và variance = $2 / (n_{in} + n_{out})$.
+- **Khi nào dùng**: Hiệu quả với các activation function đối xứng quanh 0 như `tanh` hoặc `sigmoid`.
 
 #### He Initialization
-
-**Công thức He Initialization**:
-```
-Wᵢⱼ ~ N(0, 2/n_in)
-```
-
-**Khi nào sử dụng**:
-- Đặc biệt hiệu quả với ReLU activation function
-- ReLU có xu hướng "kill" một nửa nơ-ron (output = 0)
-- He initialization bù đắp cho việc này
-
-**So sánh với Xavier**:
-- Xavier: σ² = 2/(n_in + n_out)
-- He: σ² = 2/n_in
-- He thường có variance cao hơn, phù hợp với ReLU
-
-#### Implementation chi tiết
-
-```python
-import torch
-import torch.nn as nn
-import torch.nn.init as init
-import matplotlib.pyplot as plt
-import numpy as np
-
-class BetterNN(nn.Module):
-    """
-    Neural network với các chiến lược initialization khác nhau
-    """
-    
-    def __init__(self, init_method='xavier'):
-        super().__init__()
-        self.fc1 = nn.Linear(784, 256)    # Input layer → Hidden layer 1
-        self.fc2 = nn.Linear(256, 128)    # Hidden layer 1 → Hidden layer 2
-        self.fc3 = nn.Linear(128, 10)     # Hidden layer 2 → Output layer
-        
-        # Apply initialization strategy
-        self.apply_initialization(init_method)
-        
-    def apply_initialization(self, method):
-        """
-        Áp dụng chiến lược initialization khác nhau
-        
-        Parameters:
-        method (str): 'xavier', 'he', 'normal', 'uniform'
-        """
-        
-        if method == 'xavier':
-            # Xavier/Glorot initialization
-            init.xavier_uniform_(self.fc1.weight)
-            init.xavier_uniform_(self.fc2.weight)
-            init.xavier_uniform_(self.fc3.weight)
-            print("✅ Applied Xavier/Glorot initialization")
-            
-        elif method == 'he':
-            # He initialization
-            init.kaiming_uniform_(self.fc1.weight, nonlinearity='relu')
-            init.kaiming_uniform_(self.fc2.weight, nonlinearity='relu')
-            init.kaiming_uniform_(self.fc3.weight, nonlinearity='relu')
-            print("✅ Applied He initialization")
-            
-        elif method == 'normal':
-            # Normal initialization
-            init.normal_(self.fc1.weight, mean=0, std=0.1)
-            init.normal_(self.fc2.weight, mean=0, std=0.1)
-            init.normal_(self.fc3.weight, mean=0, std=0.1)
-            print("✅ Applied Normal initialization")
-            
-        elif method == 'uniform':
-            # Uniform initialization
-            init.uniform_(self.fc1.weight, a=-0.1, b=0.1)
-            init.uniform_(self.fc2.weight, a=-0.1, b=0.1)
-            init.uniform_(self.fc3.weight, a=-0.1, b=0.1)
-            print("✅ Applied Uniform initialization")
-        
-        # Initialize biases to zero (best practice)
-        init.zeros_(self.fc1.bias)
-        init.zeros_(self.fc2.bias)
-        init.zeros_(self.fc3.bias)
-        print("✅ Initialized biases to zero")
-    
-    def forward(self, x):
-        """Forward pass"""
-        x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
-
-def compare_initialization_methods():
-    """
-    So sánh hiệu quả của các phương pháp initialization
-    """
-    
-    methods = ['xavier', 'he', 'normal', 'uniform']
-    results = {}
-    
-    print("🔬 COMPARING INITIALIZATION METHODS")
-    print("=" * 50)
-    
-    for method in methods:
-        print(f"\n📊 Testing {method.upper()} initialization...")
-        
-        # Tạo mô hình với method cụ thể
-        model = BetterNN(init_method=method)
-        
-        # Tạo dữ liệu mẫu
-        x = torch.randn(100, 784)
-        
-        # Forward pass
-        with torch.no_grad():
-            y = model(x)
-            
-            # Tính statistics
-            activations = []
-            for layer in [model.fc1, model.fc2, model.fc3]:
-                if hasattr(layer, 'weight'):
-                    activations.append(layer.weight.data.numpy().flatten())
-            
-            # Tính variance của activations
-            variances = [np.var(act) for act in activations]
-            
-            results[method] = {
-                'output_range': [y.min().item(), y.max().item()],
-                'layer_variances': variances,
-                'total_params': sum(p.numel() for p in model.parameters())
-            }
-            
-            print(f"  Output range: [{y.min().item():.4f}, {y.max().item():.4f}]")
-            print(f"  Layer variances: {[f'{v:.4f}' for v in variances]}")
-    
-    # Visualization
-    plt.figure(figsize=(15, 5))
-    
-    # Output range comparison
-    plt.subplot(1, 3, 1)
-    output_ranges = [results[m]['output_range'] for m in methods]
-    ranges = [r[1] - r[0] for r in output_ranges]
-    plt.bar(methods, ranges)
-    plt.title('Output Range Comparison')
-    plt.ylabel('Range (max - min)')
-    plt.xticks(rotation=45)
-    
-    # Layer variance comparison
-    plt.subplot(1, 3, 2)
-    for i, method in enumerate(methods):
-        variances = results[method]['layer_variances']
-        plt.plot(range(1, len(variances)+1), variances, 
-                marker='o', label=method.upper())
-    plt.title('Layer Variance Comparison')
-    plt.xlabel('Layer')
-    plt.ylabel('Variance')
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    
-    # Parameter count
-    plt.subplot(1, 3, 3)
-    param_counts = [results[m]['total_params'] for m in methods]
-    plt.bar(methods, param_counts)
-    plt.title('Total Parameters')
-    plt.ylabel('Number of Parameters')
-    plt.xticks(rotation=45)
-    
-    plt.tight_layout()
-    plt.show()
-    
-    return results
-
-# Ví dụ sử dụng
-# results = compare_initialization_methods()
-```
-
-**Giải thích kết quả:**
-- **Output Range**: Khoảng giá trị output, càng ổn định càng tốt
-- **Layer Variance**: Variance của weights trong mỗi layer
-- **Parameter Count**: Tổng số tham số của mô hình
+- **Tư tưởng**: Tương tự Xavier, nhưng được điều chỉnh cho `ReLU` activation.
+- **Lý do**: `ReLU` "giết chết" một nửa số neuron (cho output bằng 0), làm giảm phương sai của output. He initialization bù lại bằng cách nhân đôi phương sai.
+- **Công thức**: Lấy mẫu từ phân phối chuẩn với mean=0 và variance = $2 / n_{in}$.
+- **Khi nào dùng**: Hầu hết các mạng hiện đại sử dụng `ReLU` hoặc các biến thể của nó, do đó He Initialization là lựa chọn mặc định phổ biến.
 
 ### 2.2 Batch Normalization - Chuẩn hóa theo batch
 
-> **Batch Normalization** là kỹ thuật chuẩn hóa dữ liệu trong quá trình training để ổn định hóa training và tăng tốc độ hội tụ.
+> **Vấn đề (Internal Covariate Shift)**: Trong quá trình training, phân phối của output từ mỗi layer thay đổi liên tục khi các trọng số của layer trước đó được cập nhật. Điều này làm cho các layer sau phải liên tục thích ứng với một "mục tiêu di động", làm chậm quá trình học.
 
-#### Lý thuyết Batch Normalization
+**Lý thuyết Batch Normalization**:
+- **Cách hoạt động**: Tại mỗi mini-batch, Batch Normalization chuẩn hóa output của một layer để chúng có **mean=0 và variance=1**. Sau đó, nó dùng hai tham số có thể học được là **gamma ($\gamma$)** và **beta ($\beta$)** để scale và shift lại phân phối này.
+    ```
+    μ_B = (1/m)Σᵢ xᵢ
+    σ²_B = (1/m)Σᵢ(xᵢ - μ_B)²
+    x̂ᵢ = (xᵢ - μ_B) / √(σ²_B + ε)
+    yᵢ = γx̂ᵢ + β  # γ và β là tham số học được
+    ```
+- **Lợi ích**:
+    - **Ổn định hóa quá trình training**: Giảm Internal Covariate Shift.
+    - **Tăng tốc độ hội tụ**: Cho phép sử dụng learning rate cao hơn.
+    - **Regularization**: Có tác dụng điều chuẩn nhẹ, đôi khi có thể thay thế Dropout.
 
-**Forward pass**:
-```
-μ_B = (1/m)Σᵢ xᵢ
-σ²_B = (1/m)Σᵢ(xᵢ - μ_B)²
-x̂ᵢ = (xᵢ - μ_B) / √(σ²_B + ε)
-yᵢ = γx̂ᵢ + β
-```
+### 2.3 Các thuật toán tối ưu hóa (Optimization Algorithms)
 
-**Giải thích các ký hiệu:**
-- **μ_B**: Mean của batch
-- **σ²_B**: Variance của batch
-- **m**: Batch size
-- **xᵢ**: Input thứ i trong batch
-- **x̂ᵢ**: Input đã được normalize
-- **ε**: Small constant (1e-8) để tránh division by zero
-- **γ, β**: Learnable parameters (scale và shift)
-- **yᵢ**: Output cuối cùng
+Gradient Descent là nền tảng, nhưng có nhiều biến thể để cải thiện tốc độ và sự ổn định.
 
-**Lợi ích của Batch Normalization**:
-- Giảm internal covariate shift
-- Cho phép sử dụng learning rate cao hơn
-- Giảm dependency vào initialization
-- Hoạt động như một form of regularization
+#### Batch vs. Stochastic vs. Mini-batch Gradient Descent
 
-#### Implementation chi tiết
+1.  **Batch Gradient Descent**:
+    -   **Cách hoạt động**: Tính toán gradient trên **toàn bộ** tập dữ liệu training rồi mới cập nhật trọng số.
+    -   **Ưu điểm**: Hướng đi đến cực tiểu rất ổn định và trực tiếp.
+    -   **Nhược điểm**: Cực kỳ chậm và tốn bộ nhớ với các tập dữ liệu lớn. Không khả thi trong thực tế cho deep learning.
 
-```python
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import matplotlib.pyplot as plt
-import numpy as np
+2.  **Stochastic Gradient Descent (SGD)**:
+    -   **Cách hoạt động**: Tính toán gradient và cập nhật trọng số cho **từng mẫu dữ liệu một**.
+    -   **Ưu điểm**: Nhanh, tốn ít bộ nhớ, có thể "nhảy" ra khỏi các điểm cực tiểu cục bộ (local minima) không tốt nhờ sự "nhiễu" của nó.
+    -   **Nhược điểm**: Quá trình hội tụ rất "ồn ào" và không ổn định.
 
-class BatchNormNetwork(nn.Module):
-    """
-    Neural network với và không có Batch Normalization
-    """
-    
-    def __init__(self, use_batch_norm=True):
-        super().__init__()
-        self.use_batch_norm = use_batch_norm
-        
-        # Layers
-        self.fc1 = nn.Linear(784, 256)
-        self.fc2 = nn.Linear(256, 128)
-        self.fc3 = nn.Linear(128, 10)
-        
-        # Batch Normalization layers
-        if use_batch_norm:
-            self.bn1 = nn.BatchNorm1d(256)
-            self.bn2 = nn.BatchNorm1d(128)
-        
-        # Dropout for regularization
-        self.dropout = nn.Dropout(0.5)
-        
-    def forward(self, x):
-        """Forward pass với optional batch normalization"""
-        
-        # Layer 1
-        x = self.fc1(x)
-        if self.use_batch_norm:
-            x = self.bn1(x)
-        x = F.relu(x)
-        x = self.dropout(x)
-        
-        # Layer 2
-        x = self.fc2(x)
-        if self.use_batch_norm:
-            x = self.bn2(x)
-        x = F.relu(x)
-        x = self.dropout(x)
-        
-        # Output layer
-        x = self.fc3(x)
-        
-        return x
+3.  **Mini-batch Gradient Descent**:
+    -   **Cách hoạt động**: Thỏa hiệp giữa hai phương pháp trên. Tính toán gradient và cập nhật trọng số trên một **batch nhỏ** (ví dụ: 32, 64, 128 mẫu) dữ liệu.
+    -   **Ưu điểm**: Tận dụng được cả lợi thế của hai phương pháp: hội tụ ổn định hơn SGD và hiệu quả về mặt tính toán hơn Batch GD.
+    -   **Thực tế**: Đây là phương pháp được sử dụng phổ biến nhất trong deep learning. Khi người ta nói "SGD", họ thường ngụ ý là "Mini-batch SGD".
 
-def demonstrate_batch_normalization():
-    """
-    Minh họa hiệu quả của Batch Normalization
-    """
-    
-    print("🔬 BATCH NORMALIZATION DEMONSTRATION")
-    print("=" * 50)
-    
-    # Tạo dữ liệu mẫu
-    batch_size = 32
-    x = torch.randn(batch_size, 784)
-    
-    # Mô hình không có Batch Norm
-    model_no_bn = BatchNormNetwork(use_batch_norm=False)
-    print("\n📊 Model WITHOUT Batch Normalization:")
-    
-    with torch.no_grad():
-        y_no_bn = model_no_bn(x)
-        print(f"  Output shape: {y_no_bn.shape}")
-        print(f"  Output mean: {y_no_bn.mean().item():.4f}")
-        print(f"  Output std: {y_no_bn.std().item():.4f}")
-        print(f"  Output range: [{y_no_bn.min().item():.4f}, {y_no_bn.max().item():.4f}]")
-    
-    # Mô hình có Batch Norm
-    model_with_bn = BatchNormNetwork(use_batch_norm=True)
-    print("\n📊 Model WITH Batch Normalization:")
-    
-    with torch.no_grad():
-        y_with_bn = model_with_bn(x)
-        print(f"  Output shape: {y_with_bn.shape}")
-        print(f"  Output mean: {y_with_bn.mean().item():.4f}")
-        print(f"  Output std: {y_with_bn.std().item():.4f}")
-        print(f"  Output range: [{y_with_bn.min().item():.4f}, {y_with_bn.max().item():.4f}]")
-    
-    # So sánh distribution
-    plt.figure(figsize=(15, 5))
-    
-    # Histogram comparison
-    plt.subplot(1, 3, 1)
-    plt.hist(y_no_bn.numpy().flatten(), bins=50, alpha=0.7, label='No BN', density=True)
-    plt.hist(y_with_bn.numpy().flatten(), bins=50, alpha=0.7, label='With BN', density=True)
-    plt.xlabel('Output Values')
-    plt.ylabel('Density')
-    plt.title('Output Distribution Comparison')
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    
-    # Layer-wise activation comparison
-    plt.subplot(1, 3, 2)
-    layers = ['Input', 'Hidden 1', 'Hidden 2', 'Output']
-    
-    # Simulate activations through layers
-    activations_no_bn = []
-    activations_with_bn = []
-    
-    # Input
-    activations_no_bn.append(x.numpy().flatten())
-    activations_with_bn.append(x.numpy().flatten())
-    
-    # Hidden layers (simplified)
-    with torch.no_grad():
-        # No BN model
-        h1_no_bn = F.relu(model_no_bn.fc1(x))
-        h2_no_bn = F.relu(model_no_bn.fc2(h1_no_bn)
-        activations_no_bn.extend([h1_no_bn.numpy().flatten(), h2_no_bn.numpy().flatten()])
-        
-        # With BN model
-        h1_with_bn = F.relu(model_with_bn.bn1(model_with_bn.fc1(x)))
-        h2_with_bn = F.relu(model_with_bn.bn2(model_with_bn.fc2(h1_with_bn)))
-        activations_with_bn.extend([h1_with_bn.numpy().flatten(), h2_with_bn.numpy().flatten()])
-    
-    # Plot activation statistics
-    means_no_bn = [np.mean(act) for act in activations_no_bn]
-    means_with_bn = [np.mean(act) for act in activations_with_bn]
-    
-    x_pos = np.arange(len(layers))
-    width = 0.35
-    
-    plt.bar(x_pos - width/2, means_no_bn, width, label='No BN', alpha=0.7)
-    plt.bar(x_pos + width/2, means_with_bn, width, label='With BN', alpha=0.7)
-    plt.xlabel('Layers')
-    plt.ylabel('Mean Activation')
-    plt.title('Mean Activation by Layer')
-    plt.xticks(x_pos, layers)
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    
-    # Variance comparison
-    plt.subplot(1, 3, 3)
-    vars_no_bn = [np.var(act) for act in activations_no_bn]
-    vars_with_bn = [np.var(act) for act in activations_with_bn]
-    
-    plt.bar(x_pos - width/2, vars_no_bn, width, label='No BN', alpha=0.7)
-    plt.bar(x_pos + width/2, vars_with_bn, width, label='With BN', alpha=0.7)
-    plt.xlabel('Layers')
-    plt.ylabel('Variance')
-    plt.title('Activation Variance by Layer')
-    plt.xticks(x_pos, layers)
-    plt.legend()
-    plt.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.show()
-    
-    return model_no_bn, model_with_bn
+#### Các Optimizer nâng cao
 
-# Ví dụ sử dụng
-# model_no_bn, model_with_bn = demonstrate_batch_normalization()
-```
+-   **Momentum**:
+    -   **Tư tưởng**: Thêm "đà" (momentum) vào quá trình cập nhật. Giống như một quả bóng lăn xuống dốc, nó tích lũy vận tốc và có xu hướng tiếp tục di chuyển theo hướng cũ.
+    -   **Tác dụng**: Giúp vượt qua các vùng "phẳng" (plateaus) và các điểm cực tiểu cục bộ (local minima) nông, tăng tốc độ hội tụ.
 
-**Giải thích kết quả:**
-- **Output Distribution**: Phân phối output có BN thường ổn định hơn
-- **Mean Activation**: Mean của activations qua các layer
-- **Activation Variance**: Variance của activations, BN giúp ổn định
+-   **Adam (Adaptive Moment Estimation)**:
+    -   **Tư tưởng**: Kết hợp ý tưởng của Momentum và RMSprop (một thuật toán khác cũng điều chỉnh learning rate). Nó duy trì cả "momentum" và một learning rate riêng cho từng tham số.
+    -   **Tác dụng**: Thường hội tụ rất nhanh và hoạt động tốt trên nhiều loại bài toán khác nhau. Là một trong những optimizer phổ biến và an toàn nhất để bắt đầu.
+
+### 2.4 Các kỹ thuật Regularization khác
+Regularization là bất kỳ kỹ thuật nào được thêm vào quá trình học để ngăn chặn overfitting.
+
+#### Dropout
+-   **Tư tưởng**: "Đừng bỏ tất cả trứng vào một giỏ".
+-   **Cách hoạt động**: Trong mỗi lượt training, "tắt" (đặt output bằng 0) một cách ngẫu nhiên một tỷ lệ các neuron trong một layer.
+-   **Tại sao hiệu quả?**:
+    -   Nó buộc mạng phải học các **biểu diễn dư thừa (redundant representations)**. Mạng không thể phụ thuộc vào một vài neuron cụ thể nào đó, vì chúng có thể bị "tắt" bất cứ lúc nào.
+    -   Có thể xem Dropout như việc huấn luyện một **tập hợp (ensemble)** khổng lồ các mạng nơ-ron nhỏ hơn, khác nhau trên cùng một lúc, rồi lấy trung bình kết quả.
+-   **Lưu ý**: Dropout chỉ được áp dụng trong quá trình **training**. Khi **testing/inference**, tất cả các neuron đều được sử dụng.
+
+#### Early Stopping
+-   **Tư tưởng**: "Dừng lại khi mọi thứ bắt đầu tệ đi."
+-   **Cách hoạt động**:
+    1.  Trong quá trình training, theo dõi loss/metric trên một tập dữ liệu riêng gọi là **validation set**.
+    2.  Lưu lại trạng thái (checkpoint) của mô hình mỗi khi hiệu suất trên validation set được cải thiện.
+    3.  Nếu hiệu suất trên validation set không cải thiện (thậm chí tệ đi) trong một số epoch nhất định (gọi là `patience`), hãy dừng việc training lại.
+    4.  Mô hình tốt nhất của bạn là mô hình đã được lưu ở checkpoint cuối cùng.
+-   **Tại sao hiệu quả?**: Là một cách cực kỳ đơn giản và hiệu quả để ngăn overfitting. Khi training loss tiếp tục giảm nhưng validation loss bắt đầu tăng, đó là dấu hiệu rõ ràng của overfitting, và Early Stopping giúp ta dừng lại ngay tại thời điểm đó.
+
+## 🏗️ 3. Kiến trúc mạng (Network Architectures)
+
+Việc lựa chọn kiến trúc mạng phù hợp là rất quan trọng vì mỗi loại kiến trúc được tối ưu hóa cho một dạng dữ liệu và bài toán cụ thể.
+
+### 3.1 Convolutional Neural Networks (CNNs) - Mạng nơ-ron tích chập
+
+-   **Dạng dữ liệu**: Chủ yếu dùng cho **dữ liệu dạng lưới (grid-like data)** như hình ảnh (2D), video (3D: không gian + thời gian).
+-   **Tư tưởng cốt lõi**: CNN tận dụng cấu trúc không gian cục bộ của dữ liệu bằng cách sử dụng các bộ lọc (filters) nhỏ để quét qua dữ liệu. Điều này giúp phát hiện các mẫu (patterns) cục bộ (như cạnh, góc, hình dạng) và tái sử dụng các bộ lọc đó trên toàn bộ ảnh.
+-   **Các thành phần chính**:
+    1.  **Convolutional Layer**: Áp dụng các bộ lọc (kernels) để tạo ra các feature map.
+    2.  **Pooling Layer**: Giảm kích thước không gian của feature map (Max Pooling, Average Pooling) để giảm số lượng tham số và chống overfitting.
+    3.  **Fully Connected Layer**: Các layer dense truyền thống ở cuối mạng để thực hiện phân loại hoặc hồi quy.
+
+#### Các kiến trúc CNN nổi bật
+1.  **VGG (Visual Geometry Group)**:
+    -   **Đặc điểm**: Nổi tiếng với sự đơn giản nhưng hiệu quả. VGG chủ yếu sử dụng các khối tích chập 3x3 nhỏ (small 3x3 convolutional filters) lặp đi lặp lại.
+    -   **Ý tưởng**: Chứng minh rằng độ sâu của mạng (stacking many small convolutional layers) quan trọng hơn kích thước bộ lọc lớn.
+2.  **Inception (GoogLeNet)**:
+    -   **Đặc điểm**: Giới thiệu "Inception module", một khối xây dựng mà thực hiện nhiều loại tích chập (ví dụ: 1x1, 3x3, 5x5) và pooling song song.
+    -   **Ý tưởng**: Cho phép mô hình tự động chọn các bộ lọc có kích thước phù hợp nhất ở mỗi cấp độ trừu tượng, đồng thời giảm chi phí tính toán thông qua tích chập 1x1.
+3.  **ResNet (Residual Network)**:
+    -   **Đặc điểm**: Giới thiệu **kết nối dư (Residual Connections)** hoặc "skip connections".
+    -   **Ý tưởng**: Cho phép xây dựng các mạng cực kỳ sâu (hàng trăm layer) mà không gặp vấn đề vanishing gradients. Về cơ bản, một layer học `F(x)` (phần dư) thay vì `H(x)` (mapping đầy đủ), và `H(x) = x + F(x)`. Điều này giúp tối ưu hóa dễ dàng hơn vì `F(x)` thường dễ học hơn `H(x)`.
+
+### 3.2 Recurrent Neural Networks (RNNs) - Mạng nơ-ron hồi quy
+
+-   **Dạng dữ liệu**: Tối ưu cho **dữ liệu tuần tự (sequential data)** như văn bản, chuỗi thời gian, âm thanh.
+-   **Tư tưởng cốt lõi**: RNN có một "bộ nhớ" bên trong (state ẩn) cho phép nó xử lý thông tin từ các bước thời gian trước đó và sử dụng nó để ảnh hưởng đến output hiện tại.
+-   **Vấn đề Vanishing/Exploding Gradients**: Trong các RNN truyền thống, gradient có thể trở nên quá nhỏ (vanishing) hoặc quá lớn (exploding) khi lan truyền qua các chuỗi dài, khiến mô hình khó học được các phụ thuộc dài hạn.
+
+#### LSTM (Long Short-Term Memory) và GRU (Gated Recurrent Unit)
+Đây là các biến thể của RNN được thiết kế đặc biệt để giải quyết vấn đề Vanishing Gradients và học được các phụ thuộc dài hạn.
+1.  **LSTM**:
+    -   **Ý tưởng**: Sử dụng các "cổng" (gates) để kiểm soát dòng thông tin vào/ra khỏi "trạng thái ô nhớ" (cell state).
+    -   **Gates**:
+        -   **Forget Gate**: Quyết định thông tin nào từ cell state cũ sẽ bị quên.
+        -   **Input Gate**: Quyết định thông tin nào mới sẽ được thêm vào cell state.
+        -   **Output Gate**: Quyết định thông tin nào từ cell state sẽ được sử dụng để tính hidden state và output.
+    -   Các cổng này được điều khiển bởi các phép toán sigmoid và phép nhân element-wise.
+2.  **GRU**:
+    -   **Ý tưởng**: Là một phiên bản đơn giản hơn của LSTM, với ít cổng hơn (chỉ có Update Gate và Reset Gate).
+    -   **Ưu điểm**: Huấn luyện nhanh hơn LSTM một chút, nhưng thường cho hiệu suất tương đương.
+
+### 3.3 Transformer Architecture
+
+-   **Dạng dữ liệu**: Cũng dùng cho **dữ liệu tuần tự**, đặc biệt là văn bản.
+-   **Tư tưởng cốt lõi**: Hoàn toàn bỏ qua kiến trúc hồi quy và chỉ dựa vào cơ chế **Self-Attention** để xử lý các phụ thuộc dài hạn trong chuỗi.
+-   **Đặc điểm**: Có thể xử lý các phần của chuỗi song song (parallelization), giúp tăng tốc độ training đáng kể.
+
+(Để biết thêm chi tiết về Transformer, vui lòng tham khảo tài liệu `06-llms.md`).
 
 ## 📚 Tài liệu tham khảo
 
@@ -1603,25 +1330,33 @@ def demonstrate_batch_normalization():
 - [Delving Deep into Rectifiers](https://arxiv.org/abs/1502.01852) - He initialization paper
 - [Batch Normalization: Accelerating Deep Network Training](https://arxiv.org/abs/1502.03167) - BatchNorm paper
 
+### Kiến trúc mạng
+- [Very Deep Convolutional Networks for Large-Scale Image Recognition (VGG)](https://arxiv.org/abs/1409.1556)
+- [Going Deeper with Convolutions (Inception/GoogLeNet)](https://arxiv.org/abs/1409.4842)
+- [Deep Residual Learning for Image Recognition (ResNet)](https://arxiv.org/abs/1512.03385)
+- [Long Short-Term Memory (LSTM)](https://www.bioinf.jku.at/publications/older/2604.pdf)
+- [Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation (GRU)](https://arxiv.org/abs/1406.1078)
+
 ### Implementation
 - [PyTorch Tutorials](https://pytorch.org/tutorials/) - Hướng dẫn PyTorch chính thức
 - [PyTorch Documentation](https://pytorch.org/docs/stable/) - Tài liệu PyTorch
 
 ## 🎯 Bài tập thực hành
 
-1. **Universal Approximation**: Implement neural network xấp xỉ các hàm phức tạp
-2. **Backpropagation**: Tự implement backpropagation từ đầu
-3. **Initialization**: So sánh hiệu quả các phương pháp initialization
-4. **Batch Normalization**: Implement BatchNorm từ đầu và so sánh với PyTorch
-5. **Architecture Design**: Thiết kế neural network cho các bài toán cụ thể
+1.  **Universal Approximation**: Implement neural network xấp xỉ các hàm phức tạp.
+2.  **Backpropagation**: Tự implement backpropagation từ đầu.
+3.  **Initialization**: So sánh hiệu quả các phương pháp initialization.
+4.  **Batch Normalization**: Implement BatchNorm từ đầu và so sánh với PyTorch.
+5.  **Kiến trúc CNN**: Xây dựng và huấn luyện một mô hình VGG hoặc ResNet đơn giản cho bộ dữ liệu CIFAR-10.
+6.  **Kiến trúc RNN**: Xây dựng và huấn luyện một mô hình LSTM hoặc GRU cho bài toán phân loại chuỗi (ví dụ: phân loại sentiment cho văn bản ngắn).
 
 ## 🚀 Bước tiếp theo
 
 Sau khi hoàn thành Deep Learning cơ bản, bạn sẽ:
-- Hiểu sâu về lý thuyết neural networks
-- Biết cách tối ưu hóa training process
-- Có thể thiết kế kiến trúc mạng phù hợp
-- Sẵn sàng học Computer Vision và NLP
+-   Hiểu sâu về lý thuyết neural networks.
+-   Biết cách tối ưu hóa training process.
+-   Có thể thiết kế kiến trúc mạng phù hợp cho các bài toán khác nhau.
+-   Sẵn sàng học các ứng dụng cụ thể trong Computer Vision và NLP.
 
 ---
 

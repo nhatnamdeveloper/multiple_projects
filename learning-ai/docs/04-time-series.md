@@ -1380,28 +1380,64 @@ def demonstrate_time_series_exploration():
 
 ### 2.1 ARIMA Models - Mô hình ARIMA
 
-> **ARIMA (AutoRegressive Integrated Moving Average)** là mô hình cổ điển cho dự báo chuỗi thời gian.
+> **ARIMA (AutoRegressive Integrated Moving Average)** là một trong những mô hình thống kê mạnh mẽ và phổ biến nhất để dự báo chuỗi thời gian. Tên của nó đã mô tả ba thành phần cốt lõi: AR, I, và MA.
 
-#### ARIMA Components - Các thành phần ARIMA
+#### Giải mã ARIMA(p, d, q)
 
-**Công thức ARIMA(p,d,q)**:
-```
-ARIMA(p,d,q): (1-φ₁B-φ₂B²-...-φₚBᵖ)(1-B)ᵈYₜ = (1-θ₁B-θ₂B²-...-θᵩBᵩ)εₜ
-```
+Hãy coi ARIMA như một công thức nấu ăn với 3 thành phần chính:
 
-**Giải thích ký hiệu:**
-- **p**: Bậc của AR (AutoRegressive) - số lags của Y
-- **d**: Bậc của differencing - số lần lấy sai phân
-- **q**: Bậc của MA (Moving Average) - số lags của error terms
-- **φᵢ**: AR coefficients
-- **θᵢ**: MA coefficients
-- **B**: Backshift operator (BYₜ = Yₜ₋₁)
-- **εₜ**: Error terms (white noise)
+1.  **AR (AutoRegressive) - Tự hồi quy (p)**:
+    *   **Tư tưởng**: "Tương lai sẽ giống như quá khứ." Mô hình giả định rằng giá trị hiện tại của chuỗi có thể được dự đoán bằng một tổ hợp tuyến tính của các giá trị trước đó.
+    *   **Ví dụ**: Dự đoán nhiệt độ hôm nay (`Yt`) dựa trên nhiệt độ của vài ngày trước (`Yt-1`, `Yt-2`,...).
+    *   **Tham số `p`**: Là số lượng giá trị quá khứ (lags) được sử dụng để dự đoán. `AR(2)` có nghĩa là mô hình sử dụng giá trị của 2 ngày trước đó.
 
-**Các trường hợp đặc biệt**:
-- **AR(p)**: ARIMA(p,0,0) - Chỉ có AR component
-- **MA(q)**: ARIMA(0,0,q) - Chỉ có MA component
-- **ARMA(p,q)**: ARIMA(p,0,q) - Không có differencing
+2.  **I (Integrated) - Tích hợp (d)**:
+    *   **Tư tưởng**: "Làm cho dữ liệu ổn định trước khi dự báo." Nhiều chuỗi thời gian có xu hướng (trend) tăng hoặc giảm, khiến chúng không "dừng" (non-stationary). Các mô hình như ARIMA hoạt động tốt nhất trên dữ liệu dừng (stationary - có nghĩa là trung bình và phương sai không đổi theo thời gian).
+    *   **Cách hoạt động**: Lấy **sai phân (differencing)** của chuỗi thời gian. Thay vì dự đoán giá trị thực tế, ta dự đoán sự thay đổi của giá trị so với thời điểm trước.
+    *   **Tham số `d`**: Là số lần lấy sai phân cần thiết để chuỗi trở nên dừng.
+        *   `d=0`: Dữ liệu đã dừng.
+        *   `d=1`: Lấy sai phân bậc 1 (`Y't = Yt - Yt-1`).
+        *   `d=2`: Lấy sai phân bậc 2 (hiếm gặp).
+
+3.  **MA (Moving Average) - Trung bình trượt (q)**:
+    *   **Tư tưởng**: "Mô hình có thể học từ những lỗi dự đoán trong quá khứ." Mô hình giả định rằng giá trị hiện tại phụ thuộc vào sai số dự đoán (prediction errors) của các thời điểm trước đó.
+    *   **Ví dụ**: Nếu mô hình liên tục dự đoán thấp hơn thực tế trong vài ngày qua, thành phần MA sẽ giúp điều chỉnh dự đoán tiếp theo lên cao hơn. Nó giúp mô hình đối phó với các "cú sốc" (shocks) ngẫu nhiên.
+    *   **Tham số `q`**: Là số lượng sai số quá khứ được sử dụng trong mô hình. `MA(1)` có nghĩa là dự đoán hiện tại có tính đến sai số của dự đoán ngay trước đó.
+
+Kết hợp lại, **ARIMA(p, d, q)** là một mô hình áp dụng `AR(p)` và `MA(q)` trên dữ liệu đã được lấy sai phân `d` lần.
+
+#### Làm thế nào để chọn (p, d, q)? Quy trình Box-Jenkins
+
+1.  **Xác định `d` (Differencing)**:
+    *   Vẽ biểu đồ chuỗi thời gian. Nếu có xu hướng rõ ràng, bạn cần lấy sai phân.
+    *   Sử dụng các kiểm định thống kê như **ADF Test (Augmented Dickey-Fuller)**. Nếu p-value > 0.05, chuỗi không dừng và bạn cần lấy sai phân (tăng `d` lên 1) rồi kiểm tra lại. Lặp lại cho đến khi chuỗi dừng.
+
+2.  **Xác định `p` và `q` (AR và MA orders)**:
+    *   Sau khi chuỗi đã dừng (đã xác định `d`), vẽ biểu đồ **ACF (Autocorrelation Function)** và **PACF (Partial Autocorrelation Function)**.
+    *   **ACF**: Đo lường mối tương quan của chuỗi với các phiên bản trễ (lagged versions) của chính nó.
+    *   **PACF**: Cũng đo lường tương quan nhưng loại bỏ ảnh hưởng của các độ trễ ngắn hơn.
+    *   **Quy tắc nhận dạng**:
+
+| Mô hình | Đồ thị ACF | Đồ thị PACF |
+| :--- | :--- | :--- |
+| **AR(p)** | Giảm dần hoặc theo hình sin | **Cắt đột ngột** sau lag `p` |
+| **MA(q)** | **Cắt đột ngột** sau lag `q` | Giảm dần hoặc theo hình sin |
+| **ARMA(p,q)**| Giảm dần | Giảm dần |
+
+    *   *"Cắt đột ngột" (cuts off)*: Các vạch tương quan giảm xuống vùng không đáng kể (vùng màu xanh) một cách đột ngột.
+    *   *"Giảm dần" (tails off)*: Các vạch tương quan giảm từ từ.
+
+3.  **Huấn luyện và Đánh giá**:
+    *   Thử một vài bộ `(p, d, q)` tiềm năng.
+    *   Chọn mô hình có chỉ số **AIC (Akaike Information Criterion)** hoặc **BIC (Bayesian Information Criterion)** thấp nhất. Các chỉ số này cân bằng giữa độ phức tạp của mô hình và độ phù hợp với dữ liệu.
+    *   Kiểm tra phần dư (residuals) của mô hình tốt nhất. Phần dư phải giống như nhiễu trắng (white noise), nghĩa là không còn quy luật nào có thể khai thác được.
+
+#### Mở rộng: SARIMA cho dữ liệu có tính mùa vụ
+-   Khi chuỗi thời gian của bạn có tính mùa vụ rõ rệt (ví dụ: doanh số bán lẻ tăng vào cuối năm), mô hình **SARIMA (Seasonal ARIMA)** là lựa chọn tốt hơn.
+-   **Ký hiệu**: `SARIMA(p,d,q)(P,D,Q)m`
+    -   `(p,d,q)`: Các thành phần không theo mùa (giống ARIMA).
+    -   `(P,D,Q)`: Các thành phần **theo mùa**. `P` là bậc AR mùa, `D` là số lần sai phân mùa, `Q` là bậc MA mùa.
+    -   `m`: Độ dài của một chu kỳ mùa (ví dụ: `m=12` cho dữ liệu hàng tháng, `m=7` cho dữ liệu hàng ngày).
 
 #### Implementation ARIMA
 

@@ -341,1036 +341,323 @@ graph TD
 
 ## 🔧 1. Feature Engineering và Preprocessing
 
-### 1.1 Advanced Feature Engineering
+> **"Coming up with features is difficult, time-consuming, requires expert knowledge. 'Applied machine learning' is basically feature engineering."** - Andrew Ng
 
-> **Feature Engineering** là quá trình tạo ra các đặc trưng mới từ dữ liệu gốc để cải thiện hiệu suất của mô hình machine learning.
+**Feature Engineering** là nghệ thuật và khoa học của việc chuyển đổi dữ liệu thô thành các **đặc trưng (features)** phù hợp để cung cấp cho mô hình machine learning. Đây được coi là một trong những bước quan trọng nhất quyết định đến hiệu suất của mô hình. Nguyên tắc cốt lõi là **"Garbage In, Garbage Out"** - nếu bạn đưa vào mô hình những feature kém chất lượng, mô hình cũng sẽ cho ra kết quả kém chất lượng.
+
+Mục tiêu của Feature Engineering là:
+1.  **Cải thiện hiệu suất mô hình**: Cung cấp cho mô hình những tín hiệu (signals) rõ ràng hơn.
+2.  **Giảm độ phức tạp**: Giúp mô hình học nhanh hơn và dễ diễn giải hơn.
+3.  **Làm cho dữ liệu phù hợp với thuật toán**: Nhiều thuật toán yêu cầu input ở một định dạng cụ thể (ví dụ: dữ liệu số, đã được chuẩn hóa).
+
+### 1.1 Kỹ thuật tạo Feature nâng cao (Advanced Feature Engineering)
 
 #### Temporal Features - Đặc trưng thời gian
+Khi làm việc với dữ liệu có yếu tố thời gian (time-series), việc trích xuất thông tin từ cột ngày tháng là cực kỳ quan trọng. Các mô hình tuyến tính hoặc cây quyết định không thể tự "hiểu" được tính chu kỳ của ngày trong tuần hay tháng trong năm nếu không có sự trợ giúp.
 
-**Lý thuyết cơ bản:**
-- **Time Series Decomposition**: Trend + Seasonality + Residual
-- **Cyclical Encoding**: Sinusoidal transformation để preserve circular relationships
-- **Fourier Transform**: Decompose time series thành frequency components
-- **Autocorrelation**: Measure temporal dependencies
-
-**Mathematical Foundations:**
-
-**1. Cyclical Encoding Theory:**
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy import signal
-from scipy.stats import pearsonr
-
-class CyclicalEncodingTheory:
-    """Theoretical framework cho cyclical encoding"""
-    
-    @staticmethod
-    def explain_cyclical_encoding():
-        """Explain why cyclical encoding is necessary"""
-        print("""
-        **Vấn đề với Linear Encoding:**
-        - Tháng 1 = 1, Tháng 12 = 12
-        - Khoảng cách: |12-1| = 11 (rất xa)
-        - Thực tế: Tháng 12 và 1 liền kề nhau
-        
-        **Giải pháp: Cyclical Encoding:**
-        - Tháng 1: (sin(2π×1/12), cos(2π×1/12)) = (0.5, 0.866)
-        - Tháng 12: (sin(2π×12/12), cos(2π×12/12)) = (0, 1)
-        - Khoảng cách Euclidean: √[(0.5-0)² + (0.866-1)²] = 0.5 (gần nhau)
-        """)
-    
-    @staticmethod
-    def demonstrate_cyclical_properties():
-        """Demonstrate mathematical properties của cyclical encoding"""
-        months = np.arange(1, 13)
-        
-        # Linear encoding
-        linear_encoding = months
-        
-        # Cyclical encoding
-        cyclical_sin = np.sin(2 * np.pi * months / 12)
-        cyclical_cos = np.cos(2 * np.pi * months / 12)
-        
-        # Calculate distances
-        def euclidean_distance(x1, y1, x2, y2):
-            return np.sqrt((x1-x2)**2 + (y1-y2)**2)
-        
-        # Distance between consecutive months
-        linear_distances = []
-        cyclical_distances = []
-        
-        for i in range(len(months)-1):
-            # Linear distance
-            linear_dist = abs(linear_encoding[i+1] - linear_encoding[i])
-            linear_distances.append(linear_dist)
-            
-            # Cyclical distance
-            cyclical_dist = euclidean_distance(
-                cyclical_sin[i], cyclical_cos[i],
-                cyclical_sin[i+1], cyclical_cos[i+1]
-            )
-            cyclical_distances.append(cyclical_dist)
-        
-        # Special case: December to January
-        linear_dist_dec_jan = abs(12 - 1)
-        cyclical_dist_dec_jan = euclidean_distance(
-            cyclical_sin[-1], cyclical_cos[-1],  # December
-            cyclical_sin[0], cyclical_cos[0]     # January
-        )
-        
-        print("**Distance Analysis:**")
-        print(f"Linear encoding - consecutive months: {np.mean(linear_distances):.2f}")
-        print(f"Cyclical encoding - consecutive months: {np.mean(cyclical_distances):.2f}")
-        print(f"Linear encoding - Dec to Jan: {linear_dist_dec_jan}")
-        print(f"Cyclical encoding - Dec to Jan: {cyclical_dist_dec_jan:.3f}")
-        
-        return {
-            'months': months,
-            'linear': linear_encoding,
-            'cyclical_sin': cyclical_sin,
-            'cyclical_cos': cyclical_cos,
-            'linear_distances': linear_distances,
-            'cyclical_distances': cyclical_distances
-        }
-    
-    @staticmethod
-    def fourier_analysis_example():
-        """Demonstrate Fourier analysis cho time series"""
-        # Generate synthetic time series with seasonality
-        t = np.linspace(0, 100, 1000)
-        signal_clean = (np.sin(2 * np.pi * t / 12) +  # Annual seasonality
-                       np.sin(2 * np.pi * t / 4) +    # Quarterly seasonality
-                       np.sin(2 * np.pi * t / 1))     # Monthly seasonality
-        
-        # Add noise
-        signal_noisy = signal_clean + 0.1 * np.random.randn(len(t))
-        
-        # Perform FFT
-        fft_result = np.fft.fft(signal_noisy)
-        frequencies = np.fft.fftfreq(len(t), t[1] - t[0])
-        
-        # Find dominant frequencies
-        power_spectrum = np.abs(fft_result)**2
-        dominant_freq_idx = np.argsort(power_spectrum)[-5:]  # Top 5 frequencies
-        
-        print("**Fourier Analysis Results:**")
-        print("Dominant frequencies (cycles per time unit):")
-        for idx in reversed(dominant_freq_idx):
-            if frequencies[idx] > 0:  # Only positive frequencies
-                period = 1 / frequencies[idx]
-                print(f"  Frequency: {frequencies[idx]:.3f}, Period: {period:.1f}")
-        
-        return {
-            'time': t,
-            'signal_clean': signal_clean,
-            'signal_noisy': signal_noisy,
-            'frequencies': frequencies,
-            'power_spectrum': power_spectrum
-        }
-    
-    @staticmethod
-    def autocorrelation_analysis():
-        """Demonstrate autocorrelation analysis"""
-        # Generate time series with autocorrelation
-        np.random.seed(42)
-        n = 1000
-        
-        # AR(1) process: X_t = 0.8 * X_{t-1} + ε_t
-        ar_process = np.zeros(n)
-        for t in range(1, n):
-            ar_process[t] = 0.8 * ar_process[t-1] + np.random.normal(0, 1)
-        
-        # Calculate autocorrelation
-        def autocorr(x, max_lag=20):
-            """Calculate autocorrelation function"""
-            acf = []
-            for lag in range(max_lag + 1):
-                if lag == 0:
-                    acf.append(1.0)
-                else:
-                    # Pearson correlation between X_t and X_{t-lag}
-                    correlation = pearsonr(x[lag:], x[:-lag])[0]
-                    acf.append(correlation)
-            return acf
-        
-        acf_values = autocorr(ar_process)
-        lags = range(len(acf_values))
-        
-        print("**Autocorrelation Analysis:**")
-        print(f"AR(1) process with φ = 0.8")
-        print(f"Expected ACF(1) ≈ 0.8")
-        print(f"Actual ACF(1) = {acf_values[1]:.3f}")
-        
-        return {
-            'ar_process': ar_process,
-            'lags': lags,
-            'acf_values': acf_values
-        }
-
-# Demonstrate theoretical concepts
-theory = CyclicalEncodingTheory()
-theory.explain_cyclical_encoding()
-
-# Run demonstrations
-cyclical_props = theory.demonstrate_cyclical_properties()
-fourier_results = theory.fourier_analysis_example()
-autocorr_results = theory.autocorrelation_analysis()
-
-# Visualization
-fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-
-# 1. Cyclical encoding visualization
-axes[0,0].scatter(cyclical_props['cyclical_sin'], cyclical_props['cyclical_cos'], 
-                  c=cyclical_props['months'], cmap='viridis')
-axes[0,0].set_title('Cyclical Encoding: Months in 2D Space')
-axes[0,0].set_xlabel('sin(2π×month/12)')
-axes[0,0].set_ylabel('cos(2π×month/12)')
-for i, month in enumerate(cyclical_props['months']):
-    axes[0,0].annotate(month, (cyclical_props['cyclical_sin'][i], cyclical_props['cyclical_cos'][i]))
-
-# 2. Fourier analysis
-axes[0,1].plot(fourier_results['time'], fourier_results['signal_noisy'], alpha=0.7, label='Noisy Signal')
-axes[0,1].plot(fourier_results['time'], fourier_results['signal_clean'], 'r-', label='Clean Signal')
-axes[0,1].set_title('Time Series with Multiple Seasonalities')
-axes[0,1].set_xlabel('Time')
-axes[0,1].set_ylabel('Value')
-axes[0,1].legend()
-
-# 3. Power spectrum
-axes[1,0].plot(fourier_results['frequencies'][:len(fourier_results['frequencies'])//2], 
-                fourier_results['power_spectrum'][:len(fourier_results['power_spectrum'])//2])
-axes[1,0].set_title('Power Spectrum')
-axes[1,0].set_xlabel('Frequency')
-axes[1,0].set_ylabel('Power')
-
-# 4. Autocorrelation function
-axes[1,1].stem(autocorr_results['lags'], autocorr_results['acf_values'])
-axes[1,1].set_title('Autocorrelation Function (AR(1) process)')
-axes[1,1].set_xlabel('Lag')
-axes[1,1].set_ylabel('ACF')
-
-plt.tight_layout()
-plt.show()
-```
-
-**2. Advanced Temporal Feature Engineering:**
-```python
-class AdvancedTemporalFeatures:
-    """Advanced temporal feature engineering techniques"""
-    
-    def __init__(self):
-        self.feature_history = []
-    
-    def create_lag_features(self, df: pd.DataFrame, value_column: str, 
-                           date_column: str, lags: List[int]) -> pd.DataFrame:
-        """Create lag features với proper time alignment"""
-        df = df.copy()
-        df = df.sort_values(date_column).reset_index(drop=True)
-        
-        for lag in lags:
-            df[f'{value_column}_lag_{lag}'] = df[value_column].shift(lag)
-        
-        return df
-    
-    def create_rolling_features(self, df: pd.DataFrame, value_column: str, 
-                               windows: List[int], functions: List[str]) -> pd.DataFrame:
-        """Create rolling window features"""
-        df = df.copy()
-        
-        for window in windows:
-            for func in functions:
-                if func == 'mean':
-                    df[f'{value_column}_rolling_mean_{window}'] = df[value_column].rolling(window).mean()
-                elif func == 'std':
-                    df[f'{value_column}_rolling_std_{window}'] = df[value_column].rolling(window).std()
-                elif func == 'min':
-                    df[f'{value_column}_rolling_min_{window}'] = df[value_column].rolling(window).min()
-                elif func == 'max':
-                    df[f'{value_column}_rolling_max_{window}'] = df[value_column].rolling(window).max()
-                elif func == 'median':
-                    df[f'{value_column}_rolling_median_{window}'] = df[value_column].rolling(window).median()
-        
-        return df
-    
-    def create_expanding_features(self, df: pd.DataFrame, value_column: str) -> pd.DataFrame:
-        """Create expanding window features (cumulative)"""
-        df = df.copy()
-        
-        df[f'{value_column}_expanding_mean'] = df[value_column].expanding().mean()
-        df[f'{value_column}_expanding_std'] = df[value_column].expanding().std()
-        df[f'{value_column}_expanding_min'] = df[value_column].expanding().min()
-        df[f'{value_column}_expanding_max'] = df[value_column].expanding().max()
-        
-        return df
-    
-    def create_difference_features(self, df: pd.DataFrame, value_column: str, 
-                                 differences: List[int]) -> pd.DataFrame:
-        """Create difference features (stationarity)"""
-        df = df.copy()
-        
-        for diff in differences:
-            df[f'{value_column}_diff_{diff}'] = df[value_column].diff(diff)
-        
-        return df
-    
-    def create_seasonal_decomposition_features(self, df: pd.DataFrame, 
-                                             value_column: str, 
-                                             period: int) -> pd.DataFrame:
-        """Create seasonal decomposition features"""
-        from statsmodels.tsa.seasonal import seasonal_decompose
-        
-        df = df.copy()
-        
-        # Ensure data is sorted by time
-        df = df.sort_values('date').reset_index(drop=True)
-        
-        # Perform seasonal decomposition
-        decomposition = seasonal_decompose(df[value_column], period=period, extrapolate_trend='freq')
-        
-        # Add decomposition components
-        df[f'{value_column}_trend'] = decomposition.trend
-        df[f'{value_column}_seasonal'] = decomposition.seasonal
-        df[f'{value_column}_residual'] = decomposition.resid
-        
-        return df
-    
-    def create_fourier_features(self, df: pd.DataFrame, date_column: str, 
-                               periods: List[float]) -> pd.DataFrame:
-        """Create Fourier features cho multiple seasonalities"""
-        df = df.copy()
-        df[date_column] = pd.to_datetime(df[date_column])
-        
-        # Convert to numeric for Fourier analysis
-        time_numeric = (df[date_column] - df[date_column].min()).dt.total_seconds()
-        
-        for period in periods:
-            # Create multiple frequency components
-            for harmonic in range(1, 4):  # First 3 harmonics
-                freq = 2 * np.pi * harmonic / period
-                df[f'fourier_sin_{period}_{harmonic}'] = np.sin(freq * time_numeric)
-                df[f'fourier_cos_{period}_{harmonic}'] = np.cos(freq * time_numeric)
-        
-        return df
-
-# Example usage
-temporal_features = AdvancedTemporalFeatures()
-
-# Create sample time series data
-dates = pd.date_range('2024-01-01', periods=1000, freq='D')
-values = (np.sin(2 * np.pi * np.arange(1000) / 365) +  # Annual seasonality
-          np.sin(2 * np.pi * np.arange(1000) / 30) +   # Monthly seasonality
-          np.random.normal(0, 0.1, 1000))              # Noise
-
-df = pd.DataFrame({
-    'date': dates,
-    'value': values
-})
-
-# Apply advanced temporal features
-df_with_features = temporal_features.create_lag_features(df, 'value', 'date', [1, 7, 30])
-df_with_features = temporal_features.create_rolling_features(df_with_features, 'value', [7, 30], ['mean', 'std'])
-df_with_features = temporal_features.create_expanding_features(df_with_features, 'value')
-df_with_features = temporal_features.create_difference_features(df_with_features, 'value', [1, 7])
-df_with_features = temporal_features.create_seasonal_decomposition_features(df_with_features, 'value', 365)
-df_with_features = temporal_features.create_fourier_features(df_with_features, 'date', [365, 30, 7])
-
-print(f"Original columns: {len(df.columns)}")
-print(f"After feature engineering: {len(df_with_features.columns)}")
-print(f"New features created: {len(df_with_features.columns) - len(df.columns)}")
-```
-
-**3. Mathematical Validation và Feature Selection:**
-```python
-class TemporalFeatureValidation:
-    """Validate temporal features using statistical methods"""
-    
-    @staticmethod
-    def check_stationarity(series: pd.Series, significance_level: float = 0.05) -> Dict[str, Any]:
-        """Check stationarity using Augmented Dickey-Fuller test"""
-        from statsmodels.tsa.stattools import adfuller
-        
-        result = adfuller(series.dropna())
-        
-        is_stationary = result[1] < significance_level
-        
-        return {
-            'is_stationary': is_stationary,
-            'adf_statistic': result[0],
-            'p_value': result[1],
-            'critical_values': result[4],
-            'significance_level': significance_level
-        }
-    
-    @staticmethod
-    def feature_importance_analysis(df: pd.DataFrame, target_column: str) -> pd.DataFrame:
-        """Analyze feature importance using correlation và mutual information"""
-        from sklearn.feature_selection import mutual_info_regression
-        from sklearn.preprocessing import StandardScaler
-        
-        # Prepare data
-        feature_cols = [col for col in df.columns if col != target_column and not col.startswith('date')]
-        X = df[feature_cols].fillna(0)
-        y = df[target_column].fillna(0)
-        
-        # Standardize features
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X)
-        
-        # Calculate correlations
-        correlations = []
-        for col in feature_cols:
-            corr = df[col].corr(df[target_column])
-            correlations.append(abs(corr))
-        
-        # Calculate mutual information
-        mi_scores = mutual_info_regression(X_scaled, y, random_state=42)
-        
-        # Create feature importance dataframe
-        feature_importance = pd.DataFrame({
-            'feature': feature_cols,
-            'correlation_abs': correlations,
-            'mutual_information': mi_scores,
-            'importance_score': (np.array(correlations) + mi_scores) / 2
-        }).sort_values('importance_score', ascending=False)
-        
-        return feature_importance
-    
-    @staticmethod
-    def temporal_feature_correlation_analysis(df: pd.DataFrame, 
-                                            feature_prefix: str) -> pd.DataFrame:
-        """Analyze correlation between temporal features"""
-        # Find all features with the given prefix
-        temporal_features = [col for col in df.columns if col.startswith(feature_prefix)]
-        
-        if len(temporal_features) < 2:
-            return pd.DataFrame()
-        
-        # Calculate correlation matrix
-        correlation_matrix = df[temporal_features].corr()
-        
-        # Find highly correlated features
-        high_corr_pairs = []
-        for i in range(len(temporal_features)):
-            for j in range(i+1, len(temporal_features)):
-                corr_value = correlation_matrix.iloc[i, j]
-                if abs(corr_value) > 0.8:  # High correlation threshold
-                    high_corr_pairs.append({
-                        'feature1': temporal_features[i],
-                        'feature2': temporal_features[j],
-                        'correlation': corr_value
-                    })
-        
-        return pd.DataFrame(high_corr_pairs).sort_values('correlation', key=abs, ascending=False)
-
-# Validate temporal features
-validation = TemporalFeatureValidation()
-
-# Check stationarity of original series
-stationarity_result = validation.check_stationarity(df['value'])
-print(f"Original series stationary: {stationarity_result['is_stationary']}")
-print(f"ADF p-value: {stationarity_result['p_value']:.6f}")
-
-# Check stationarity of differenced series
-diff_series = df['value'].diff(1).dropna()
-diff_stationarity = validation.check_stationarity(diff_series)
-print(f"Differenced series stationary: {diff_stationarity['is_stationary']}")
-print(f"ADF p-value: {diff_stationarity['p_value']:.6f}")
-
-# Analyze feature importance
-feature_importance = validation.feature_importance_analysis(df_with_features, 'value')
-print("\nTop 10 most important temporal features:")
-print(feature_importance.head(10))
-
-# Analyze temporal feature correlations
-temporal_correlations = validation.temporal_feature_correlation_analysis(df_with_features, 'value_rolling')
-if not temporal_correlations.empty:
-    print("\nHighly correlated rolling features:")
-    print(temporal_correlations)
-```
-
-**Tài liệu tham khảo chuyên sâu:**
-- **Time Series Analysis**: [Box & Jenkins - Time Series Analysis](https://www.wiley.com/en-us/Time+Series+Analysis:+Forecasting+and+Control,+5th+Edition-p-9781118675021)
-- **Fourier Analysis**: [Fourier Analysis and Its Applications](https://www.springer.com/gp/book/9780387946009)
-- **Autocorrelation**: [Time Series Analysis: Theory and Methods](https://link.springer.com/book/10.1007/978-1-4419-0320-4)
-- **Feature Engineering**: [Feature Engineering for Machine Learning](https://www.oreilly.com/library/view/feature-engineering-for/9781491953235/)
+-   **Tại sao cần thiết?** Giúp mô hình nhận biết các quy luật có tính chu kỳ (ví dụ: doanh số tăng vào cuối tuần, giảm vào đầu tuần) và các xu hướng dài hạn.
+-   **Cyclical Encoding**: Kỹ thuật này đặc biệt hữu ích. Thay vì mã hóa tháng 12 là `12` và tháng 1 là `1` (khiến mô hình nghĩ chúng ở rất xa nhau), ta dùng `sin` và `cos` để biểu diễn chúng trên một vòng tròn, thể hiện đúng bản chất tuần hoàn.
 
 ```python
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
 
 def create_temporal_features(df, date_column):
     """
-    Tạo đặc trưng thời gian toàn diện
-    
-    Parameters:
-    df (pd.DataFrame): DataFrame cần xử lý
-    date_column (str): Tên cột chứa ngày tháng
-    
-    Returns:
-    pd.DataFrame: DataFrame với các đặc trưng thời gian mới
+    Tạo các đặc trưng thời gian toàn diện từ một cột ngày tháng.
     """
     df = df.copy()
+    # Đảm bảo cột ngày tháng ở đúng định dạng datetime
     df[date_column] = pd.to_datetime(df[date_column])
     
-    # 1. Basic temporal features - Đặc trưng thời gian cơ bản
-    df[f'{date_column}_year'] = df[date_column].dt.year          # Năm
-    df[f'{date_column}_month'] = df[date_column].dt.month        # Tháng (1-12)
-    df[f'{date_column}_day'] = df[date_column].dt.day            # Ngày trong tháng
-    df[f'{date_column}_dayofweek'] = df[date_column].dt.dayofweek # Ngày trong tuần (0=Monday)
-    df[f'{date_column}_quarter'] = df[date_column].dt.quarter     # Quý (1-4)
-    df[f'{date_column}_is_month_end'] = df[date_column].dt.is_month_end.astype(int)    # Cuối tháng
-    df[f'{date_column}_is_month_start'] = df[date_column].dt.is_month_start.astype(int) # Đầu tháng
+    # 1. Các feature cơ bản
+    df[f'{date_column}_year'] = df[date_column].dt.year
+    df[f'{date_column}_month'] = df[date_column].dt.month
+    df[f'{date_column}_day'] = df[date_column].dt.day
+    df[f'{date_column}_dayofweek'] = df[date_column].dt.dayofweek # 0=Thứ 2, 6=Chủ Nhật
+    df[f'{date_column}_dayofyear'] = df[date_column].dt.dayofyear
+    df[f'{date_column}_weekofyear'] = df[date_column].dt.isocalendar().week.astype(int)
+    df[f'{date_column}_quarter'] = df[date_column].dt.quarter
     
-    # 2. Cyclical encoding - Mã hóa tuần hoàn cho đặc trưng định kỳ
-    # Giúp mô hình hiểu rằng tháng 12 và tháng 1 gần nhau
+    # 2. Mã hóa tuần hoàn (Cyclical Encoding)
+    # Giúp mô hình hiểu rằng tháng 12 và tháng 1 là liền kề
     df[f'{date_column}_month_sin'] = np.sin(2 * np.pi * df[f'{date_column}_month'] / 12)
     df[f'{date_column}_month_cos'] = np.cos(2 * np.pi * df[f'{date_column}_month'] / 12)
-    
-    # Giúp mô hình hiểu rằng thứ 7 và chủ nhật gần nhau
+    # Tương tự cho ngày trong tuần
     df[f'{date_column}_dayofweek_sin'] = np.sin(2 * np.pi * df[f'{date_column}_dayofweek'] / 7)
     df[f'{date_column}_dayofweek_cos'] = np.cos(2 * np.pi * df[f'{date_column}_dayofweek'] / 7)
     
-    # 3. Time since epoch - Thời gian từ epoch (1970-01-01)
-    df[f'{date_column}_epoch'] = (df[date_column] - pd.Timestamp('1970-01-01')).dt.total_seconds()
-    
-    # 4. Business logic features - Đặc trưng logic nghiệp vụ
-    df[f'{date_column}_is_weekend'] = df[f'{date_column}_dayofweek'].isin([5, 6]).astype(int)      # Cuối tuần
-    df[f'{date_column}_is_business_day'] = df[f'{date_column}_dayofweek'].isin([0, 1, 2, 3, 4]).astype(int) # Ngày làm việc
+    # 3. Các feature dựa trên logic nghiệp vụ
+    df[f'{date_column}_is_weekend'] = (df[f'{date_column}_dayofweek'] >= 5).astype(int)
     
     return df
 
-# Ví dụ sử dụng
-df = pd.DataFrame({
-    'date': pd.date_range('2024-01-01', periods=100, freq='D'),
-    'value': np.random.randn(100)
-})
-df = create_temporal_features(df, 'date')
-
-print("📅 Temporal Features Created:")
-print(f"Original columns: {list(df.columns[:2])}")
-print(f"New temporal features: {list(df.columns[2:])}")
+# Ví dụ
+df_demo = pd.DataFrame({'sales_date': pd.date_range('2023-01-01', periods=5, freq='D')})
+df_featured = create_temporal_features(df_demo, 'sales_date')
+print(df_featured.head())
 ```
 
-**Giải thích các khái niệm:**
-- **Cyclical Encoding**: Chuyển đổi đặc trưng tuần hoàn thành sin/cos để mô hình hiểu tính liên tục
-- **Epoch Time**: Số giây từ 1970-01-01, giúp mô hình hiểu khoảng cách thời gian
-- **Business Logic**: Tạo đặc trưng dựa trên kiến thức nghiệp vụ (ví dụ: ngày cuối tuần)
+#### Mã hóa dữ liệu phân loại (Categorical Encoding)
 
-#### Categorical Encoding - Mã hóa dữ liệu phân loại
+Các mô hình ML yêu cầu input là số. Do đó, chúng ta phải chuyển các biến phân loại (như "Thành phố", "Loại sản phẩm") thành dạng số.
 
-**Tại sao cần categorical encoding?**
-- Mô hình ML chỉ xử lý được dữ liệu số
-- Các phương pháp encoding khác nhau phù hợp với từng loại dữ liệu
-- Target encoding giúp capture thông tin về target variable
+##### So sánh các phương pháp Encoding
+| Phương pháp | Ưu điểm | Nhược điểm | Khi nào dùng? |
+| :--- | :--- | :--- | :--- |
+| **One-Hot Encoding** | - Không tạo ra thứ tự giả. <br>- Dễ diễn giải. | - Tạo ra nhiều cột mới (curse of dimensionality). <br>- Gây vấn đề với các thuật toán dựa trên cây nếu có quá nhiều cột. | Khi số lượng categories ít (ví dụ: < 15). |
+| **Label Encoding** | - Đơn giản, không làm tăng số chiều. | - Tạo ra một thứ tự giả (ví dụ: `Hà Nội`=0, `HCM`=1, `Đà Nẵng`=2 ngụ ý `ĐN > HCM > HN`). | Chỉ dùng cho các biến có thứ tự tự nhiên (ordinal variables), ví dụ: `['Low', 'Medium', 'High']`. **Tránh dùng cho biến không có thứ tự.** |
+| **Target Encoding** | - Không tạo thêm cột. <br>- Mã hóa thông tin từ biến mục tiêu (target) vào feature. | - **Rất dễ gây data leakage và overfitting** nếu không cẩn thận. | Dùng cho biến có số lượng category lớn (high cardinality). Luôn phải kết hợp với cross-validation để giảm leakage. |
+| **Frequency Encoding** | - Đơn giản. <br>- Nắm bắt được tần suất xuất hiện của category. | - Các category có cùng tần suất sẽ được mã hóa giống nhau. | Khi tần suất của category là một tín hiệu quan trọng. |
 
 ```python
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from sklearn.feature_extraction.text import TfidfVectorizer
 import category_encoders as ce
-
-class AdvancedCategoricalEncoder:
-    """
-    Bộ mã hóa dữ liệu phân loại nâng cao
-    
-    Hỗ trợ nhiều phương pháp encoding khác nhau:
-    - Label Encoding: Cho dữ liệu có thứ tự
-    - One-Hot Encoding: Cho dữ liệu không có thứ tự
-    - Target Encoding: Cho dữ liệu có target variable
-    - Count Encoding: Thay thế bằng tần suất xuất hiện
-    - Hash Encoding: Cho dữ liệu có nhiều categories
-    """
-    
-    def __init__(self):
-        self.label_encoders = {}      # Lưu trữ label encoders
-        self.onehot_encoders = {}     # Lưu trữ one-hot encoders
-        self.target_encoders = {}     # Lưu trữ target encoders
-        self.count_encoders = {}      # Lưu trữ count encoders
-        self.hash_encoders = {}       # Lưu trữ hash encoders
-    
-    def label_encode(self, df, categorical_columns):
-        """
-        Label encoding cho categories có thứ tự
-        
-        Parameters:
-        df (pd.DataFrame): DataFrame cần encode
-        categorical_columns (list): Danh sách cột cần encode
-        
-        Returns:
-        pd.DataFrame: DataFrame đã được encode
-        """
-        df_encoded = df.copy()
-        
-        for col in categorical_columns:
-            if col not in self.label_encoders:
-                # Fit encoder mới
-                self.label_encoders[col] = LabelEncoder()
-                df_encoded[col] = self.label_encoders[col].fit_transform(df[col])
-            else:
-                # Transform với encoder đã có
-                df_encoded[col] = self.label_encoders[col].transform(df[col])
-        
-        return df_encoded
-    
-    def onehot_encode(self, df, categorical_columns, sparse=False):
-        """
-        One-hot encoding cho categories không có thứ tự
-        
-        Parameters:
-        df (pd.DataFrame): DataFrame cần encode
-        categorical_columns (list): Danh sách cột cần encode
-        sparse (bool): Có sử dụng sparse matrix không
-        
-        Returns:
-        pd.DataFrame: DataFrame đã được encode
-        """
-        df_encoded = df.copy()
-        
-        for col in categorical_columns:
-            if col not in self.onehot_encoders:
-                # Fit encoder mới
-                self.onehot_encoders[col] = OneHotEncoder(sparse=sparse, drop='first')
-                encoded = self.onehot_encoders[col].fit_transform(df[[col]])
-                
-                # Tạo tên cột mới
-                if sparse:
-                    feature_names = [f"{col}_{cat}" for cat in self.onehot_encoders[col].categories_[0][1:]]
-                    encoded_df = pd.DataFrame(encoded.toarray(), columns=feature_names, index=df.index)
-                else:
-                    feature_names = [f"{col}_{cat}" for cat in self.onehot_encoders[col].categories_[0][1:]]
-                    encoded_df = pd.DataFrame(encoded, columns=feature_names, index=df.index)
-                
-                # Thêm cột mới và xóa cột cũ
-                df_encoded = pd.concat([df_encoded, encoded_df], axis=1)
-                df_encoded.drop(col, axis=1, inplace=True)
-        
-        return df_encoded
-    
-    def target_encode(self, df, categorical_columns, target_column, cv_folds=5):
-        """
-        Target encoding với cross-validation để tránh data leakage
-        
-        Parameters:
-        df (pd.DataFrame): DataFrame cần encode
-        categorical_columns (list): Danh sách cột cần encode
-        target_column (str): Tên cột target
-        cv_folds (int): Số folds cho cross-validation
-        
-        Returns:
-        pd.DataFrame: DataFrame đã được encode
-        """
-        df_encoded = df.copy()
-        
-        for col in categorical_columns:
-            if col not in self.target_encoders:
-                # Sử dụng TargetEncoder với cross-validation
-                self.target_encoders[col] = ce.TargetEncoder(cols=[col], cv=cv_folds)
-                df_encoded = self.target_encoders[col].fit_transform(df_encoded, df[target_column])
-            else:
-                # Transform với encoder đã có
-                df_encoded = self.target_encoders[col].transform(df_encoded)
-        
-        return df_encoded
-    
-    def count_encode(self, df, categorical_columns):
-        """
-        Count encoding - thay thế category bằng tần suất xuất hiện
-        
-        Parameters:
-        df (pd.DataFrame): DataFrame cần encode
-        categorical_columns (list): Danh sách cột cần encode
-        
-        Returns:
-        pd.DataFrame: DataFrame đã được encode
-        """
-        df_encoded = df.copy()
-        
-        for col in categorical_columns:
-            if col not in self.count_encoders:
-                # Tính tần suất xuất hiện
-                value_counts = df[col].value_counts()
-                self.count_encoders[col] = value_counts
-                df_encoded[f'{col}_count'] = df[col].map(value_counts)
-            else:
-                # Sử dụng mapping đã có
-                df_encoded[f'{col}_count'] = df[col].map(self.count_encoders[col])
-        
-        return df_encoded
-
-# Ví dụ sử dụng
-encoder = AdvancedCategoricalEncoder()
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 # Dữ liệu mẫu
-sample_df = pd.DataFrame({
-    'category': ['A', 'B', 'A', 'C', 'B'],
-    'ordinal': ['Low', 'Medium', 'Low', 'High', 'Medium'],
-    'target': [0, 1, 0, 1, 1]
+data = pd.DataFrame({
+    'city': ['Hanoi', 'HCM', 'Danang', 'Hanoi', 'HCM'],
+    'quality': ['Good', 'Great', 'Good', 'Bad', 'Great'],
+    'target': [1, 1, 0, 0, 1]
 })
 
-print("📊 Original Data:")
-print(sample_df)
-print("\n" + "="*50)
+# 1. One-Hot Encoding
+ohe = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+city_ohe = ohe.fit_transform(data[['city']])
+print("One-Hot Encoded City:\n", city_ohe)
 
-# Label encoding cho ordinal data
-df_labeled = encoder.label_encode(sample_df, ['ordinal'])
-print("🏷️ Label Encoded (Ordinal):")
-print(df_labeled[['ordinal', 'target']])
+# 2. Label Encoding (CHỈ DÙNG CHO BIẾN CÓ THỨ TỰ)
+# Giả sử 'quality' có thứ tự: Bad < Good < Great
+quality_map = {'Bad': 0, 'Good': 1, 'Great': 2}
+data['quality_encoded'] = data['quality'].map(quality_map)
+print("\nLabel Encoded Quality:\n", data[['quality', 'quality_encoded']])
 
-# One-hot encoding cho nominal data
-df_onehot = encoder.onehot_encode(sample_df, ['category'])
-print("\n🔥 One-Hot Encoded (Nominal):")
-print(df_onehot)
-
-# Target encoding
-df_target = encoder.target_encode(sample_df, ['category'], 'target')
-print("\n🎯 Target Encoded:")
-print(df_target)
-
-# Count encoding
-df_count = encoder.count_encode(sample_df, ['category'])
-print("\n🔢 Count Encoded:")
-print(df_count)
+# 3. Target Encoding (cẩn thận với data leakage)
+target_encoder = ce.TargetEncoder(cols=['city'])
+city_target_encoded = target_encoder.fit_transform(data['city'], data['target'])
+print("\nTarget Encoded City:\n", city_target_encoded)
 ```
 
-**Giải thích các phương pháp encoding:**
-- **Label Encoding**: Gán số cho mỗi category (0, 1, 2...), phù hợp cho dữ liệu có thứ tự
-- **One-Hot Encoding**: Tạo cột riêng cho mỗi category (0/1), phù hợp cho dữ liệu không có thứ tự
-- **Target Encoding**: Thay thế category bằng giá trị trung bình của target, có thể gây data leakage
-- **Count Encoding**: Thay thế category bằng tần suất xuất hiện, giúp capture frequency information
+### 1.2 Chuẩn hóa và Lựa chọn Feature (Feature Scaling & Selection)
 
-### 1.2 Feature Selection - Lựa chọn đặc trưng
+#### Chuẩn hóa Feature (Feature Scaling)
+- **Tại sao cần?** Nhiều thuật toán ML (như Linear Regression, SVM, Neural Networks) rất nhạy cảm với sự khác biệt về thang đo của các feature. Ví dụ, một feature `tuổi` (0-100) và một feature `thu_nhập` (0-1,000,000,000) sẽ khiến mô hình "ưu tiên" `thu_nhập` hơn vì giá trị của nó lớn hơn nhiều. Feature scaling đưa tất cả các feature về cùng một thang đo.
+- **Khi nào cần?** Hầu hết các thuật toán, **trừ các thuật toán dựa trên cây** (Decision Tree, Random Forest, Gradient Boosting) vì chúng không quan tâm đến độ lớn của feature, chỉ quan tâm đến điểm chia.
 
-> **Feature Selection** là quá trình chọn ra những đặc trưng quan trọng nhất để cải thiện hiệu suất mô hình và giảm overfitting.
+##### Các phương pháp Scaling
+1.  **StandardScaler (Z-score Normalization)**:
+    -   **Công thức**: $x' = \frac{x - \mu}{\sigma}$ (trừ đi trung bình và chia cho độ lệch chuẩn).
+    -   **Kết quả**: Dữ liệu sẽ có trung bình là 0 và độ lệch chuẩn là 1.
+    -   **Khi nào dùng?**: Phù hợp với hầu hết các trường hợp, đặc biệt khi dữ liệu có phân phối gần chuẩn. Nó không giới hạn giá trị trong một khoảng cụ thể.
 
-#### Statistical Methods - Phương pháp thống kê
+2.  **MinMaxScaler (Normalization)**:
+    -   **Công thức**: $x' = \frac{x - \min(x)}{\max(x) - \min(x)}$
+    -   **Kết quả**: Dữ liệu sẽ được đưa về khoảng `[0, 1]`.
+    -   **Khi nào dùng?**: Hữu ích cho các thuật toán yêu cầu dữ liệu trong một khoảng nhất định (ví dụ: Neural Networks với activation Sigmoid/Tanh). Tuy nhiên, nó rất nhạy cảm với outliers.
 
 ```python
-from sklearn.feature_selection import SelectKBest, f_classif, mutual_info_classif
-from sklearn.feature_selection import SelectFromModel
-from sklearn.ensemble import RandomForestClassifier
-import numpy as np
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
-def statistical_feature_selection(X, y, k=10, method='f_classif'):
-    """
-    Lựa chọn đặc trưng bằng phương pháp thống kê
-    
-    Parameters:
-    X (pd.DataFrame): Features
-    y (pd.Series): Target variable
-    k (int): Số lượng features cần chọn
-    method (str): Phương pháp lựa chọn ('f_classif', 'mutual_info_classif')
-    
-    Returns:
-    tuple: (selected_features, feature_scores)
-    """
-    
-    if method == 'f_classif':
-        # F-test cho classification
-        selector = SelectKBest(score_func=f_classif, k=k)
-        selector.fit(X, y)
-        
-        # Lấy scores và p-values
-        scores = selector.scores_
-        p_values = selector.pvalues_
-        
-        # Tạo DataFrame với scores
-        feature_scores = pd.DataFrame({
-            'Feature': X.columns,
-            'F_Score': scores,
-            'P_Value': p_values
-        }).sort_values('F_Score', ascending=False)
-        
-    elif method == 'mutual_info_classif':
-        # Mutual Information cho classification
-        selector = SelectKBest(score_func=mutual_info_classif, k=k)
-        selector.fit(X, y)
-        
-        # Lấy scores
-        scores = selector.scores_
-        
-        # Tạo DataFrame với scores
-        feature_scores = pd.DataFrame({
-            'Feature': X.columns,
-            'MI_Score': scores
-        }).sort_values('MI_Score', ascending=False)
-    
-    # Lấy features được chọn
-    selected_features = feature_scores.head(k)['Feature'].tolist()
-    
-    return selected_features, feature_scores
+data_to_scale = np.array([[100], [200], [500], [1000], [5000]], dtype=float)
 
-def model_based_feature_selection(X, y, threshold='median'):
-    """
-    Lựa chọn đặc trưng dựa trên mô hình (Random Forest)
-    
-    Parameters:
-    X (pd.DataFrame): Features
-    y (pd.Series): Target variable
-    threshold (str/float): Ngưỡng để lựa chọn features
-    
-    Returns:
-    tuple: (selected_features, feature_importance)
-    """
-    
-    # Sử dụng Random Forest để đánh giá feature importance
-    rf = RandomForestClassifier(n_estimators=100, random_state=42)
-    rf.fit(X, y)
-    
-    # Lấy feature importance
-    feature_importance = pd.DataFrame({
-        'Feature': X.columns,
-        'Importance': rf.feature_importances_
-    }).sort_values('Importance', ascending=False)
-    
-    # Lựa chọn features dựa trên threshold
-    if threshold == 'median':
-        threshold_value = feature_importance['Importance'].median()
-    elif threshold == 'mean':
-        threshold_value = feature_importance['Importance'].mean()
-    else:
-        threshold_value = threshold
-    
-    selected_features = feature_importance[feature_importance['Importance'] > threshold_value]['Feature'].tolist()
-    
-    return selected_features, feature_importance
+# StandardScaler
+scaler_std = StandardScaler()
+scaled_std = scaler_std.fit_transform(data_to_scale)
+print("StandardScaler (Z-score):\n", scaled_std.flatten())
 
-# Ví dụ sử dụng
-# Giả sử chúng ta có dữ liệu X và y
-# selected_features, scores = statistical_feature_selection(X, y, k=5, method='f_classif')
-# model_features, importance = model_based_feature_selection(X, y, threshold='median')
+# MinMaxScaler
+scaler_minmax = MinMaxScaler()
+scaled_minmax = scaler_minmax.fit_transform(data_to_scale)
+print("\nMinMaxScaler:\n", scaled_minmax.flatten())
 ```
 
-**Giải thích các phương pháp feature selection:**
-- **F-test**: Đo lường sự khác biệt giữa các nhóm, p-value thấp = feature quan trọng
-- **Mutual Information**: Đo lường mức độ phụ thuộc giữa feature và target
-- **Model-based**: Sử dụng mô hình ML để đánh giá tầm quan trọng của features
+#### Lựa chọn Feature (Feature Selection)
 
+> **Mục tiêu**: Chọn ra một tập hợp con các feature quan trọng nhất để cải thiện hiệu suất mô hình, giảm thời gian huấn luyện và tránh overfitting.
+
+##### Các loại phương pháp Feature Selection
+1.  **Filter Methods**:
+    -   **Cách hoạt động**: Đánh giá và xếp hạng các feature dựa trên các bài kiểm tra thống kê (như tương quan, chi-square, mutual information) **trước khi** huấn luyện mô hình.
+    -   **Ưu điểm**: Nhanh, không phụ thuộc vào mô hình.
+    -   **Nhược điểm**: Có thể bỏ lỡ các mối quan hệ tương tác giữa các feature (ví dụ: feature A và B riêng lẻ thì yếu, nhưng kết hợp lại thì rất mạnh).
+    -   **Ví dụ**: `SelectKBest` với `f_classif` hoặc `mutual_info_classif`.
+
+2.  **Wrapper Methods**:
+    -   **Cách hoạt động**: Sử dụng một mô hình ML để "bọc" và đánh giá các tập con feature khác nhau. Coi việc chọn feature như một bài toán tìm kiếm.
+    -   **Ưu điểm**: Thường cho kết quả tốt hơn Filter methods vì xét đến tương tác feature.
+    -   **Nhược điểm**: Rất tốn kém về mặt tính toán.
+    -   **Ví dụ**: Recursive Feature Elimination (RFE).
+
+3.  **Embedded Methods**:
+    -   **Cách hoạt động**: Quá trình chọn feature được "nhúng" ngay trong quá trình huấn luyện mô hình.
+    -   **Ưu điểm**: Hiệu quả hơn Wrapper methods, nắm bắt được tương tác feature.
+    -   **Nhược điểm**: Phụ thuộc vào mô hình cụ thể.
+    -   **Ví dụ**: **Lasso (L1) Regression** tự động "zero out" các feature không quan trọng. **Random Forest** cung cấp `feature_importances_`.
+
+```python
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+
+# Giả sử X, y là dữ liệu của bạn
+
+# 1. Filter Method
+kbest = SelectKBest(score_func=f_classif, k=5)
+X_kbest = kbest.fit_transform(X, y)
+selected_indices_filter = kbest.get_support(indices=True)
+print(f"Filter - 5 features tốt nhất: {selected_indices_filter}")
+
+# 2. Wrapper Method
+estimator = LogisticRegression(max_iter=1000)
+rfe = RFE(estimator, n_features_to_select=5, step=1)
+rfe.fit(X, y)
+selected_indices_wrapper = rfe.get_support(indices=True)
+print(f"Wrapper (RFE) - 5 features tốt nhất: {selected_indices_wrapper}")
+
+# 3. Embedded Method
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X, y)
+importances = rf.feature_importances_
+# Sắp xếp và lấy 5 features quan trọng nhất
+selected_indices_embedded = np.argsort(importances)[::-1][:5]
+print(f"Embedded (RF) - 5 features tốt nhất: {selected_indices_embedded}")
+```
 ## 📊 2. Supervised Learning - Học có giám sát
+
+> **Tư tưởng cốt lõi**: Học có giám sát (Supervised Learning) giống như việc một học sinh học bài với một người thầy có đáp án. Chúng ta cung cấp cho mô hình một tập dữ liệu đã được **gán nhãn (labeled)**, bao gồm cả "câu hỏi" (input features, **X**) và "câu trả lời đúng" (output target, **y**). Mục tiêu của mô hình là học ra một **hàm ánh xạ `f`** sao cho `f(X)` có thể dự đoán `y` một cách chính xác nhất có thể, ngay cả với những "câu hỏi" mới mà nó chưa từng thấy.
+
+Supervised Learning bao gồm 2 loại bài toán chính:
+1.  **Regression (Hồi quy)**: Dự đoán một giá trị liên tục.
+    -   *Ví dụ*: Dự đoán giá nhà, nhiệt độ ngày mai.
+2.  **Classification (Phân loại)**: Dự đoán một nhãn phân loại (category).
+    -   *Ví dụ*: Email là spam hay không spam, một bức ảnh chứa chó hay mèo.
 
 ### 2.1 Linear Models - Mô hình tuyến tính
 
-> **Linear Models** là các mô hình cơ bản giả định mối quan hệ tuyến tính giữa features và target.
+> **Linear Models** là nhóm mô hình đơn giản nhất, giả định rằng mối quan hệ giữa các input feature và output target là một đường thẳng (hoặc một siêu phẳng trong không gian nhiều chiều). Chúng rất nhanh, dễ diễn giải và là một baseline tuyệt vời cho bất kỳ bài toán nào.
 
-#### Linear Regression với Regularization
+#### Linear Regression và Regularization
+
+Trong Linear Regression, chúng ta cố gắng tìm các hệ số (coefficients) để tối thiểu hóa tổng bình phương lỗi. Tuy nhiên, nếu mô hình quá phức tạp hoặc có quá nhiều feature, nó có thể bị **overfitting**: học thuộc lòng dữ liệu training nhưng hoạt động kém trên dữ liệu mới. **Regularization** là một kỹ thuật để chống lại overfitting bằng cách "phạt" các mô hình có hệ số quá lớn, buộc chúng phải đơn giản hơn.
+
+##### Đánh đổi Bias-Variance (Bias-Variance Tradeoff)
+-   **Bias (Độ chệch)**: Sai số do các giả định đơn giản hóa của mô hình. Mô hình có bias cao có thể **underfit** (không nắm bắt được quy luật của dữ liệu).
+-   **Variance (Phương sai)**: Mức độ thay đổi của dự đoán nếu ta huấn luyện mô hình trên các tập dữ liệu training khác nhau. Mô hình có variance cao thường **overfit** (quá nhạy cảm với nhiễu trong dữ liệu training).
+-   **Mục tiêu**: Tìm điểm cân bằng giữa Bias và Variance. Regularization giúp giảm Variance kosztem (tại chi phí của) việc tăng một chút Bias.
+
+##### Các loại Regularization
+1.  **Ridge Regression (L2 Regularization)**:
+    -   **Cách hoạt động**: Thêm vào hàm mất mát một thành phần bằng tổng bình phương của các hệ số (`alpha * Σ(coefficient²)`).
+    -   **Tác dụng**: "Co" các hệ số về gần 0, nhưng không bao giờ bằng 0. Nó làm cho mô hình ít nhạy cảm hơn với các feature riêng lẻ, giúp giảm variance và chống overfitting.
+    -   **Khi dùng**: Khi bạn có nhiều feature và tin rằng hầu hết chúng đều có ích.
+
+2.  **Lasso Regression (L1 Regularization)**:
+    -   **Cách hoạt động**: Thêm vào hàm mất mát một thành phần bằng tổng giá trị tuyệt đối của các hệ số (`alpha * Σ|coefficient|`).
+    -   **Tác dụng**: Có khả năng đưa một số hệ số về **chính xác bằng 0**. Điều này đồng nghĩa với việc nó tự động **lựa chọn feature (feature selection)**, loại bỏ các feature không quan trọng.
+    -   **Khi dùng**: Khi bạn nghi ngờ rằng chỉ một vài feature là thực sự quan trọng.
+
+3.  **Elastic Net**:
+    -   **Cách hoạt động**: Kết hợp cả hai loại L1 và L2.
+    -   **Tác dụng**: Tận dụng ưu điểm của cả hai: vừa có thể loại bỏ feature không cần thiết (như Lasso), vừa xử lý tốt khi các feature có tương quan cao với nhau (như Ridge).
 
 ```python
 from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split, cross_val_score
-import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+import pandas as pd
 
-def compare_linear_models(X, y, test_size=0.2, random_state=42):
-    """
-    So sánh các mô hình tuyến tính khác nhau
-    
-    Parameters:
-    X (pd.DataFrame): Features
-    y (pd.Series): Target variable
-    test_size (float): Tỷ lệ dữ liệu test
-    random_state (int): Random seed
-    
-    Returns:
-    dict: Kết quả so sánh các mô hình
-    """
-    
-    # Chia dữ liệu train/test
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state
-    )
-    
-    # Chuẩn hóa dữ liệu
+def compare_linear_models(X, y):
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
     
-    # Định nghĩa các mô hình
     models = {
         'Linear Regression': LinearRegression(),
         'Ridge (L2)': Ridge(alpha=1.0),
-        'Lasso (L1)': Lasso(alpha=1.0),
-        'Elastic Net': ElasticNet(alpha=1.0, l1_ratio=0.5)
+        'Lasso (L1)': Lasso(alpha=0.1),
+        'Elastic Net': ElasticNet(alpha=0.1, l1_ratio=0.5)
     }
     
-    results = {}
-    
     for name, model in models.items():
-        # Train mô hình
         model.fit(X_train_scaled, y_train)
-        
-        # Dự đoán
-        y_pred_train = model.predict(X_train_scaled)
-        y_pred_test = model.predict(X_test_scaled)
-        
-        # Tính metrics
-        from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
-        
-        train_r2 = r2_score(y_train, y_pred_train)
-        test_r2 = r2_score(y_test, y_pred_test)
-        train_rmse = np.sqrt(mean_squared_error(y_train, y_pred_train))
-        test_rmse = np.sqrt(mean_squared_error(y_test, y_pred_test))
-        train_mae = mean_absolute_error(y_train, y_pred_train)
-        test_mae = mean_absolute_error(y_test, y_pred_test)
-        
-        # Cross-validation score
-        cv_scores = cross_val_score(model, X_train_scaled, y_train, cv=5, scoring='r2')
-        
-        results[name] = {
-            'Train R²': train_r2,
-            'Test R²': test_r2,
-            'Train RMSE': train_rmse,
-            'Test RMSE': test_rmse,
-            'Train MAE': train_mae,
-            'Test MAE': test_mae,
-            'CV R² Mean': cv_scores.mean(),
-            'CV R² Std': cv_scores.std()
-        }
-    
-    # Tạo bảng so sánh
-    comparison_df = pd.DataFrame(results).T
-    comparison_df = comparison_df.round(4)
-    
-    print("📊 LINEAR MODELS COMPARISON")
-    print("=" * 60)
-    print(comparison_df)
-    
-    # So sánh coefficients
-    print("\n🔍 COEFFICIENT COMPARISON")
-    print("=" * 40)
-    
-    for name, model in models.items():
+        print(f"\n--- {name} ---")
         if hasattr(model, 'coef_'):
-            coef_df = pd.DataFrame({
-                'Feature': X.columns,
-                'Coefficient': model.coef_
-            }).sort_values('Coefficient', key=abs, ascending=False)
-            
-            print(f"\n{name}:")
-            print(coef_df.head())
-    
-    return results, models
+            # Đếm số feature bị loại bỏ (hệ số bằng 0)
+            zero_coeffs = np.sum(np.abs(model.coef_) < 1e-6)
+            print(f"Hệ số: {model.coef_[:3]}...") # In 3 hệ số đầu
+            print(f"Số feature bị loại bỏ: {zero_coeffs}")
 
-# Ví dụ sử dụng
-# results, models = compare_linear_models(X, y)
+# Ví dụ sử dụng (yêu cầu có X và y từ dữ liệu thực tế)
+# compare_linear_models(X, y)
 ```
-
-**Giải thích các loại regularization:**
-- **Ridge (L2)**: Thêm penalty cho tổng bình phương coefficients, giúp giảm overfitting
-- **Lasso (L1)**: Thêm penalty cho tổng tuyệt đối coefficients, có thể zero out một số coefficients
-- **Elastic Net**: Kết hợp cả L1 và L2 regularization
 
 ### 2.2 Tree-based Models - Mô hình dựa trên cây
 
-> **Tree-based Models** là các mô hình sử dụng cây quyết định để phân loại hoặc hồi quy.
+> **Tree-based Models** phân chia không gian feature thành các vùng nhỏ hơn bằng một chuỗi các quy tắc "if-then-else" đơn giản, giống như một cây quyết định. Chúng mạnh mẽ, dễ diễn giải và không yêu cầu feature scaling.
 
-#### Random Forest và Gradient Boosting
+#### Decision Trees (Cây quyết định)
+-   **Cách hoạt động**: Tại mỗi nút (node), cây tìm ra một feature và một ngưỡng chia (split point) để phân tách dữ liệu sao cho các nhóm con trở nên "thuần khiết" nhất có thể.
+-   **Độ "thuần khiết" (Impurity)**: Thường được đo bằng **Gini Impurity** hoặc **Entropy**. Mục tiêu là giảm độ "bất định" sau mỗi lần chia.
+-   **Vấn đề**: Một cây quyết định đơn lẻ rất dễ bị **overfitting**. Nó có thể tạo ra một cây rất sâu và phức tạp để phân loại hoàn hảo dữ liệu training.
+
+#### Random Forest (Rừng ngẫu nhiên)
+-   **Tư tưởng**: "Trí tuệ tập thể". Thay vì chỉ dựa vào một cây quyết định, Random Forest xây dựng một "khu rừng" gồm nhiều cây quyết định khác nhau và lấy kết quả trung bình (hồi quy) hoặc bỏ phiếu đa số (phân loại).
+-   **Tại sao hiệu quả?**: Nó sử dụng hai kỹ thuật chính để giảm overfitting và variance:
+    1.  **Bagging (Bootstrap Aggregating)**: Mỗi cây được huấn luyện trên một mẫu ngẫu nhiên *có lặp lại* (bootstrap sample) từ dữ liệu gốc. Điều này đảm bảo các cây trong rừng là khác nhau.
+    2.  **Feature Randomness**: Tại mỗi lần chia node, mỗi cây chỉ được phép xem xét một tập con ngẫu nhiên các feature. Điều này ngăn các cây trở nên quá giống nhau nếu có một vài feature rất mạnh.
+-   **Kết quả**: Tạo ra một mô hình mạnh mẽ, ít bị overfitting hơn nhiều so với một cây quyết định đơn lẻ.
+
+#### Gradient Boosting
+-   **Tư tưởng**: "Học từ lỗi sai". Gradient Boosting cũng xây dựng nhiều cây, nhưng theo một cách **tuần tự (sequentially)**.
+-   **Cách hoạt động**:
+    1.  Bắt đầu với một mô hình rất đơn giản (ví dụ: dự đoán giá trị trung bình của tất cả target).
+    2.  Xây dựng một cây quyết định mới để **dự đoán phần lỗi (residuals)** của mô hình trước đó.
+    3.  Thêm dự đoán của cây mới này vào mô hình tổng thể (với một learning rate nhỏ).
+    4.  Lặp lại quá trình, mỗi cây mới tập trung vào việc sửa những lỗi mà các cây trước đó vẫn còn mắc phải.
+-   **Kết quả**: Thường cho hiệu suất rất cao, là một trong những thuật toán hàng đầu trong các cuộc thi Kaggle. Tuy nhiên, nó nhạy cảm hơn với hyperparameter và có thể bị overfitting nếu số lượng cây quá lớn.
 
 ```python
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.tree import plot_tree
-import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, mean_squared_error
+import pandas as pd
+import numpy as np
 
-def analyze_tree_models(X, y, test_size=0.2, random_state=42):
-    """
-    Phân tích và so sánh các mô hình dựa trên cây
-    
-    Parameters:
-    X (pd.DataFrame): Features
-    y (pd.Series): Target variable
-    test_size (float): Tỷ lệ dữ liệu test
-    random_state (int): Random seed
-    
-    Returns:
-    dict: Kết quả phân tích
-    """
-    
-    # Chia dữ liệu
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state
-    )
-    
-    # Định nghĩa các mô hình
+def analyze_tree_models(X, y):
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
     models = {
-        'Random Forest': RandomForestRegressor(
-            n_estimators=100, 
-            max_depth=10, 
-            random_state=random_state
-        ),
-        'Gradient Boosting': GradientBoostingRegressor(
-            n_estimators=100,
-            max_depth=6,
-            learning_rate=0.1,
-            random_state=random_state
-        )
+        'Random Forest': RandomForestRegressor(n_estimators=100, max_depth=10, random_state=42),
+        'Gradient Boosting': GradientBoostingRegressor(n_estimators=100, max_depth=5, learning_rate=0.1, random_state=42)
     }
     
-    results = {}
-    
     for name, model in models.items():
-        print(f"\n🌳 Training {name}...")
-        
-        # Train mô hình
+        print(f"\n--- Training {name} ---")
         model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
         
-        # Dự đoán
-        y_pred_train = model.predict(X_train)
-        y_pred_test = model.predict(X_test)
+        r2 = r2_score(y_test, y_pred)
+        rmse = np.sqrt(mean_squared_error(y_test, y_pred))
         
-        # Tính metrics
-        train_r2 = r2_score(y_train, y_pred_train)
-        test_r2 = r2_score(y_test, y_pred_test)
-        train_rmse = np.sqrt(mean_squared_error(y_train, y_pred_train))
-        test_rmse = np.sqrt(mean_squared_error(y_test, y_pred_test))
-        
-        # Feature importance
+        print(f"Test R²: {r2:.4f}")
+        print(f"Test RMSE: {rmse:.4f}")
+
         if hasattr(model, 'feature_importances_'):
             importance_df = pd.DataFrame({
                 'Feature': X.columns,
                 'Importance': model.feature_importances_
             }).sort_values('Importance', ascending=False)
-        
-        results[name] = {
-            'Train R²': train_r2,
-            'Test R²': test_r2,
-            'Train RMSE': train_rmse,
-            'Test RMSE': test_rmse,
-            'Feature Importance': importance_df
-        }
-        
-        print(f"✅ {name} completed!")
-    
-    # In kết quả
-    print("\n📊 TREE MODELS COMPARISON")
-    print("=" * 50)
-    
-    comparison_df = pd.DataFrame({
-        'Model': list(results.keys()),
-        'Train R²': [results[name]['Train R²'] for name in results.keys()],
-        'Test R²': [results[name]['Test R²'] for name in results.keys()],
-        'Train RMSE': [results[name]['Train RMSE'] for name in results.keys()],
-        'Test RMSE': [results[name]['Test RMSE'] for name in results.keys()]
-    }).round(4)
-    
-    print(comparison_df)
-    
-    # Feature importance comparison
-    print("\n🔍 TOP 10 FEATURES BY IMPORTANCE")
-    print("=" * 40)
-    
-    for name, result in results.items():
-        print(f"\n{name}:")
-        print(result['Feature Importance'].head(10))
-    
-    return results, models
+            print("Top 5 Features:\n", importance_df.head())
 
 # Ví dụ sử dụng
-# tree_results, tree_models = analyze_tree_models(X, y)
+# analyze_tree_models(X, y)
 ```
 
 **Giải thích các mô hình dựa trên cây:**
-- **Random Forest**: Ensemble của nhiều cây quyết định, mỗi cây train trên subset khác nhau
-- **Gradient Boosting**: Sequential training, mỗi cây mới sửa lỗi của các cây trước
-- **Feature Importance**: Đo lường mức độ quan trọng của mỗi feature trong việc dự đoán
+- **Random Forest**: Một tập hợp các cây quyết định độc lập, giảm variance và overfitting thông qua bagging và feature randomness.
+- **Gradient Boosting**: Một chuỗi các cây quyết định, trong đó mỗi cây học cách sửa lỗi của cây trước đó, tạo ra một mô hình mạnh mẽ từ nhiều mô hình yếu.
+- **Feature Importance**: Cả hai mô hình đều cung cấp một thước đo về tầm quan trọng của mỗi feature, giúp diễn giải mô hình.
 
 ## ⚖️ 3. Model Evaluation - Đánh giá mô hình
 
@@ -1382,28 +669,17 @@ def analyze_tree_models(X, y, test_size=0.2, random_state=42):
 
 ```python
 from sklearn.model_selection import TimeSeriesSplit
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 import numpy as np
+import pandas as pd
 
 def time_series_cv_evaluation(model, X, y, n_splits=5):
     """
     Đánh giá mô hình với time series cross-validation
-    
-    Parameters:
-    model: Mô hình cần đánh giá
-    X (pd.DataFrame): Features
-    y (pd.Series): Target variable
-    n_splits (int): Số lượng splits
-    
-    Returns:
-    dict: Kết quả đánh giá
     """
-    
-    # Time series split
     tscv = TimeSeriesSplit(n_splits=n_splits)
     
     cv_scores = []
-    train_sizes = []
     
     print("⏰ TIME SERIES CROSS-VALIDATION")
     print("=" * 50)
@@ -1419,43 +695,221 @@ def time_series_cv_evaluation(model, X, y, n_splits=5):
         y_pred = model.predict(X_test)
         
         # Tính metrics
-        mse = mean_squared_error(y_test, y_pred)
-        rmse = np.sqrt(mse)
+        rmse = np.sqrt(mean_squared_error(y_test, y_pred))
         mae = mean_absolute_error(y_test, y_pred)
         
         cv_scores.append({
             'Fold': fold,
             'Train Size': len(train_idx),
             'Test Size': len(test_idx),
-            'MSE': mse,
             'RMSE': rmse,
             'MAE': mae
         })
         
-        train_sizes.append(len(train_idx))
-        
-        print(f"Fold {fold}: Train={len(train_idx)}, Test={len(test_idx)}, RMSE={rmse:.4f}")
+        print(f"Fold {fold}: Train={len(train_idx)}, Test={len(test_idx)}, RMSE={rmse:.4f}, MAE={mae:.4f}")
     
-    # Tóm tắt kết quả
     cv_df = pd.DataFrame(cv_scores)
     
     print(f"\n📊 CROSS-VALIDATION SUMMARY")
     print("=" * 40)
     print(f"Mean RMSE: {cv_df['RMSE'].mean():.4f} ± {cv_df['RMSE'].std():.4f}")
     print(f"Mean MAE: {cv_df['MAE'].mean():.4f} ± {cv_df['MAE'].std():.4f}")
-    print(f"Min RMSE: {cv_df['RMSE'].min():.4f}")
-    print(f"Max RMSE: {cv_df['RMSE'].max():.4f}")
     
     return cv_df
 
 # Ví dụ sử dụng
-# cv_results = time_series_cv_evaluation(model, X, y, n_splits=5)
+# Để chạy ví dụ này, bạn cần có một model đã huấn luyện và dữ liệu X, y.
+# from sklearn.linear_model import LinearRegression
+# model = LinearRegression()
+# # Tạo dữ liệu giả với cột thời gian để dùng TimeSeriesSplit
+# X_dummy = pd.DataFrame(np.random.rand(100, 3), columns=['f1', 'f2', 'f3'])
+# y_dummy = pd.Series(np.random.rand(100))
+# cv_results = time_series_cv_evaluation(model, X_dummy, y_dummy, n_splits=5)
 ```
 
 **Giải thích Time Series CV:**
-- **TimeSeriesSplit**: Chia dữ liệu theo thứ tự thời gian, không random
-- **Forward Chaining**: Mỗi fold sử dụng dữ liệu quá khứ để train, tương lai để test
-- **No Data Leakage**: Đảm bảo không có thông tin từ tương lai trong training
+-   **TimeSeriesSplit**: Một chiến lược chia dữ liệu theo trình tự thời gian, đảm bảo rằng dữ liệu huấn luyện luôn xảy ra *trước* dữ liệu kiểm tra.
+-   **Forward Chaining**: Mỗi fold sử dụng dữ liệu quá khứ để huấn luyện và dữ liệu tương lai để kiểm tra.
+-   **No Data Leakage**: Ngăn chặn rò rỉ thông tin từ tương lai vào quá khứ, điều cực kỳ quan trọng trong dự báo chuỗi thời gian.
+
+---
+
+## 🔍 4. Unsupervised Learning - Học không giám sát
+
+> **Tư tưởng cốt lõi**: Trong học không giám sát, mô hình được cung cấp **dữ liệu không có nhãn (unlabeled data)** và nhiệm vụ của nó là tìm kiếm các **cấu trúc tiềm ẩn**, các **mô hình (patterns)** hoặc các **mối quan hệ** bên trong dữ liệu đó. Giống như bạn đang nhìn vào một đám đông và cố gắng tìm ra các nhóm người có vẻ giống nhau mà không ai nói cho bạn biết họ là ai hay thuộc nhóm nào.
+
+Các tác vụ chính của học không giám sát bao gồm:
+1.  **Clustering (Phân cụm)**: Nhóm các điểm dữ liệu tương tự nhau thành các cụm.
+2.  **Dimensionality Reduction (Giảm chiều dữ liệu)**: Biến đổi dữ liệu từ không gian nhiều chiều sang không gian ít chiều hơn mà vẫn giữ được càng nhiều thông tin càng tốt.
+3.  **Anomaly Detection (Phát hiện bất thường)**: Tìm kiếm các điểm dữ liệu khác biệt đáng kể so với phần lớn dữ liệu.
+
+### 4.1 Phân cụm (Clustering)
+
+#### K-Means Clustering
+
+-   **Tư tưởng**: Một trong những thuật toán phân cụm đơn giản và phổ biến nhất. Nó cố gắng chia dữ liệu thành $K$ cụm, trong đó mỗi điểm dữ liệu thuộc về cụm có tâm (centroid) gần nó nhất.
+-   **Cách hoạt động**:
+    1.  **Khởi tạo**: Chọn ngẫu nhiên $K$ điểm làm tâm cụm ban đầu.
+    2.  **Gán**: Mỗi điểm dữ liệu được gán vào cụm có tâm gần nhất.
+    3.  **Cập nhật**: Tâm cụm mới được tính toán bằng cách lấy trung bình tất cả các điểm dữ liệu đã được gán vào cụm đó.
+    4.  **Lặp lại**: Các bước 2 và 3 được lặp lại cho đến khi các tâm cụm không thay đổi đáng kể hoặc đạt đến số lần lặp tối đa.
+-   **Ưu điểm**: Đơn giản, nhanh, dễ hiểu và dễ thực hiện.
+-   **Nhược điểm**:
+    -   Cần xác định trước số lượng cụm $K$.
+    -   Nhạy cảm với việc khởi tạo tâm cụm ban đầu.
+    -   Chỉ tìm được các cụm có hình dạng cầu (spherical clusters).
+    -   Nhạy cảm với outliers.
+-   **Cách chọn $K$**:
+    -   **Elbow Method**: Vẽ đồ thị tổng bình phương khoảng cách từ mỗi điểm đến tâm cụm của nó (SSE) theo số lượng cụm $K$. Chọn $K$ tại "điểm khuỷu tay" nơi độ dốc của đường cong giảm đáng kể.
+    -   **Silhouette Score**: Đo lường mức độ tương tự của một đối tượng với cụm của chính nó so với các cụm khác. Điểm cao hơn (gần 1) cho thấy cụm rõ ràng.
+
+```python
+from sklearn.cluster import KMeans
+from sklearn.datasets import make_blobs
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Tạo dữ liệu giả
+X, y_true = make_blobs(n_samples=300, centers=4, cluster_std=0.60, random_state=0)
+
+# Huấn luyện K-Means
+kmeans = KMeans(n_clusters=4, random_state=0, n_init=10) # n_init để chạy nhiều lần khởi tạo
+kmeans.fit(X)
+y_kmeans = kmeans.predict(X)
+
+# Trực quan hóa kết quả
+plt.figure(figsize=(8, 6))
+plt.scatter(X[:, 0], X[:, 1], c=y_kmeans, s=50, cmap='viridis')
+centers = kmeans.cluster_centers_
+plt.scatter(centers[:, 0], centers[:, 1], c='red', s=200, alpha=0.7, marker='X', label='Tâm cụm')
+plt.title("K-Means Clustering")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.legend()
+plt.show()
+```
+
+#### DBSCAN (Density-Based Spatial Clustering of Applications with Noise)
+
+-   **Tư tưởng**: Thay vì xác định cụm bằng tâm cụm, DBSCAN định nghĩa cụm dựa trên **mật độ** các điểm dữ liệu. Các điểm được nhóm lại nếu chúng đủ gần nhau và nằm trong một vùng có mật độ đủ lớn.
+-   **Các khái niệm**:
+    -   **Core Point (Điểm lõi)**: Một điểm có ít nhất `min_samples` (ngưỡng mật độ) điểm khác nằm trong bán kính `eps` của nó.
+    -   **Border Point (Điểm biên)**: Một điểm nằm trong bán kính `eps` của một điểm lõi nhưng không phải là điểm lõi.
+    -   **Noise Point (Điểm nhiễu)**: Một điểm không phải là điểm lõi và cũng không phải là điểm biên.
+-   **Cách hoạt động**:
+    1.  Chọn một điểm ngẫu nhiên chưa được ghé thăm.
+    2.  Nếu điểm này là Core Point, bắt đầu một cụm mới và tìm tất cả các điểm có thể đạt được từ nó.
+    3.  Nếu không, đánh dấu nó là Noise.
+    4.  Lặp lại cho đến khi tất cả các điểm được ghé thăm.
+-   **Ưu điểm**:
+    -   Có thể tìm các cụm có hình dạng tùy ý.
+    -   Không yêu cầu xác định trước số lượng cụm $K$.
+    -   Có thể phát hiện và xử lý tốt các điểm nhiễu (outliers).
+-   **Nhược điểm**:
+    -   Khó xác định các tham số `eps` và `min_samples`, đặc biệt với dữ liệu có mật độ khác nhau.
+    -   Gặp khó khăn với các cụm có mật độ thay đổi hoặc khi các cụm có mật độ tương tự nhau.
+
+```python
+from sklearn.cluster import DBSCAN
+from sklearn.datasets import make_moons
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Tạo dữ liệu giả với hình dạng phức tạp
+X, y_true = make_moons(n_samples=200, noise=0.05, random_state=0)
+
+# Huấn luyện DBSCAN
+dbscan = DBSCAN(eps=0.3, min_samples=5) # eps: bán kính, min_samples: ngưỡng mật độ
+dbscan.fit(X)
+y_dbscan = dbscan.labels_ # -1 cho các điểm nhiễu
+
+# Trực quan hóa kết quả
+plt.figure(figsize=(8, 6))
+plt.scatter(X[:, 0], X[:, 1], c=y_dbscan, s=50, cmap='viridis')
+plt.title("DBSCAN Clustering")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.show()
+```
+
+### 4.2 Giảm chiều dữ liệu (Dimensionality Reduction)
+
+-   **Tại sao cần?** Khi có quá nhiều feature (số chiều cao), dữ liệu trở nên rất thưa thớt, khó trực quan hóa và huấn luyện mô hình (gọi là **"lời nguyền của số chiều" - Curse of Dimensionality**). Giảm chiều giúp giải quyết vấn đề này.
+
+#### Phân tích thành phần chính (Principal Component Analysis - PCA)
+
+-   **Tư tưởng**: PCA tìm các hướng (Principal Components) trong dữ liệu mà ở đó phương sai (variance) là lớn nhất. Nó chiếu dữ liệu lên các hướng này, tạo ra một biểu diễn mới có số chiều thấp hơn mà vẫn giữ được càng nhiều thông tin càng tốt.
+-   **Kết nối lý thuyết**: PCA dựa trên các khái niệm từ **Đại số tuyến tính** (đặc biệt là **Eigenvalues** và **Eigenvectors** - xem docs/01-foundations.md).
+    -   **Eigenvector**: Chính là các hướng (Principal Components) mà PCA tìm thấy.
+    -   **Eigenvalue**: Cho biết lượng phương sai (thông tin) mà mỗi Principal Component nắm giữ.
+-   **Các bước chính**:
+    1.  **Center the data**: Trừ đi giá trị trung bình từ mỗi feature.
+    2.  **Tính ma trận hiệp phương sai (Covariance Matrix)**: Mô tả mối quan hệ giữa các cặp feature.
+    3.  **Tính Eigenvalues và Eigenvectors** của ma trận hiệp phương sai.
+    4.  **Sắp xếp**: Sắp xếp các Eigenvector theo thứ tự giảm dần của Eigenvalue (Eigenvector có Eigenvalue lớn nhất là Principal Component 1, v.v.).
+    5.  **Chọn số chiều**: Chọn $k$ Eigenvector hàng đầu (tương ứng với $k$ Eigenvalue lớn nhất) để tạo thành một ma trận chiếu (projection matrix).
+    6.  **Chiếu dữ liệu**: Nhân dữ liệu gốc với ma trận chiếu để có được biểu diễn dữ liệu trong không gian $k$ chiều mới.
+-   **Ứng dụng**:
+    -   **Trực quan hóa**: Giảm dữ liệu về 2 hoặc 3 chiều để có thể vẽ biểu đồ.
+    -   **Khử nhiễu (Noise Reduction)**: Các Principal Component có Eigenvalue nhỏ thường chứa nhiễu.
+    -   **Tăng tốc mô hình**: Giảm số chiều input cho các mô hình ML.
+
+```python
+from sklearn.decomposition import PCA
+from sklearn.datasets import load_iris
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Tải bộ dữ liệu Iris
+iris = load_iris()
+X = iris.data
+y = iris.target
+feature_names = iris.feature_names
+
+# Huấn luyện PCA để giảm về 2 chiều
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
+
+print(f"Dữ liệu gốc có {X.shape[1]} chiều.")
+print(f"Dữ liệu sau PCA có {X_pca.shape[1]} chiều.")
+print(f"Tỷ lệ phương sai được giải thích bởi mỗi thành phần chính: {pca.explained_variance_ratio_}")
+print(f"Tổng tỷ lệ phương sai được giải thích bởi 2 thành phần chính: {pca.explained_variance_ratio_.sum():.2f}")
+
+# Trực quan hóa dữ liệu sau PCA
+plt.figure(figsize=(8, 6))
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='viridis', s=50, alpha=0.8)
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+plt.title("PCA của bộ dữ liệu Iris")
+plt.colorbar(label="Loài hoa")
+plt.show()
+
+# Diễn giải các thành phần chính
+print("\nCác thành phần chính (Principal Components) là sự kết hợp tuyến tính của các feature gốc:")
+for i, pc in enumerate(pca.components_):
+    print(f"  PC{i+1}: " + " + ".join([f"{val:.2f} * {name}" for val, name in zip(pc, feature_names)]))
+```
+
+## 📚 Tài liệu tham khảo
+
+### Unsupervised Learning
+- [K-Means Clustering](https://scikit-learn.org/stable/modules/clustering.html#k-means) - Scikit-learn documentation
+- [DBSCAN Clustering](https://scikit-learn.org/stable/modules/clustering.html#dbscan) - Scikit-learn documentation
+- [PCA (Principal Component Analysis)](https://scikit-learn.org/stable/modules/decomposition.html#pca) - Scikit-learn documentation
+- [An Introduction to Statistical Learning](https://www.statlearning.com/) - James, Witten, Hastie, Tibshirani
+
+## 🎯 Bài tập thực hành
+
+1.  **Phân cụm khách hàng**: Áp dụng K-Means và DBSCAN để phân cụm khách hàng dựa trên hành vi mua sắm (ví dụ: bộ dữ liệu mua hàng trực tuyến của UCI). So sánh kết quả và phân tích ưu nhược điểm của từng thuật toán.
+2.  **Giảm chiều dữ liệu và Trực quan hóa**: Sử dụng PCA để giảm chiều dữ liệu của một bộ dữ liệu có nhiều feature (ví dụ: bộ dữ liệu Wine) xuống 2 hoặc 3 chiều để trực quan hóa. Phân tích xem các thành phần chính đại diện cho thông tin gì của dữ liệu gốc.
+3.  **Xác định số cụm tối ưu**: Áp dụng Elbow Method và Silhouette Score để tìm số lượng cụm tối ưu cho một bộ dữ liệu (ví dụ: khách hàng, hoặc dữ liệu hình học giả).
+
+## 🚀 Bước tiếp theo
+
+Sau khi hoàn thành Unsupervised Learning, bạn sẽ:
+-   Hiểu rõ các phương pháp phân cụm và giảm chiều dữ liệu.
+-   Có khả năng tìm kiếm cấu trúc tiềm ẩn trong dữ liệu không nhãn.
+-   Sẵn sàng áp dụng các kỹ thuật này để tiền xử lý dữ liệu và khám phá insight.
 
 ## 📚 Tài liệu tham khảo
 

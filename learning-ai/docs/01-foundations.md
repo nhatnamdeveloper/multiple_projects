@@ -715,94 +715,324 @@ def test_data_loading(mock_model):
 
 ### 1.3 Toán học cơ bản
 
-> **Tại sao cần học?** Toán học là nền tảng của AI/ML. Hiểu các khái niệm cơ bản giúp hiểu sâu thuật toán và tối ưu hóa.
+> **Tại sao cần học?** Toán học là ngôn ngữ của AI/ML. Hiểu các khái niệm cơ bản giúp bạn không chỉ *sử dụng* các thư viện có sẵn mà còn *hiểu sâu* cách chúng hoạt động, từ đó có thể tùy chỉnh, tối ưu hóa và thậm chí phát triển các thuật toán mới.
 
 #### Đại số tuyến tính
 
+Đại số tuyến tính là nhánh toán học nghiên cứu về không gian vector và các phép biến đổi tuyến tính. Trong AI/ML, dữ liệu thường được biểu diễn dưới dạng vector và ma trận, và các thuật toán ML cốt lõi (như Neural Networks) thực chất là một chuỗi các phép biến đổi tuyến tính.
+
+##### Vector
+
+- **Vector là gì?** Một vector là một mảng các con số, biểu diễn một điểm trong không gian nhiều chiều. Mỗi con số trong vector đại diện cho một chiều (một thuộc tính hoặc feature).
+    - Ví dụ: Vector `[tuổi, thu_nhập, số_năm_kinh_nghiệm]` có thể đại diện cho một ứng viên.
+- **Biểu diễn trong code**:
+    ```python
+    import numpy as np
+    # Vector biểu diễn một người dùng với 3 features
+    user_vector = np.array([25, 50000, 3]) 
+    ```
+
+##### Các phép toán cơ bản trên Vector
+- **Cộng Vector**: `v1 + v2` - Kết hợp thông tin. Ví dụ: cộng vector "vua" và vector "phụ nữ" có thể cho ra một vector gần với "nữ hoàng".
+- **Nhân với số vô hướng (Scalar Multiplication)**: `c * v` - Scale (co giãn) một vector. Ví dụ: `2 * user_vector` làm tăng gấp đôi tất cả các thuộc tính.
+
+##### Tích vô hướng (Dot Product)
+
+- **Công thức**: `v1 · v2 = Σ(v1[i] * v2[i])`
+- **Ý nghĩa trực quan**: Tích vô hướng đo lường mức độ "cùng hướng" (tương đồng) của hai vector.
+    - Nếu `v1 · v2 > 0`: Hai vector cùng hướng.
+    - Nếu `v1 · v2 < 0`: Hai vector ngược hướng.
+    - Nếu `v1 · v2 = 0`: Hai vector vuông góc (trực giao), không có sự tương quan tuyến tính.
+- **Ứng dụng trong ML**:
+    - **Đo độ tương đồng**: Rất quan trọng trong các hệ thống gợi ý (recommendation systems) và tìm kiếm ngữ nghĩa (semantic search).
+    - **Tính toán trong Neural Network**: Là phép toán cốt lõi trong mỗi neuron (tổng trọng số của các input).
+
 ```python
-import numpy as np
-
 # Vector operations
-v1 = np.array([1, 2, 3])
-v2 = np.array([4, 5, 6])
+v1 = np.array([1, 2, 3])  # Vector biểu diễn feature A
+v2 = np.array([4, 5, 6])  # Vector biểu diễn feature B
 
-# Dot product (tích vô hướng)
-dot_product = np.dot(v1, v2)  # 1×4 + 2×5 + 3×6 = 32
+# Tích vô hướng (Dot product)
+dot_product = np.dot(v1, v2)  # 1*4 + 2*5 + 3*6 = 32
+print(f"Tích vô hướng: {dot_product}")
+# Giá trị dương lớn cho thấy 2 vector khá tương đồng về hướng.
+```
 
+##### Ma trận (Matrix)
+
+- **Ma trận là gì?** Một ma trận là một mảng hai chiều các con số, có thể được xem như một tập hợp các vector.
+- **Ứng dụng trong ML**:
+    - **Biểu diễn dữ liệu**: Một ma trận có thể biểu diễn một tập dữ liệu, trong đó mỗi hàng là một mẫu dữ liệu (data point) và mỗi cột là một feature.
+    - **Biến đổi tuyến tính (Linear Transformation)**: Một ma trận có thể "biến đổi" một vector từ không gian này sang không gian khác (xoay, co giãn, trượt). Đây là nền tảng của Neural Networks.
+    - **Lưu trữ trọng số**: Trong Neural Networks, các trọng số (weights) của một layer được lưu trong một ma trận.
+
+##### Phép nhân ma trận (Matrix Multiplication)
+
+- **Công thức**: `C = A @ B` - Nhân ma trận A (kích thước `m x n`) với ma trận B (kích thước `n x p`) sẽ cho ra ma trận C (kích thước `m x p`).
+- **Ý nghĩa trực quan**: Nhân một vector với một ma trận (`y = A @ x`) chính là áp dụng một phép biến đổi tuyến tính lên vector đó. Chuỗi các layer trong Neural Network thực chất là một chuỗi các phép nhân ma trận.
+- **Ví dụ**:
+    ```python
+    # Ma trận A có thể đại diện cho trọng số của một layer trong neural network
+    A = np.array([[1, 2], [3, 4]]) 
+    # Vector x là input của layer đó
+    x = np.array([5, 6])
+
+    # Phép nhân ma trận A @ x biến đổi vector x
+    transformed_x = A @ x  # (1*5 + 2*6, 3*5 + 4*6) = (17, 39)
+    print(f"Vector x sau khi biến đổi bởi A: {transformed_x}")
+    ```
+
+##### Eigenvalues và Eigenvectors (Trị riêng và Vector riêng)
+
+- **Ý nghĩa trực quan**: Khi một ma trận (phép biến đổi tuyến tính) tác động lên hầu hết các vector, nó sẽ làm thay đổi hướng của chúng. Tuy nhiên, có một số vector đặc biệt chỉ bị co giãn (dài ra hoặc ngắn lại) mà không đổi hướng.
+    - **Eigenvector**: Là những vector không đổi hướng này. Chúng đại diện cho các "trục chính" của phép biến đổi.
+    - **Eigenvalue**: Là hệ số co giãn tương ứng với mỗi eigenvector. Nó cho biết mức độ co giãn (quan trọng) của trục đó.
+- **Ứng dụng trong ML**:
+    - **PCA (Principal Component Analysis)**: Một thuật toán giảm chiều dữ liệu. PCA tìm các eigenvectors của ma trận hiệp phương sai (covariance matrix) để xác định các "thành phần chính" (các hướng có nhiều thông tin nhất) của dữ liệu. Các eigenvalue tương ứng cho biết tầm quan trọng của mỗi thành phần. Bằng cách giữ lại các thành phần có eigenvalue lớn nhất, ta có thể giảm chiều dữ liệu mà mất ít thông tin nhất.
+    - **Phân tích độ ổn định của hệ thống**: Trong các hệ thống động, eigenvalues giúp xác định hệ thống có ổn định hay không.
+
+```python
 # Matrix operations
 A = np.array([[1, 2], [3, 4]])
 B = np.array([[5, 6], [7, 8]])
 
 # Matrix multiplication
-C = A @ B  # Hoặc np.matmul(A, B)
+C = A @ B
+print(f"Phép nhân ma trận A @ B:\n{C}")
 
 # Eigenvalues và Eigenvectors
+# Chỉ áp dụng cho ma trận vuông
 eigenvalues, eigenvectors = np.linalg.eig(A)
+print(f"\nEigenvalues của A: {eigenvalues}")
+print(f"Eigenvectors của A:\n{eigenvectors}")
+
+# Kiểm tra tính chất A @ v = λ * v
+for i in range(len(eigenvalues)):
+    v = eigenvectors[:, i]
+    lambda_v = eigenvalues[i] * v
+    Av = A @ v
+    # So sánh xem Av và λv có tương đương không
+    print(f"\nKiểm tra Eigenvector {i+1}:")
+    print(f"A @ v = {Av}")
+    print(f"λ * v = {lambda_v}")
+    assert np.allclose(Av, lambda_v) # allclose dùng để so sánh float
 ```
 
 **Giải thích khái niệm:**
-- **Dot product**: Đo độ tương đồng giữa hai vector
-- **Matrix multiplication**: Kết hợp thông tin từ hai ma trận
-- **Eigenvalues/Eigenvectors**: Đặc trưng quan trọng của ma trận, dùng trong PCA
+- **Dot product (Tích vô hướng)**: Đo độ tương đồng về hướng và độ lớn giữa hai vector.
+- **Matrix multiplication (Phép nhân ma trận)**: Áp dụng một chuỗi các phép biến đổi tuyến tính. Là trái tim của các mạng nơ-ron sâu.
+- **Eigenvalues/Eigenvectors (Trị riêng/Vector riêng)**: Các "trục bất biến" của một phép biến đổi tuyến tính. Rất quan trọng trong các thuật toán giảm chiều dữ liệu như PCA và trong việc hiểu các thuộc tính của ma trận.
 
 #### Xác suất và Thống kê
 
+Xác suất và Thống kê cung cấp các công cụ để mô hình hóa sự không chắc chắn (uncertainty) và để rút ra kết luận từ dữ liệu.
+
+-   **Xác suất (Probability)**: Bắt đầu với một mô hình (ví dụ: một đồng xu công bằng), và dự đoán dữ liệu (ví dụ: xác suất nhận được mặt ngửa là 50%).
+-   **Thống kê (Statistics)**: Bắt đầu với dữ liệu (ví dụ: tung đồng xu 100 lần, nhận được 55 lần mặt ngửa), và suy luận về mô hình (ví dụ: liệu đồng xu có công bằng không?).
+
+##### Các khái niệm xác suất cơ bản
+
+-   **Xác suất có điều kiện (Conditional Probability)**: $P(A|B)$ - xác suất của sự kiện A xảy ra *biết rằng* sự kiện B đã xảy ra. Ví dụ: $P(\text{mưa}|\text{trời có mây})$.
+-   **Định lý Bayes (Bayes' Theorem)**: Là nền tảng của suy luận thống kê và nhiều thuật toán ML. Nó cho phép chúng ta cập nhật "niềm tin" của mình về một giả thuyết khi có dữ liệu mới.
+    $$ P(\text{Giả thuyết | Dữ liệu}) = \frac{P(\text{Dữ liệu | Giả thuyết}) \times P(\text{Giả thuyết})}{P(\text{Dữ liệu})} $$
+    - $P(\text{Giả thuyết | Dữ liệu})$ (Posterior): Niềm tin vào giả thuyết *sau khi* thấy dữ liệu.
+    - $P(\text{Dữ liệu | Giả thuyết})$ (Likelihood): Khả năng có được dữ liệu này nếu giả thuyết là đúng.
+    - $P(\text{Giả thuyết})$ (Prior): Niềm tin vào giả thuyết *trước khi* thấy dữ liệu.
+
+##### Phân phối chuẩn (Normal Distribution)
+
+- **Là gì?**: Còn gọi là phân phối Gauss, có hình chuông đặc trưng. Rất nhiều hiện tượng trong tự nhiên tuân theo phân phối này (chiều cao, cân nặng, sai số đo lường).
+- **Tại sao quan trọng?**: **Định lý giới hạn trung tâm (Central Limit Theorem)** nói rằng trung bình của một lượng lớn các biến ngẫu nhiên độc lập sẽ có phân phối xấp xỉ chuẩn, bất kể phân phối gốc của chúng là gì. Điều này làm cho phân phối chuẩn trở nên cực kỳ phổ biến trong thống kê.
+- **Tham số**:
+    - **μ (mu)**: Giá trị trung bình (mean), đỉnh của hình chuông.
+    - **σ (sigma)**: Độ lệch chuẩn (standard deviation), đo độ "phân tán" hay "dẹt" của hình chuông.
+
 ```python
 import scipy.stats as stats
+import numpy as np
 
-# Phân phối chuẩn (Normal distribution)
+# Phân phối chuẩn (Normal distribution) với trung bình 0 và độ lệch chuẩn 1
 # μ (mu) = mean, σ (sigma) = standard deviation
 normal_dist = stats.norm(loc=0, scale=1)  # loc=μ, scale=σ
 
-# Xác suất P(X < x)
-prob_less_than_1 = normal_dist.cdf(1)  # P(X < 1)
-
-# Confidence interval (khoảng tin cậy)
-# 95% confidence interval cho mean
-confidence_interval = stats.t.interval(0.95, df=len(data)-1, 
-                                     loc=np.mean(data), 
-                                     scale=stats.sem(data))
+# Tính xác suất P(X < 1), tức là diện tích dưới đường cong bên trái của x=1
+prob_less_than_1 = normal_dist.cdf(1)  # cdf: Cumulative Distribution Function
+print(f"P(X < 1) trong phân phối chuẩn (0,1): {prob_less_than_1:.4f}")
+# Khoảng 84.13% giá trị sẽ nhỏ hơn 1.
 ```
 
+##### Khoảng tin cậy (Confidence Interval)
+
+- **Ý nghĩa trực quan**: Thay vì ước lượng một tham số (ví dụ: chiều cao trung bình của người Việt Nam) bằng một con số duy nhất, ta đưa ra một *khoảng* và nói rằng ta "tin tưởng 95%" rằng giá trị thật nằm trong khoảng đó.
+- **"Tin tưởng 95%" nghĩa là gì?**: Nếu ta lặp lại quy trình lấy mẫu và tính khoảng tin cậy này 100 lần, thì khoảng 95 trong số các khoảng tin cậy đó sẽ chứa giá trị thật của tham số. Nó không có nghĩa là có 95% xác suất giá trị thật nằm trong một khoảng tin cậy cụ thể.
+
+```python
+# Giả sử ta có một mẫu dữ liệu
+data = np.random.normal(loc=170, scale=5, size=100) # Mẫu 100 người có chiều cao trung bình 170cm
+
+# Tính khoảng tin cậy 95% cho giá trị trung bình
+# Ta dùng t-distribution vì ta đang ước lượng từ một mẫu
+confidence_interval = stats.t.interval(0.95, df=len(data)-1, 
+                                     loc=np.mean(data), 
+                                     scale=stats.sem(data)) # sem: Standard Error of the Mean
+
+print(f"Chiều cao trung bình của mẫu: {np.mean(data):.2f} cm")
+print(f"Khoảng tin cậy 95% cho chiều cao trung bình thật: [{confidence_interval[0]:.2f}, {confidence_interval[1]:.2f}] cm")
+```
+
+##### Kiểm định giả thuyết (Hypothesis Testing)
+- **Mục đích**: Dùng dữ liệu từ mẫu để đưa ra quyết định về một giả thuyết nào đó về tổng thể.
+- **Các bước cơ bản**:
+    1.  **Phát biểu giả thuyết không (Null Hypothesis, H₀)**: Thường là giả thuyết "không có gì xảy ra" (ví dụ: thuốc mới không có tác dụng, hai nhóm là như nhau).
+    2.  **Phát biểu giả thuyết đối (Alternative Hypothesis, H₁)**: Điều bạn muốn chứng minh (ví dụ: thuốc mới có tác dụng).
+    3.  **Tính toán p-value**: Là xác suất quan sát được kết quả hiện tại (hoặc cực đoan hơn) *nếu giả thuyết không là đúng*.
+    4.  **Kết luận**: Nếu p-value rất nhỏ (thường < 0.05), ta có bằng chứng để bác bỏ giả thuyết không và chấp nhận giả thuyết đối.
+
 **Giải thích khái niệm:**
-- **μ (mu)**: Giá trị trung bình của phân phối
-- **σ (sigma)**: Độ lệch chuẩn, đo độ phân tán của dữ liệu
-- **Confidence interval**: Khoảng chứa tham số thật với xác suất tin cậy
+- **μ (mu)**: Giá trị trung bình của phân phối, thể hiện "trung tâm" của dữ liệu.
+- **σ (sigma)**: Độ lệch chuẩn, đo độ phân tán của dữ liệu quanh giá trị trung bình.
+- **Confidence interval (Khoảng tin cậy)**: Một khoảng ước lượng cho một tham số của tổng thể. Nó cho biết mức độ không chắc chắn của ước lượng.
+- **Hypothesis Testing (Kiểm định giả thuyết)**: Một quy trình thống kê để quyết định xem có đủ bằng chứng trong một mẫu dữ liệu để suy ra một kết luận nào đó về tổng thể hay không.
+
+#### Giải tích và Tối ưu hóa
+
+> **Tại sao cần học?** Hầu hết các thuật toán học máy (đặc biệt là Deep Learning) đều là bài toán tối ưu hóa. Chúng ta cần tìm bộ tham số (weights) cho mô hình để hàm mất mát (loss function) là nhỏ nhất. Giải tích cung cấp công cụ để thực hiện việc này, đó là **đạo hàm** và **gradient**.
+
+##### Đạo hàm (Derivative)
+- **Ý nghĩa trực quan**: Đạo hàm của một hàm số tại một điểm cho biết "tốc độ thay đổi" hay "độ dốc" của hàm số tại điểm đó.
+    - Nếu đạo hàm > 0: hàm số đang đi lên.
+    - Nếu đạo hàm < 0: hàm số đang đi xuống.
+    - Nếu đạo hàm = 0: hàm số đạt điểm cực trị (cực đại hoặc cực tiểu).
+
+##### Gradient (勾配)
+- **Gradient là gì?**: Trong không gian nhiều chiều, Gradient là một vector chứa tất cả các đạo hàm riêng (partial derivatives) của hàm số.
+- **Ý nghĩa trực quan**: Vector Gradient tại một điểm luôn **chỉ về hướng dốc nhất** (hướng mà hàm số tăng nhanh nhất).
+- **Ứng dụng**: Để tìm điểm cực tiểu của hàm mất mát, ta chỉ cần đi ngược lại hướng của gradient. Đây chính là ý tưởng cốt lõi của thuật toán **Gradient Descent**.
+
+##### Tối ưu hóa với Gradient Descent
+- **Tư tưởng**: Giống như bạn đang đứng trên một ngọn đồi trong sương mù và muốn đi xuống thung lũng (điểm thấp nhất). Bạn sẽ nhìn xuống chân mình, xem hướng nào là dốc nhất và bước một bước nhỏ theo hướng đó. Lặp lại quá trình này, bạn sẽ dần dần đi đến đáy thung lũng.
+- **Công thức cập nhật**:
+    $$ \theta_{\text{mới}} = \theta_{\text{cũ}} - \alpha \nabla L(\theta_{\text{cũ}}) $$
+    - $\theta$: Tham số của mô hình (ví dụ: weights).
+    - $L(\theta)$: Hàm mất mát.
+    - $\nabla L(\theta)$: Gradient của hàm mất mát.
+    - $\alpha$ (Learning Rate): "Kích thước bước chân" của bạn.
+        - Nếu $\alpha$ quá lớn, bạn có thể "vượt" qua đáy thung lũng.
+        - Nếu $\alpha$ quá nhỏ, bạn sẽ đi rất chậm.
+
+```python
+# Ví dụ minh họa Gradient Descent cho hàm f(x) = x^2
+def gradient_descent_example():
+    # Hàm số cần tối ưu
+    f = lambda x: x**2
+    # Đạo hàm của hàm số
+    gradient = lambda x: 2*x
+
+    # Khởi tạo giá trị ban đầu
+    x_current = 10.0
+    learning_rate = 0.1
+    epochs = 50
+
+    print("Bắt đầu Gradient Descent:")
+    for i in range(epochs):
+        grad = gradient(x_current)
+        x_current = x_current - learning_rate * grad
+        if (i+1) % 5 == 0:
+            print(f"Epoch {i+1}: x = {x_current:.4f}, f(x) = {f(x_current):.4f}")
+
+    print(f"\nGiá trị cực tiểu tìm được x = {x_current:.4f}")
+
+gradient_descent_example()
+```
 
 ### 1.4 SQL và Database
 
-> **Tại sao cần học?** Hầu hết dữ liệu thực tế được lưu trong database. SQL giúp truy vấn và xử lý dữ liệu hiệu quả.
+> **Tại sao cần học?** Hầu hết dữ liệu trong thế giới thực được lưu trữ trong các cơ sở dữ liệu quan hệ. SQL (Structured Query Language) là ngôn ngữ tiêu chuẩn để tương tác với chúng. Việc thành thạo SQL cho phép bạn trích xuất, tổng hợp và chuẩn bị dữ liệu một cách hiệu quả cho các mô hình machine learning.
 
-#### JOINs và Window Functions
+#### Mô hình dữ liệu quan hệ
+- **Bảng (Table)**: Dữ liệu được tổ chức thành các bảng, giống như các trang tính Excel. Ví dụ: bảng `users`, `products`, `orders`.
+- **Cột (Column/Attribute)**: Mỗi cột đại diện cho một thuộc tính của dữ liệu. Ví dụ: trong bảng `users`, có thể có các cột `user_id`, `name`, `email`.
+- **Hàng (Row/Record)**: Mỗi hàng đại diện cho một thực thể dữ liệu cụ thể. Ví dụ: một người dùng cụ thể.
+- **Khóa chính (Primary Key)**: Một hoặc nhiều cột định danh duy nhất cho mỗi hàng trong bảng. Ví dụ: `user_id` trong bảng `users`.
+- **Khóa ngoại (Foreign Key)**: Một cột trong một bảng tham chiếu đến khóa chính của một bảng khác, tạo ra mối quan hệ giữa hai bảng. Ví dụ: cột `user_id` trong bảng `orders` tham chiếu đến bảng `users`.
+
+#### Các loại JOINs
+
+JOINs được sử dụng để kết hợp dữ liệu từ hai hay nhiều bảng dựa trên một cột chung. Hãy tưởng tượng chúng như các phép toán trên tập hợp (biểu đồ Venn).
+
+- **INNER JOIN**: Chỉ trả về các hàng có giá trị khớp ở cả hai bảng (phần giao của hai tập hợp).
+    ```sql
+    -- Lấy thông tin người dùng và các đơn hàng của họ
+    SELECT u.name, o.order_id, o.amount
+    FROM users u
+    INNER JOIN orders o ON u.user_id = o.user_id;
+    ```
+- **LEFT JOIN (hoặc LEFT OUTER JOIN)**: Trả về tất cả các hàng từ bảng bên trái và các hàng khớp từ bảng bên phải. Nếu không có hàng khớp, các cột của bảng bên phải sẽ có giá trị `NULL`.
+    ```sql
+    -- Lấy tất cả người dùng, kể cả những người chưa có đơn hàng nào
+    SELECT u.name, o.order_id
+    FROM users u
+    LEFT JOIN orders o ON u.user_id = o.user_id;
+    ```
+- **RIGHT JOIN (hoặc RIGHT OUTER JOIN)**: Ngược lại với `LEFT JOIN`. Trả về tất cả các hàng từ bảng bên phải.
+- **FULL OUTER JOIN**: Trả về tất cả các hàng khi có sự trùng khớp ở một trong hai bảng. Nếu không có sự trùng khớp, các cột của bảng không khớp sẽ là `NULL`.
+
+#### Common Table Expressions (CTEs)
+- **CTE** (sử dụng mệnh đề `WITH`) cho phép bạn tạo một bảng tạm thời, có tên, mà bạn có thể tham chiếu trong câu lệnh `SELECT`, `INSERT`, `UPDATE`, hoặc `DELETE` tiếp theo.
+- **Tại sao dùng?** Giúp chia nhỏ các truy vấn phức tạp thành các bước logic, dễ đọc và dễ bảo trì hơn.
 
 ```sql
--- INNER JOIN: Chỉ lấy dữ liệu có trong cả hai bảng
-SELECT u.name, o.order_id, o.amount
+-- Ví dụ: Tìm những người dùng có tổng chi tiêu trên 1000
+WITH UserSpending AS (
+    -- Bước 1: Tính tổng chi tiêu cho mỗi người dùng
+    SELECT
+        user_id,
+        SUM(amount) AS total_spent
+    FROM orders
+    GROUP BY user_id
+)
+-- Bước 2: Lọc những người dùng có total_spent > 1000
+SELECT
+    u.name,
+    us.total_spent
 FROM users u
-INNER JOIN orders o ON u.user_id = o.user_id;
+JOIN UserSpending us ON u.user_id = us.user_id
+WHERE us.total_spent > 1000;
+```
 
--- LEFT JOIN: Lấy tất cả từ bảng trái, NULL nếu không có trong bảng phải
-SELECT u.name, o.order_id
-FROM users u
-LEFT JOIN orders o ON u.user_id = o.user_id;
+#### Window Functions
 
--- Window function: Tính toán trên tập con dữ liệu
+- **Là gì?** Window functions thực hiện các phép tính trên một tập hợp các hàng (một "cửa sổ") có liên quan đến hàng hiện tại. Không giống như `GROUP BY`, chúng không gộp các hàng lại mà trả về một giá trị cho mỗi hàng.
+- **Cú pháp**: `FUNCTION() OVER (PARTITION BY ... ORDER BY ...)`
+    - `PARTITION BY user_id`: Chia dữ liệu thành các "phân vùng" cho mỗi `user_id`. Phép tính sẽ được thực hiện riêng biệt trong mỗi phân vùng này.
+    - `ORDER BY order_date`: Sắp xếp các hàng trong mỗi phân vùng theo `order_date`.
+    - `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`: Định nghĩa "cửa sổ" là hàng hiện tại và 2 hàng trước nó.
+- **Ứng dụng**:
+    - Tính toán running total, moving average.
+    - Xếp hạng (ranking) dữ liệu.
+    - So sánh giá trị của hàng hiện tại với các hàng lân cận.
+
+```sql
+-- Ví dụ: Tính trung bình trượt 3 tháng gần nhất cho mỗi người dùng
 SELECT 
     user_id,
     order_date,
     amount,
+    -- Tính giá trị trung bình của cột 'amount'
+    -- trên cửa sổ bao gồm hàng hiện tại và 2 hàng trước đó
+    -- trong cùng một phân vùng user_id
     AVG(amount) OVER (
         PARTITION BY user_id 
         ORDER BY order_date 
         ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
-    ) as moving_avg_3_months
+    ) as moving_avg_3_orders
 FROM orders;
 ```
 
-**Giải thích JOINs:**
-- **INNER JOIN**: Giao của hai bảng (chỉ dữ liệu chung)
-- **LEFT JOIN**: Tất cả từ bảng trái + dữ liệu chung từ bảng phải
-- **Window function**: Tính toán trên "cửa sổ" dữ liệu (ví dụ: moving average)
+**Giải thích các khái niệm:**
+- **JOINs**: Các phép nối bảng để kết hợp thông tin từ nhiều nguồn.
+- **CTE (Common Table Expression)**: Giúp cấu trúc các truy vấn SQL phức tạp trở nên rõ ràng, dễ đọc hơn.
+- **Window function**: Thực hiện các phép tính phức tạp trên một tập hợp các hàng mà không làm thay đổi số lượng hàng của kết quả. Rất hữu ích cho việc tạo feature trong ML.
 
 ### 1.5 Trực quan hóa dữ liệu
 

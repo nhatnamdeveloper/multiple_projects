@@ -40,17 +40,83 @@
 - **Tokenization**: Phân đoạn - chuyển text thành tokens
 - **Vocabulary**: Từ vựng - tập hợp tất cả tokens có thể
 
-### **Transformer Components:**
-- **Self-Attention**: Tự chú ý - mechanism để capture dependencies
-- **Positional Encoding**: Mã hóa vị trí - encode position information
-- **Feed-Forward**: Truyền thẳng - MLP trong transformer block
-- **Layer Normalization**: Chuẩn hóa lớp - normalize activations
+### **Kiến trúc Transformer (Transformer Architecture)**
 
-### **Training Techniques:**
-- **Fine-tuning**: Tinh chỉnh - adapt pre-trained model cho specific task
-- **LoRA**: Low-Rank Adaptation - efficient fine-tuning technique
-- **RLHF**: Reinforcement Learning from Human Feedback - align model với human preferences
-- **Instruction Tuning**: Hướng dẫn tinh chỉnh - fine-tune với instruction data
+Kiến trúc Transformer, được giới thiệu trong bài báo "Attention Is All You Need", đã tạo ra một cuộc cách mạng trong xử lý ngôn ngữ tự nhiên. Cốt lõi của nó là cơ chế **Self-Attention**, cho phép mô hình cân nhắc tầm quan trọng của các từ khác nhau trong một câu khi xử lý một từ cụ thể.
+
+Một khối Transformer (Transformer Block) tiêu chuẩn bao gồm các thành phần chính sau:
+
+1.  **Multi-Head Self-Attention (Tự chú ý đa đầu)**:
+    *   **Nhiệm vụ**: "Nhìn" vào các từ khác trong câu để hiểu rõ hơn ngữ cảnh của một từ.
+    *   **Tư duy trực quan**: Khi bạn đọc câu "The cat sat on the mat, it was asleep", để hiểu "it" ám chỉ con gì, bạn cần "chú ý" đến "cat". Self-attention làm điều tương tự. "Multi-head" có nghĩa là mô hình làm điều này từ nhiều "góc nhìn" khác nhau cùng một lúc (ví dụ: một "đầu" có thể tập trung vào quan hệ cú pháp, một "đầu" khác tập trung vào quan hệ ngữ nghĩa).
+    *   Đây là thành phần giúp Transformer xử lý các mối quan hệ xa trong câu, một điểm yếu của các mô hình RNN/LSTM trước đó.
+
+2.  **Add & Norm (Residual Connection và Layer Normalization)**:
+    *   **Nhiệm vụ**: Giúp việc huấn luyện các mạng rất sâu trở nên khả thi.
+    *   **Add (Residual Connection)**: Tạo một "đường tắt" cho gradient, cho phép nó chảy ngược qua các layer một cách dễ dàng hơn, tránh hiện tượng vanishing gradients. Về cơ bản, output của một sub-layer là `x + SubLayer(x)`.
+    *   **Norm (Layer Normalization)**: Chuẩn hóa output của mỗi layer để giữ cho phân phối dữ liệu ổn định trong suốt quá trình training, giúp tăng tốc độ và sự ổn định của việc học.
+
+3.  **Feed-Forward Network (Mạng truyền thẳng)**:
+    *   **Nhiệm vụ**: Xử lý và "tiêu hóa" thông tin đã được tổng hợp từ cơ chế attention.
+    *   **Tư duy trực quan**: Sau khi attention đã thu thập tất cả ngữ cảnh cần thiết cho mỗi từ, Feed-Forward network là một mạng nơ-ron đơn giản (gồm 2 lớp tuyến tính) hoạt động trên từng từ một cách độc lập để xử lý thông tin đó và tạo ra một biểu diễn mới, phong phú hơn.
+
+Một khối Transformer đầy đủ sẽ trông như thế này: `Input -> Multi-Head Attention -> Add & Norm -> Feed-Forward Network -> Add & Norm -> Output`. Các mô hình LLM lớn chỉ đơn giản là xếp chồng rất nhiều các khối này lên nhau.
+
+- **Positional Encoding**: Mã hóa vị trí - Vì self-attention không có khái niệm về thứ tự từ, ta cần "thêm" thông tin vị trí vào các embedding đầu vào.
+- **Self-Attention**: Tự chú ý - Cơ chế cho phép các token trong một chuỗi tương tác và cân nhắc tầm quan trọng của nhau.
+- **Feed-Forward**: Mạng truyền thẳng - Một mạng nơ-ron nhỏ được áp dụng cho từng vị trí một cách độc lập.
+- **Layer Normalization**: Chuẩn hóa lớp - Ổn định hóa quá trình huấn luyện bằng cách chuẩn hóa các activation.
+
+### **Kỹ thuật Huấn luyện và Tinh chỉnh (Training & Fine-tuning)**
+
+- **Pre-training (Tiền huấn luyện)**: Giai đoạn mô hình học các kiến thức tổng quát về ngôn ngữ từ một kho dữ liệu văn bản khổng lồ (ví dụ: toàn bộ Internet). Đây là bước tốn kém nhất, thường chỉ được thực hiện bởi các công ty lớn.
+- **Fine-tuning (Tinh chỉnh)**: Quá trình điều chỉnh một mô hình đã được pre-trained để nó hoạt động tốt trên một tác vụ hoặc một bộ dữ liệu cụ thể.
+- **Instruction Tuning (Tinh chỉnh theo chỉ dẫn)**: Một dạng fine-tuning đặc biệt, trong đó mô hình được huấn luyện trên một bộ dữ liệu gồm các cặp `(chỉ dẫn, câu trả lời mong muốn)`. Kỹ thuật này giúp mô hình học cách "làm theo mệnh lệnh" và là nền tảng cho các chatbot như ChatGPT.
+
+#### Parameter-Efficient Fine-Tuning (PEFT) - Tinh chỉnh hiệu quả tham số
+
+-   **Vấn đề**: Fine-tuning toàn bộ một mô hình có hàng tỷ tham số (full fine-tuning) đòi hỏi rất nhiều tài nguyên phần cứng (GPU memory) và thời gian.
+-   **Giải pháp (PEFT)**: Thay vì cập nhật tất cả các trọng số của mô hình, các phương pháp PEFT chỉ cập nhật một phần nhỏ các tham số, hoặc thêm vào một số lượng nhỏ các tham số mới có thể huấn luyện.
+-   **Lợi ích**:
+    -   Giảm đáng kể yêu cầu về bộ nhớ và tính toán.
+    -   Giảm nguy cơ "catastrophic forgetting" (mô hình quên mất kiến thức đã học trong pre-training).
+    -   Dễ dàng quản lý nhiều phiên bản fine-tune cho các tác vụ khác nhau.
+
+#### LoRA (Low-Rank Adaptation) - Một phương pháp PEFT phổ biến
+
+-   **Tư tưởng**: Sự thay đổi trọng số của một mô hình lớn trong quá trình fine-tuning có thể được xấp xỉ bằng một ma trận có **hạng thấp (low-rank)**.
+-   **Cách hoạt động**:
+    1.  Giữ nguyên ma trận trọng số lớn `W` của mô hình gốc (frozen).
+    2.  Thay vì cập nhật `W`, LoRA học hai ma trận nhỏ hơn nhiều là `A` và `B`.
+    3.  Sự thay đổi của trọng số (`ΔW`) được tính bằng tích của hai ma trận này: `ΔW = B @ A`.
+    4.  Khi inference, kết quả được tính bằng: `output = W @ x + (B @ A) @ x`.
+-   **Ví dụ tương tự**: Hãy tưởng tượng `W` là một bức ảnh chân dung có độ phân giải cực cao. Full fine-tuning giống như việc vẽ lại toàn bộ bức ảnh. LoRA giống như việc chỉ vẽ những nét thay đổi (nếp nhăn, cảm xúc) trên một lớp giấy mờ (layer) riêng, sau đó đặt lớp giấy mờ đó lên trên bức ảnh gốc. Chúng ta chỉ cần lưu lại lớp giấy mờ thay vì một bức ảnh mới hoàn toàn.
+-   `r` (rank): Là một hyperparameter quan trọng trong LoRA, quyết định kích thước của hai ma trận `A` và `B`. `r` càng nhỏ, số lượng tham số cần huấn luyện càng ít.
+
+#### RLHF (Reinforcement Learning from Human Feedback) - Học tăng cường từ phản hồi của con người
+
+Đây là quy trình 3 bước giúp "căn chỉnh" (align) hành vi của LLM với sở thích và mong muốn của con người, làm cho nó trở nên hữu ích và an toàn hơn.
+
+1.  **Bước 1: Supervised Fine-Tuning (SFT)**
+    *   Thu thập một bộ dữ liệu chất lượng cao gồm các cặp `(prompt, response)` do con người viết.
+    *   Fine-tune mô hình ngôn ngữ cơ sở (base model) trên bộ dữ liệu này.
+    *   **Kết quả**: Một mô hình SFT có khả năng trả lời các prompt theo phong cách mong muốn.
+
+2.  **Bước 2: Huấn luyện Reward Model (Mô hình phần thưởng)**
+    *   Cho mô hình SFT tạo ra nhiều câu trả lời khác nhau cho cùng một prompt.
+    *   Con người (labelers) sẽ xếp hạng các câu trả lời này từ tốt nhất đến tệ nhất.
+    *   Dùng dữ liệu xếp hạng này để huấn luyện một mô hình riêng, gọi là **Reward Model**.
+    *   **Nhiệm vụ của Reward Model**: Nhận vào một cặp `(prompt, response)` và trả về một điểm số (reward) thể hiện mức độ "tốt" của câu trả lời theo tiêu chí của con người.
+
+3.  **Bước 3: Tối ưu hóa bằng Reinforcement Learning (RL)**
+    *   Sử dụng thuật toán RL (thường là **PPO - Proximal Policy Optimization**) để tiếp tục fine-tune mô hình SFT.
+    *   Trong vòng lặp này:
+        *   Mô hình nhận một prompt và tạo ra một câu trả lời.
+        *   **Reward Model** sẽ "chấm điểm" câu trả lời đó.
+        *   Điểm số này được dùng làm "phần thưởng" để cập nhật các trọng số của mô hình LLM.
+    *   **Mục tiêu**: Tối đa hóa điểm thưởng từ Reward Model, từ đó khiến LLM tạo ra các câu trả lời mà con người ưa thích hơn.
+
+**Kết quả cuối cùng**: Một mô hình đã được "căn chỉnh", vừa có kiến thức từ pre-training, vừa có khả năng tuân theo chỉ dẫn từ SFT, và quan trọng nhất là hành xử theo cách con người mong đợi nhờ RLHF.
 
 ### **Deployment:**
 - **Model Serving**: Phục vụ mô hình - serve model cho inference
