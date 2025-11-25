@@ -1,11 +1,12 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import shutil
-import os
+from io import BytesIO
 from PIL import Image
 import numpy as np
 import logging
+import tensorflow as tf
+from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input, decode_predictions
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Realtime Media Processor Backend",
-    description="Backend for real-time image, video, and livestream processing",
+    description="Backend for real-time image, video, and livestream processing with ML inference",
     version="0.1.0",
 )
 
@@ -26,6 +27,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- ML Model Loading ---
+# Load the pre-trained MobileNetV2 model
+try:
+    logger.info("Loading MobileNetV2 model...")
+    model = MobileNetV2(weights="imagenet")
+    model.trainable = False  # Freeze the model weights
+    logger.info("MobileNetV2 model loaded successfully.")
+except Exception as e:
+    logger.error(f"Error loading MobileNetV2 model: {e}", exc_info=True)
+    model = None # Set model to None if loading fails
+
+@app.on_event("startup")
+async def startup_event():
+    if model is None:
+        logger.error("ML model not loaded. /predict/image endpoint will not function.")
+
+# --- Helper functions for image processing and prediction ---
+def preprocess_image_for_model(image: Image.Image):
+    """Resizes and preprocesses the image for MobileNetV2 input."""
+    image = image.resize((224, 224))  # MobileNetV2 expects 224x224 input
+    image_array = np.asarray(image)
+    image_array = np.expand_dims(image_array, axis=0)  # Add batch dimension
+    return preprocess_input(image_array) # Preprocess for MobileNetV2
+
 @app.get("/")
 async def read_root():
     return {"message": "Welcome to the Realtime Media Processor Backend!"}
@@ -33,52 +58,52 @@ async def read_root():
 @app.post("/predict/image")
 async def predict_image(file: UploadFile = File(...)):
     """
-    Accepts an image file, processes it (placeholder), and returns a dummy prediction.
+    Accepts an image file, performs ML inference using MobileNetV2, and returns predictions.
     """
+    if model is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="ML model is not loaded. Please check backend logs."
+        )
+
     try:
-        # Create a temporary directory to save the uploaded file
-        upload_dir = "temp_uploads"
-        os.makedirs(upload_dir, exist_ok=True)
-        file_path = os.path.join(upload_dir, file.filename)
-
-        # Save the uploaded file
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        # Read image file
+        contents = await file.read()
+        image = Image.open(BytesIO(contents)).convert("RGB") # Ensure RGB
         
-        logger.info(f"Received image: {file.filename}, saved to {file_path}")
+        logger.info(f"Received image: {file.filename}, dimensions: {image.size}")
 
-        # --- Placeholder for ML Inference ---
-        # In a real application, you would load your ML model here (e.g., TensorFlow, PyTorch)
-        # and perform inference on the image.
+        # Preprocess image for the model
+        processed_image = preprocess_image_for_model(image)
         
-        # Open and process the image with PIL (or OpenCV)
-        image = Image.open(file_path)
-        # Example: Convert to numpy array and get shape
-        image_np = np.array(image)
-        height, width, channels = image_np.shape
+        # Perform inference
+        predictions = model.predict(processed_image)
         
-        # Dummy prediction data
-        dummy_prediction = {
-            "class": "detected_object",
-            "confidence": 0.95,
-            "bounding_box": [10, 20, 100, 150], # [x_min, y_min, x_max, y_max]
-            "image_dimensions": {"height": height, "width": width}
-        }
-        logger.info(f"Processed image: {file.filename}, dummy prediction: {dummy_prediction}")
-        # --- End Placeholder ---
+        # Decode predictions (ImageNet classes)
+        decoded_predictions = decode_predictions(predictions.numpy(), top=5)[0] # Top 5 predictions
 
-        # Clean up the temporary file
-        os.remove(file_path)
-        shutil.rmtree(upload_dir) # Remove the directory after processing
+        # Format prediction data
+        formatted_predictions = []
+        for _, label, confidence in decoded_predictions:
+            formatted_predictions.append({
+                "label": label,
+                "confidence": float(confidence),
+                "image_dimensions": {"height": image.height, "width": image.width}
+            })
+        
+        logger.info(f"Processed image: {file.filename}, predictions: {formatted_predictions}")
 
         return JSONResponse(content={
             "filename": file.filename,
-            "prediction": dummy_prediction,
+            "predictions": formatted_predictions,
             "status": "success"
         })
     except Exception as e:
         logger.error(f"Error processing image {file.filename}: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Failed to process image: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to process image: {e}"
+        )
 
 # Placeholder for video stream endpoint (e.g., using WebSockets)
 # @app.websocket("/ws/video")
